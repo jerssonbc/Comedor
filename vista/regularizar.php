@@ -26,7 +26,7 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3)">
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="../index.php" class="logo">
@@ -275,7 +275,7 @@ if(!isset($_SESSION['idUsuario'])){
 
                             <div class="box box-primary">
                                 <div class="box-header">
-                                    <h3 class="box-title">REGULARIZACIÓN - COMEDOR</h3>
+                                    <h3 class="box-title">REGULARIZACIÓN -  COMEDOR</h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
                                 <form role="form">
