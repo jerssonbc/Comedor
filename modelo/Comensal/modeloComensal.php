@@ -84,10 +84,14 @@ class ModeloComensal{
                                     $this->result=mysql_query($consultaSql);
                                     if($this->result)
                                     {
-                                        $iduser=mysql_fetch_row($this->result);
+                                        $rowuserid=mysql_fetch_row($this->result);
 
-                                        $consultaSql="INSERT INTO  usuario_rol(usuario_id,rol_id) values ()";
-                                        // TERMINAR
+                                        $consultaSql="INSERT INTO  usuario_rol(usuario_id,rol_id)
+                                                         values (".$rowuserid[0].",3)";
+                                        $this->result=mysql_query($consultaSql);
+                                        if ($this->result) {
+                                            
+                                        }
                                     }
                                     echo 'OK';
                                 }

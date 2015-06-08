@@ -71,7 +71,7 @@ function agregarComensal(){
                     type:'POST',
                     url:'../control/Comensal/controlComensal.php',
                     data:{param_opcion:'agregarComensal',
-                    		dni:vdni,apepaterno:vapematerno,
+                    		dni:vdni,apepaterno:vapepaterno,
                     		apematerno:vapematerno,nombres:vnombres,
                     		codigo_comensal:vcodigo_comensal,institucion:vinstitucion,
                     		tipocomensal:vtipocomensal,programa:vprograma,
