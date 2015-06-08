@@ -275,7 +275,7 @@ if(!isset($_SESSION['idUsuario'])){
 
                             <div class="box box-primary">
                                 <div class="box-header">
-                                    <h3 class="box-title">REGULARIZACION</h3>
+                                    <h3 class="box-title">REGULARIZACIÓN - COMEDOR</h3>
                                 </div><!-- /.box-header -->
                                 <!-- form start -->
                                 <form role="form">
