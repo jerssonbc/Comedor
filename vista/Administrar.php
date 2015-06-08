@@ -26,7 +26,7 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3)">
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);listarRol();">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="../index.php" class="logo">
@@ -274,8 +274,8 @@ if(!isset($_SESSION['idUsuario'])){
                 <section class="content" >
                             <div class="nav-tabs-custom">
                                                 <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#tab_1" data-toggle="tab">USUARIOS</a></li>
-                                                    <li><a href="#tab_2" data-toggle="tab">ROLES</a></li>
+                                                    <li class="active"><a href="#tab_1" data-toggle="tab">AGREGAR</a></li>
+                                                    <li><a href="#tab_2" data-toggle="tab" onClick="listarUsuarios();">USUARIOS</a></li>
                                                     <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                                                 </ul>
                                                 <div class="tab-content">
@@ -288,26 +288,51 @@ if(!isset($_SESSION['idUsuario'])){
                                                                  <div class="box box-primary">
                                                         
                                                                     <!-- form start -->
-                                                                    <form role="form">
+                                                                    <form role="form" id="formulario" enctype="multipart/form-data">
                                                                         <div class="box-body">
+                                                                            <!--<div class="form-group">
+                                                                                <label for="exampleInputFile">Subir Foto Pefil</label>
+                                                                                <input type="file" name="fotoUsuario" id="fotoUsuario">
+                                                                                <p class="help-block">Cargado...</p>
+                                                                            </div>-->
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">DNI</label>
+                                                                                <input type="number" class="form-control" id="dni" placeholder="Enter Dni">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Apellidos</label>
+                                                                                <input type="text" class="form-control" id="apellidos" placeholder="Enter Apellidos">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputEmail1">Nombres</label>
+                                                                                <input type="text" class="form-control" id="nombres" placeholder="Enter nombres">
+                                                                            </div>
                                                                             <div class="form-group">
                                                                                 <label for="exampleInputEmail1">Correo</label>
-                                                                                <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+                                                                                <input type="text" class="form-control" id="correo" placeholder="Enter correo">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="exampleInputPassword1">Password</label>
-                                                                                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                                                                                <label for="exampleInputEmail1">USUARIO</label>
+                                                                                <input type="text" class="form-control" id="usuario" placeholder="Enter usuario">
                                                                             </div>
                                                                             
-                                                                            <div class="checkbox">
-                                                                                <label>
-                                                                                    <input type="checkbox"> Check me out
-                                                                                </label>
+
+                                                                            <div class="form-group">
+                                                                                <label for="exampleInputPassword1">Password</label>
+                                                                                <input type="password" class="form-control" id="password" placeholder="Password">
                                                                             </div>
+                                                                            <div class="form-group" >
+                                                                                <label>ROL</label>
+                                                                                <select class="form-control" id="rol">
+                                                                                    <option value="0">--Seleccionar--</option>
+                                                                                    
+                                                                                </select>
+                                                                            </div>
+                                                                                                    
                                                                         </div><!-- /.box-body -->
 
                                                                         <div class="box-footer">
-                                                                            <button type="submit" class="btn btn-primary">Agregar</button>
+                                                                            <div  class="btn btn-primary" onClick="agregarTrabajador();agregarFoto();" >Agregar</div>
                                                                         </div>
                                                                     </form>
                                                                 </div><!-- /.box -->  
@@ -317,10 +342,29 @@ if(!isset($_SESSION['idUsuario'])){
                                                             </div><!-- /.tab-pane -->
                                                     </div><!-- /.tab-pane -->
                                                     <div class="tab-pane" id="tab_2">
-                                                            <div class="box-header">
+                                                            
+                                                            <div class="box-body" id="ListaUsuarios">
+                                                                <div class="box-header">
                                                                 <h3 class="box-title">Asignar Roles</h3>
                                                             </div><!-- /.box-header -->
-                                                            <div class="box-body">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        
+                                                                    <tr>
+                                                                        <th style="width: 10px">#</th>
+                                                                        <th>Usuario</th>
+                                                                        <th>Dni</th>
+                                                                        <th>Apellidos y Nombre</th>
+                                                                        <th>Opciones</th>
+                                                                        <th style="width: 40px">Programa</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody id="bcomensales">
+                                                                    
+                                                                    </tbody>
+                                                                    
+                                                                </table>
+
                                                                 
                                                             </div><!-- /.box-body -->
                                                             <div class="box-footer clearfix">
@@ -346,6 +390,7 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js"        type="text/javascript"></script>
         <script src="../js/menu.js" type="text/javascript"></script>
+        <script src="../js/validacionesUsuario.js" type="text/javascript"></script>
 
 
     </body>

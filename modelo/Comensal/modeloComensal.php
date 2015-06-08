@@ -50,6 +50,7 @@ class ModeloComensal{
         $programa=$this->param['programa'];
         $usuario = $this->param['usuario'];
         $password = $this->param['password'];
+        $passwordMD5=md5($password);
 
         $estado=1;
         $fecha_exp=date("Y-m-d");
@@ -76,11 +77,11 @@ class ModeloComensal{
                             $row=mysql_fetch_row($this->result);
 
                             $consultaSql="INSERT INTO usuarios(usuario,password,estado, id_comensal)
-                                 values ( '$usuario','$password',1,".$row[0].")";
+                                 values ( '$usuario','$passwordMD5',1,".$row[0].")";
 
                             $this->result=mysql_query($consultaSql);
                                 if ($this->result) {
-                                    $consultaSql="SELECT id FROM usuarios where usuario='$usuario' and password='$password'";
+                                    $consultaSql="SELECT id FROM usuarios where usuario='$usuario' and password='$passwordMD5'";
                                     $this->result=mysql_query($consultaSql);
                                     if($this->result)
                                     {
