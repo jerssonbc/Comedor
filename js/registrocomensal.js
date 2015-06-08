@@ -58,6 +58,11 @@ function agregarComensal(){
     var vusuario=$('input[name=usuario]').val();
     var vpassword=$('input[name=password]').val();
 
+    var vimagepath=window.uploadedImage.imagePath;
+    //$('#uploadedImage').imagePath;
+
+    //alert("Valor "+vimagepath);
+
     if( vinstitucion=='0')
     	alert('Selection Intitucion');
     else{
@@ -75,7 +80,8 @@ function agregarComensal(){
                     		apematerno:vapematerno,nombres:vnombres,
                     		codigo_comensal:vcodigo_comensal,institucion:vinstitucion,
                     		tipocomensal:vtipocomensal,programa:vprograma,
-                    		usuario:vusuario,password:vpassword
+                    		usuario:vusuario,password:vpassword,
+                    		uploadedImagePath:vimagepath
                     		},
                     success:function(data){
                     	if(data=='OK'){
@@ -84,6 +90,7 @@ function agregarComensal(){
 	                        $('#addComensal').each (function(){
 						  		this.reset();
 							});
+							
 	                    }else{
 	                    	if(data=='EPC'){
 	                    		alert("Fallo el registro del comensal ");

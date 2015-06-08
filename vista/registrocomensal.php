@@ -296,15 +296,18 @@ if(!isset($_SESSION['idUsuario'])){
                 <!-- Main content -->
                 <section class="content" style="background: url(/img/fondo.jpg);no-repeat;height:500px" >
 
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-10">
                         <div class="box box-primary">
+
                                     <div class="box-header">
                                         <h3 class="box-title">Registro de Nuevo Comensal ...</h3>
                                     </div><!-- /.box-header -->
-
+                                <div class="col-md-7">
+                                    
+                                
                                     <!-- form start -->
                                     <form role="form" id="addComensal" onsubmit="agregarComensal(); return false;" method="post" accept-charset="utf-8">
                                         <div class="box-body">  
@@ -380,11 +383,39 @@ if(!isset($_SESSION['idUsuario'])){
                                            </i> Cancelar</button> -->
                                         </div>
                                     </form>      
-                                    
+                                </div> 
+                                <div class="col-md-5">
+                                    <iframe id="uploadedImage" name="uploadedImage" src="" 
+                                          style="width:200px; height:200px;"
+                                          frameborder="0" marginheight="0" marginwidth="0">
+                                      </iframe>
+                                      <br>
+                                     <form id="imageForm" name="imageForm" enctype="multipart/form-data"
+                                            action="uploadImage.php" method="POST" target="uploadedImage">
+                                                <div class="form-group">
+                                                    <label>Foto:</label>
+                                                    <input name="imageToUpload"  class="form-control" 
+                                                        id="imageToUpload" type="file"
+                                                            onchange="uploadImage();" size="30" required/>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="oldImageToDelete">
+                                                        Old uploaded image to delete (this field should be hidden):
+                                                    </label>
+                                                    <input name="oldImageToDelete" id="oldImageToDelete" type="text"
+                                                    size="50" />
+                                                </div>
+                                                
+                                              
+                                              
+                                    </form>
+                                </div>
+                                
+                                <div style="clear:both;"></div>
            
                         </div><!-- /.box -->
                     </div>
-                    <div class="col-md-2">
+                    <div class="col-md-1">
                         
                     </div>
                          
@@ -402,6 +433,119 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
          <script type"text/javascript" src="../js/registrocomensal.js"></script>
+
+         <script language="JavaScript" type="text/javascript">
+      
+      var loadingHtml = "Loading..."; // this could be an animated image
+      var imageLoadingHtml = "Image loading...";
+        var http = getXMLHTTPRequest();
+      //----------------------------------------------------------------
+        function uploadImage() {
+        var uploadedImageFrame = window.uploadedImage;
+          uploadedImageFrame.document.body.innerHTML = loadingHtml;
+          // VALIDATE FILE
+        var imagePath = uploadedImageFrame.imagePath;
+        if(imagePath == null){
+          imageForm.oldImageToDelete.value = "";
+        }
+        else {
+          imageForm.oldImageToDelete.value = imagePath;
+        }
+        imageForm.submit();
+      }
+      //----------------------------------------------------------------
+      function showImageUploadStatus() {
+        var uploadedImageFrame = window.uploadedImage;
+        if(uploadedImageFrame.document.body.innerHTML == loadingHtml){
+          divResult.innerHTML = imageLoadingHtml;
+        }
+        else {
+          var imagePath = uploadedImageFrame.imagePath;
+          if(imagePath == null){
+            divResult.innerHTML = "No uploaded image in this form.";
+          }
+          else {
+            divResult.innerHTML = "Loaded image: " + imagePath;
+          }
+        }
+      }
+      //----------------------------------------------------------------
+      function getXMLHTTPRequest() {
+        try {
+            xmlHttpRequest = new XMLHttpRequest();
+        }
+        catch(error1) {
+            try {
+            xmlHttpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+          }
+          catch(error2) {
+            try {
+                xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            catch(error3) {
+                xmlHttpRequest = false;
+            }
+          }
+        }
+        return xmlHttpRequest;
+      }
+      //----------------------------------------------------------------
+      function sendData() {
+        var url = "submitForm.php";
+        var parameters = "imageDescription=" + dataForm.imageDescription.value;
+        var imagePath = window.uploadedImage.imagePath;
+        if(imagePath != null){
+          parameters += "&uploadedImagePath=" + imagePath;
+        }
+        
+        http.open("POST", url, true);
+    
+        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        http.setRequestHeader("Content-length", parameters.length);
+        http.setRequestHeader("Connection", "close");
+    
+        http.onreadystatechange = useHttpResponse;
+        http.send(parameters);
+      }
+      //----------------------------------------------------------------
+      function submitFormIfNotImageLoading(maxLoadingTime, checkingIntervalTime) {
+        if(window.uploadedImage.document.body.innerHTML == loadingHtml) {
+          if(maxLoadingTime <= 0) {
+            divResult.innerHTML = "The image loading has timed up. "
+                                + "Please, try again when the image is loaded.";
+          }
+          else {
+            divResult.innerHTML = imageLoadingHtml;
+            maxLoadingTime = maxLoadingTime - checkingIntervalTime;
+            var recursiveCall = "submitFormIfNotImageLoading(" 
+                              + maxLoadingTime + ", " + checkingIntervalTime + ")";
+            setTimeout(recursiveCall, checkingIntervalTime);
+          }
+        }
+        else {
+          sendData();
+        }
+      }
+        //----------------------------------------------------------------
+      function submitForm() {
+        var maxLoadingTime = 3000; // milliseconds
+        var checkingIntervalTime = 500; // milliseconds
+        submitFormIfNotImageLoading(maxLoadingTime, checkingIntervalTime);
+      }
+      //----------------------------------------------------------------
+      function useHttpResponse() {
+        if (http.readyState == 4) {
+            if (http.status == 200) {
+            divResult.innerHTML = http.responseText;
+            dataForm.reset();
+            imageForm.reset();
+            window.uploadedImage.document.body.innerHTML = "";
+            window.uploadedImage.imagePath = null;
+            }
+        }
+      }
+
+    </script>
 
     </body>
 </html>

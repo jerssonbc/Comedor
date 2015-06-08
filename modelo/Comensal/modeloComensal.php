@@ -91,6 +91,38 @@ class ModeloComensal{
                                         $this->result=mysql_query($consultaSql);
                                         if ($this->result) {
                                             
+                                            $pathToMove = "../../uploads/";
+                                            $imagePathParameterName = "uploadedImagePath"; 
+                                            $imagePath = '../'.$this->param[$imagePathParameterName];
+                                                //&& (file_exists($imagePath))
+                                            if (($imagePath != null) ) 
+                                                { 
+                                                 // $imagePathToMove = $pathToMove . basename($imagePath); 
+                                                   $info=pathinfo($imagePath);
+
+                                                  $imagePathToMove = $pathToMove .$rowuserid[0].'.png';//$info['extension'];
+
+                                                  if(file_exists($imagePathToMove)) { 
+                                                    unlink($imagePathToMove); 
+                                                  } 
+                                                  if(rename($imagePath, $imagePathToMove)) { 
+
+                                                    //$consultaSql="update usuarios set imagen='foto".$rowuserid[0]."' where id=".$rowuserid[0];
+                                                    //$this->result=mysql_query($consultaSql);
+                                                    //if($this->result){
+
+                                                    //}
+                                                    //echo "The image " . $imagePathToMove . " was stored with the description '" . $description . "'."; 
+                                                  } 
+                                                  else { 
+                                                    //echo "There was an error moving the file " . $imagePath . " to " . $imagePathToMove; 
+                                                  } 
+                                                } 
+                                                else { 
+                                                  //echo "No image was uploaded for the description '" . $description . "'."; 
+                                                } 
+
+
                                         }
                                     }
                                     echo 'OK';

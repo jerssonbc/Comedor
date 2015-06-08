@@ -13,6 +13,10 @@
 	$param['programa']='';
 	$param['usuario']='';
 	$param['password']='';
+	$param['uploadedImagePath']='';
+
+	if(isset($_POST['uploadedImagePath']))
+		$param['uploadedImagePath']=$_POST['uploadedImagePath'];
 
 	if(isset($_POST['param_opcion']))
 		$param['param_opcion']=$_POST['param_opcion'];
