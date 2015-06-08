@@ -302,7 +302,7 @@ if(!isset($_SESSION['idUsuario'])){
                     <div class="col-md-8">
                         <div class="box box-primary">
                                     <div class="box-header">
-                                        <h3 class="box-title">Registro de Nuevo Comensal</h3>
+                                        <h3 class="box-title">Registro de Nuevo Comensal ...</h3>
                                     </div><!-- /.box-header -->
 
                                     <!-- form start -->
