@@ -13,6 +13,7 @@ function registrarAsistencia(){
     if (xmlhttp.readyState==4 && xmlhttp.status==200)
       {
       document.getElementById("content").innerHTML=xmlhttp.responseText;      
+      startTime();
       }
     }
   xmlhttp.open("GET","vista/view_asistencia.php",true);
@@ -21,9 +22,11 @@ function registrarAsistencia(){
 
 function registrarAsistenciaComensal() {
     codigo=$('#codigo').val();     
+    horaMarcado=$('#horaMarcado').val(); 
+    soloHoraMarcado=$('#soloHoraMarcado').val();
       $.ajax({
           type: "POST",
-          data: {codigo,param_opcion:'registrar'},
+          data: {codigo,horaMarcado,soloHoraMarcado,param_opcion:'registrar'},
           url: "control/asistencia/controlAsistencia.php",
           success: function(datos) {
               if (datos == '') {
@@ -78,4 +81,21 @@ function registrarTipoComensal() {
               alert( datos+" Error Fatal");
           }
       });
+}
+
+function startTime(){
+    today=new Date();
+    h=today.getHours();
+    m=today.getMinutes();
+    s=today.getSeconds();
+    m=checkTime(m);
+    s=checkTime(s);
+    document.getElementById('horaMarcado').value=h+":"+m+":"+s;
+    document.getElementById('soloHoraMarcado').value=h;
+    document.getElementById('reloj').innerHTML=h+":"+m+":"+s;
+    t=setTimeout('startTime()',500);
+}
+function checkTime(i)
+{
+  if (i<10) {i="0" + i;}return i;
 }

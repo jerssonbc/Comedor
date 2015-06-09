@@ -5,7 +5,9 @@ include_once '../../modelo/asistencia/modeloAsistencia.php';
 $param = array();
 session_start();
 $param['codigo']='';
+$param['horaMarcado']='';
 $param['param_opcion']='';
+$param['soloHoraMarcado']='';
 
 
 if (isset($_POST['param_opcion']))
@@ -14,13 +16,17 @@ if (isset($_POST['param_opcion']))
 if (isset($_POST['codigo']))
     $param['codigo'] = $_POST['codigo'];
 
+if (isset($_POST['horaMarcado']))
+    $param['horaMarcado'] = $_POST['horaMarcado'];
+
+if (isset($_POST['soloHoraMarcado']))
+    $param['soloHoraMarcado'] = $_POST['soloHoraMarcado'];
+
 
 $Asistencia=new ModeloAsistencia();
 $res = $Asistencia->gestionar($param);
-$devuelve = "<div class='alert alert-warning' role='alert'>
-		      <strong>Comensal No Registrado!</strong> Su codigo de acceso no se encuentra en nuestra base de datos, probablemente su periodo de servicio ya expiro!. 
-		    </div>";
-if ($res['total'] > 0) {
+$devuelve = "";
+if ($res['total'] > 0 and $res['totalValidacion']==0) {
     $datos = $res['datos'];
     for ($i = 0; $i < count($datos); $i++) {
         $comensal = $datos[$i];                
@@ -58,6 +64,22 @@ if ($res['total'] > 0) {
 		      <strong>Asistencia Registrada!</strong> Su asistencia ha sido registrada exitosamente!. 
 		    </div>';
     }
+}
+//Ya ha marcado asistencia para ese turno en ese dia
+if ($res['total'] > 0 and $res['totalValidacion']<>0) {
+    $devuelve = "<div class='alert alert-danger' role='alert'>
+              <strong>Asistencia Ya marcada!</strong> Ya se ha marcado la asistencia para este dia en este turno!. 
+            </div>";
+}
+if ($res['total']==0) {
+    $devuelve = "<div class='alert alert-warning' role='alert'>
+              <strong>Comensal No Registrado!</strong> Su codigo de acceso no se encuentra en nuestra base de datos, probablemente su periodo de servicio ya expiro!. 
+            </div>";
+}
+if ($res['opcMensaje']== -1) {
+    $devuelve = "<div class='alert alert-warning' role='alert'>
+              <strong>No Disponible!</strong> No se encuentra dentro de las horas de atencion para alguno de los turnos!. 
+            </div>";
 }
 echo $devuelve;
 

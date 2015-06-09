@@ -169,7 +169,7 @@ if(!isset($_SESSION['idUsuario'])){
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="img/avatar04.png" class="img-circle" alt="User Image" />
+                                    <img src="../uploads/<?php echo $_SESSION['idUsuario']; ?>.png"  class="img-circle" alt="User Image" />
                                     <p>
                                         <?php echo $_SESSION['user']; ?> - Web Developer
                                         <small>Member since may. 2015</small>
@@ -210,7 +210,7 @@ if(!isset($_SESSION['idUsuario'])){
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="../img/avatar04.png" class="img-circle" alt="User Image" />
+                            <img src="../uploads/<?php echo $_SESSION['idUsuario']; ?>.png" class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>Hello, <?php echo $_SESSION['user']; ?></p>

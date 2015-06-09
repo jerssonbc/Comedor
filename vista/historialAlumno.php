@@ -19,6 +19,8 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- Theme style -->
         <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="../assets/css/goSamples.css" rel="stylesheet" type="text/css" /> 
+        
+       
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -26,7 +28,7 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);listarRol();">
+    <body class="skin-blue" onload="historial();cronogHistorial();" >
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="../index.php" class="logo">
@@ -167,7 +169,7 @@ if(!isset($_SESSION['idUsuario'])){
                             <ul class="dropdown-menu">
                                 <!-- User image -->
                                 <li class="user-header bg-light-blue">
-                                    <img src="../uploads/<?php echo $_SESSION['idUsuario']; ?>.png" class="img-circle" alt="User Image" />
+                                    <img src="../uploads/<?php echo $_SESSION['idUsuario']; ?>.png"class="img-circle" alt="User Image" />
                                     <p>
                                         <?php echo $_SESSION['user']; ?> - Web Developer
                                         <small>Member since may. 2015</small>
@@ -191,7 +193,7 @@ if(!isset($_SESSION['idUsuario'])){
                                         <a href="#" class="btn btn-default btn-flat">Perfil</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="vista/logout.php" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -208,7 +210,7 @@ if(!isset($_SESSION['idUsuario'])){
                     <!-- Sidebar user panel -->
                     <div class="user-panel">
                         <div class="pull-left image">
-                            <img src="../uploads/<?php echo $_SESSION['idUsuario']; ?>.png" class="img-circle" alt="User Image" />
+                            <img src="../uploads/<?php echo $_SESSION['idUsuario']; ?>.png"  class="img-circle" alt="User Image" />
                         </div>
                         <div class="pull-left info">
                             <p>Hello, <?php echo $_SESSION['user']; ?></p>
@@ -229,24 +231,43 @@ if(!isset($_SESSION['idUsuario'])){
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         
+                        <li>
+                            <a href="#">
+                                <i class="fa fa-th"></i> <span>Administar</span> <small class="badge pull-right bg-green">new</small>
+                            </a>
+                        </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
                                 <span>OPERACIONES</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
-                            <ul class="treeview-menu" id="listarMenu1">
-                                
+                            <ul class="treeview-menu">
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGULARIZAR</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> CRONOGRAMA</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGISTRAR ASISTENCIA</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>
+                                <li><a href="../vista/registrocomensal.php"><i class="fa fa-angle-double-right"></i> REGISTRAR COMENSAL</a></li>
+
+
                             </ul>
                         </li>
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
-                                <span>REPORTES</span><small class="badge pull-right bg-green">Rep</small>
+                                <span>REPORTES</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
-                            <ul class="treeview-menu" id="listarMenu2">
-                            
+                            <ul class="treeview-menu">
+                                <li><a href="comensalesregistrados.php"><i class="fa fa-angle-double-right">
+                                </i>COMENSALES REGISTRADOS</a>
+                                </li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i>HISTORIAL POR ALUMNO</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REPORTE ASISTENCIA</a></li>
+                                <li><a href="#"><i class="fa fa-angle-double-right"></i> LISTADO DEL DIA</a></li>
+                                
+
 
                             </ul>
                         </li>
@@ -266,132 +287,56 @@ if(!isset($_SESSION['idUsuario'])){
                     </h1>
                     <ol class="breadcrumb">
                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                         <li>Operaciones</li>
+                          <li class="active">Registrar Comensal</li>
                        
                     </ol>
                 </section>
 
                 <!-- Main content -->
-                <section class="content" >
-                            <div class="nav-tabs-custom">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#tab_1" data-toggle="tab">AGREGAR</a></li>
-                                                    <li><a href="#tab_2" data-toggle="tab" onClick="listarUsuarios();">USUARIOS</a></li>
-                                                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                                                </ul>
-                                                <div class="tab-content">
-                                                    <div class="tab-pane active" id="tab_1">
-                                                            
-                                                            <div class="box-header">
-                                                                <h3 class="box-title">ASIGNAR USUARIOS </h3>
-                                                            </div><!-- /.box-header -->
-                                                            <div class="box-body">
-                                                                 <div class="box box-primary">
-                                                        
-                                                                    <!-- form start -->
-                                                                    <form role="form" id="formulario" enctype="multipart/form-data">
-                                                                        <div class="box-body">
-                                                                            <!--<div class="form-group">
-                                                                                <label for="exampleInputFile">Subir Foto Pefil</label>
-                                                                                <input type="file" name="fotoUsuario" id="fotoUsuario">
-                                                                                <p class="help-block">Cargado...</p>
-                                                                            </div>-->
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">DNI</label>
-                                                                                <input type="number" class="form-control" id="dni" placeholder="Enter Dni">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Apellidos</label>
-                                                                                <input type="text" class="form-control" id="apellidos" placeholder="Enter Apellidos">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Nombres</label>
-                                                                                <input type="text" class="form-control" id="nombres" placeholder="Enter nombres">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Correo</label>
-                                                                                <input type="text" class="form-control" id="correo" placeholder="Enter correo">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">USUARIO</label>
-                                                                                <input type="text" class="form-control" id="usuario" placeholder="Enter usuario">
-                                                                            </div>
-                                                                            
+                <section class="content" style="background: url(/img/fondo.jpg);no-repeat;height:500px" >
+                <div style="margin-right:50px;background: rgba(255,255,255,0.9);border-radius: 5px 5px 5px 5px;padding: 15px;width: 90%;">
 
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputPassword1">Password</label>
-                                                                                <input type="password" class="form-control" id="password" placeholder="Password">
-                                                                            </div>
-                                                                            <div class="form-group" >
-                                                                                <label>ROL</label>
-                                                                                <select class="form-control" id="rol">
-                                                                                    <option value="0">--Seleccionar--</option>
-                                                                                    
-                                                                                </select>
-                                                                            </div>
-                                                                                                    
-                                                                        </div><!-- /.box-body -->
+                <center>
+                    <h1>Cronograma de Asistencia</h1>
+                    <div id="cronogramaH">
+                        
+                    </div>
+                    <form name="fmrhistorial" action="#">
+                        <h3>Fecha Inicio: &nbsp;<input type="date" name="txtfechaIn">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        Fecha Fin: &nbsp;<input type="date" name="txtfechaFin">
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" value="Filtrar" class="btn btn-primary btn-lg"></h3>
+                    </form>
+                    <br><br>
+                    <table class="table table-bordered">
+                        <thead align="center">
+                            <td>FECHA</td>
+                            <td>TURNO</td>
+                            <td>ASISTENCIA</td>
+                        </thead>
+                        <tbody align="center" id='historial'>
 
-                                                                        <div class="box-footer">
-                                                                            <div  class="btn btn-primary" onClick="agregarTrabajador();agregarFoto();" >Agregar</div>
-                                                                        </div>
-                                                                    </form>
-                                                                </div><!-- /.box -->  
-
-                                                                
-
-                                                            </div><!-- /.tab-pane -->
-                                                    </div><!-- /.tab-pane -->
-                                                    <div class="tab-pane" id="tab_2">
-                                                            
-                                                            <div class="box-body" id="ListaUsuarios">
-                                                                <div class="box-header">
-                                                                <h3 class="box-title">Asignar Roles</h3>
-                                                            </div><!-- /.box-header -->
-                                                                <table class="table">
-                                                                    <thead>
-                                                                        
-                                                                    <tr>
-                                                                        <th style="width: 10px">#</th>
-                                                                        <th>Usuario</th>
-                                                                        <th>Dni</th>
-                                                                        <th>Apellidos y Nombre</th>
-                                                                        <th>Opciones</th>
-                                                                        <th style="width: 40px">Programa</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody id="bcomensales">
-                                                                    
-                                                                    </tbody>
-                                                                    
-                                                                </table>
-
-                                                                
-                                                            </div><!-- /.box-body -->
-                                                            <div class="box-footer clearfix">
-                                                                
-                                                            </div>
-
-                                                    </div><!-- /.tab-pane -->
-                                                </div><!-- /.tab-content -->
-                                            </div>
-
-                                                  
+                        </tbody>
+                    </table>
+            </center>
+            </div>     
                         <!--<button onclick="guardarImages()" class="btn btn-info btn-lg"  >IMAGEN</button>-->
 
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-
+    <button type="button" onclick="loadInstitucion();" class="btn btn-danger">Cancelar</button>
         <!-- jQuery 2.0.2 -->
         <script src="../js/jquery-2.1.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
-        <script src="../js/bootstrap.min.js"       type="text/javascript"></script>
+        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
-        <script src="../js/AdminLTE/app.js"        type="text/javascript"></script>
-        <script src="../js/menu.js" type="text/javascript"></script>
-        <script src="../js/validacionesUsuario.js" type="text/javascript"></script>
-
+        <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
+         <script type"text/javascript" src="../js/registrocomensal.js"></script>
+         <script type="text/javascript" src="../js/historial.js"></script>
 
     </body>
 </html>

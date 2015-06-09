@@ -244,16 +244,19 @@ function listarUsuarios(){
                     <tbody id="bcomensales">';
                 while($row=mysql_fetch_row($this->result)){
 
-                    $link_photo_car = "../img/fotosUsuario/".$row[0].".png";    
+
+                    $link_photo_car = "../uploads/".$row[0].".png"; 
+
+                    
      
-                        if (!is_array(@getimagesize($link_photo_car))) 
+                        if (file_exists("../../uploads/".$row[0].".png")) 
                         { 
-                            $show_path_photo_car = "../img/avatar04.png"; // Photo unavailable 
+                            $show_path_photo_car = $link_photo_car; // Photo unavailable 
                         } 
                         else 
                         { 
-                            $show_path_photo_car =$link_photo_car;
-                        } 
+                            $show_path_photo_car ="../uploads/imgdefecto.png";
+                        }
                            echo '<tr>
                                             <td><div class="pull-left image"><img src="'.$show_path_photo_car.'" style="width:35px;heigth:35px;" /></div></td>
                                             <td>'.$row[1].'</td>
@@ -270,11 +273,12 @@ function listarUsuarios(){
                                     </table>';     
         }
         $this->cerrarAbrir();
-        $consultaSql="SELECT u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre) from usuarios u inner join comensales c 
+        $consultaSql="SELECT u.id,u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre) from usuarios u inner join comensales c 
                                 on u.id_comensal=c.id where u.estado=1 and u.id_comensal is not null";
         $this->result = mysql_query($consultaSql);
         if($this->result){
                 //$cont=1;
+                                
             echo '<div class="box-body" id="ListaUsuarios">
                                                                 <div class="box-header">
                                                                 <h3 class="box-title">Comensales</h3>
@@ -293,11 +297,23 @@ function listarUsuarios(){
                                                                     </thead>
                     <tbody id="bcomensales">';
                 while($row=mysql_fetch_row($this->result)){
+                    $link_photo_car = "../uploads/".$row[0].".png"; 
+
+                    
+     
+                        if (file_exists("../../uploads/".$row[0].".png")) 
+                        { 
+                            $show_path_photo_car = $link_photo_car; // Photo unavailable 
+                        } 
+                        else 
+                        { 
+                            $show_path_photo_car ="../uploads/imgdefecto.png";
+                        } 
                            echo '<tr>
-                                            <td><div class="pull-left image"><img src="../img/avatar04.png" style="width:35px;heigth:35px;" /></div></td>
-                                            <td>'.$row[0].'</td>
+                                            <td><div class="pull-left image"><img src="'.$show_path_photo_car.'" style="width:35px;heigth:35px;" /></div></td>
                                             <td>'.$row[1].'</td>
                                             <td>'.$row[2].'</td>
+                                            <td>'.$row[3].'</td>
                                             <td>
                                                 <button class="btn btn-primary"><icon class="glyphicon glyphicon-trash"></button>
                                                 <button class="btn btn-danger"><icon class="glyphicon glyphicon-pencil"></button>
