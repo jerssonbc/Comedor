@@ -12,6 +12,7 @@ $param['correo']='';
 $param['rol']='';
 $param['estado']='';
 $param['user']='';
+$param['uploadedImagePath']='';
 //$param['foto1']='';
 //$param['foto2']='';
 $param['password']='';
@@ -45,8 +46,11 @@ if (isset($_POST['post']))
     $param['post'] = $_POST['post'];
 if (isset($_POST['password']))
     $param['password'] = $_POST['password'];
-if (isset($_POST['empresa']))
-    $param['empresa'] = $_POST['empresa'];
+if (isset($_POST['idUsuario']))
+    $param['idUsuario'] = $_POST['idUsuario'];
+
+if(isset($_POST['uploadedImagePath']))
+        $param['uploadedImagePath']=$_POST['uploadedImagePath'];
 
 $Usuario=new ModeloUsuario();
 echo $Usuario->gestionar($param);
