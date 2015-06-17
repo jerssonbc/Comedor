@@ -284,65 +284,97 @@ if(!isset($_SESSION['idUsuario'])){
                                                             <div class="box-header">
                                                                 <h3 class="box-title">ASIGNAR USUARIOS </h3>
                                                             </div><!-- /.box-header -->
-                                                            <div class="box-body">
-                                                                 <div class="box box-primary">
-                                                        
-                                                                    <!-- form start -->
-                                                                    <form role="form" id="formulario" enctype="multipart/form-data">
-                                                                        <div class="box-body">
-                                                                            <!--<div class="form-group">
-                                                                                <label for="exampleInputFile">Subir Foto Pefil</label>
-                                                                                <input type="file" name="fotoUsuario" id="fotoUsuario">
-                                                                                <p class="help-block">Cargado...</p>
-                                                                            </div>-->
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">DNI</label>
-                                                                                <input type="number" class="form-control" id="dni" placeholder="Enter Dni">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Apellidos</label>
-                                                                                <input type="text" class="form-control" id="apellidos" placeholder="Enter Apellidos">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Nombres</label>
-                                                                                <input type="text" class="form-control" id="nombres" placeholder="Enter nombres">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">Correo</label>
-                                                                                <input type="text" class="form-control" id="correo" placeholder="Enter correo">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputEmail1">USUARIO</label>
-                                                                                <input type="text" class="form-control" id="usuario" placeholder="Enter usuario">
-                                                                            </div>
-                                                                            
+                                                            <div class="col-md-7">
+                                                                    <div class="box-body">
+                                                                     <div class="box box-primary">
+                                                            
+                                                                        <!-- form start -->
+                                                                        <form role="form" id="formulario" enctype="multipart/form-data">
+                                                                            <div class="box-body">
+                                                                                <!--<div class="form-group">
+                                                                                    <label for="exampleInputFile">Subir Foto Pefil</label>
+                                                                                    <input type="file" name="fotoUsuario" id="fotoUsuario">
+                                                                                    <p class="help-block">Cargado...</p>
+                                                                                </div>-->
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">DNI</label>
+                                                                                    <input type="number" class="form-control" id="dni" placeholder="Enter Dni">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Apellidos</label>
+                                                                                    <input type="text" class="form-control" id="apellidos" placeholder="Enter Apellidos">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Nombres</label>
+                                                                                    <input type="text" class="form-control" id="nombres" placeholder="Enter nombres">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">Correo</label>
+                                                                                    <input type="text" class="form-control" id="correo" placeholder="Enter correo">
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputEmail1">USUARIO</label>
+                                                                                    <input type="text" class="form-control" id="usuario" placeholder="Enter usuario">
+                                                                                </div>
+                                                                                
 
-                                                                            <div class="form-group">
-                                                                                <label for="exampleInputPassword1">Password</label>
-                                                                                <input type="password" class="form-control" id="password" placeholder="Password">
-                                                                            </div>
-                                                                            <div class="form-group" >
-                                                                                <label>ROL</label>
-                                                                                <select class="form-control" id="rol">
-                                                                                    <option value="0">--Seleccionar--</option>
-                                                                                    
-                                                                                </select>
-                                                                            </div>
-                                                                                                    
-                                                                        </div><!-- /.box-body -->
+                                                                                <div class="form-group">
+                                                                                    <label for="exampleInputPassword1">Password</label>
+                                                                                    <input type="password" class="form-control" id="password" placeholder="Password">
+                                                                                </div>
+                                                                                <div class="form-group" >
+                                                                                    <label>ROL</label>
+                                                                                    <select class="form-control" id="rol">
+                                                                                        <option value="0">--Seleccionar--</option>
+                                                                                        
+                                                                                    </select>
+                                                                                </div>
+                                                                                                        
+                                                                            </div><!-- /.box-body -->
 
-                                                                        <div class="box-footer">
-                                                                            <div  class="btn btn-primary" onClick="agregarTrabajador();agregarFoto();" >Agregar</div>
-                                                                        </div>
+                                                                            <div class="box-footer">
+                                                                                <div  class="btn btn-primary" onClick="agregarTrabajador();agregarFoto();" >Agregar</div>
+                                                                            </div>
+                                                                        </form>
+                                                                    </div><!-- /.box -->  
+
+                                                                    
+
+                                                                </div><!-- /.tab-pane -->
+                                                            </div>
+                                                            <div class="col-md-5">
+                                                                <div class="box-body">
+                                                                     <div class="box box-primary">
+                                                                    <iframe id="uploadedImage" name="uploadedImage" src="" 
+                                                                      style="width:200px; height:200px;"
+                                                                      frameborder="0" marginheight="0" marginwidth="0">
+                                                                      </iframe>
+                                                                      <br>
+                                                                     <form id="imageForm" name="imageForm" enctype="multipart/form-data"
+                                                                            action="uploadImage.php" method="POST" target="uploadedImage">
+                                                                                <div class="form-group">
+                                                                                    <label>Foto:</label>
+                                                                                    <input name="imageToUpload"  class="form-control" 
+                                                                                        id="imageToUpload" type="file"
+                                                                                            onchange="uploadImage();" size="30" required/>
+                                                                                </div>
+                                                                                <div class="form-group">
+                                                                                    <label for="oldImageToDelete">
+                                                                                        Old uploaded image to delete (this field should be hidden):
+                                                                                    </label>
+                                                                                    <input name="oldImageToDelete" id="oldImageToDelete" type="text"
+                                                                                    size="50" />
+                                                                                </div>
+                                                                                    </BR>
+                                                      
+                                                      
                                                                     </form>
-                                                                </div><!-- /.box -->  
-
-                                                                
-
-                                                            </div><!-- /.tab-pane -->
+                                                                  </div>
+                                                                </div>  
+                                                            </div>
+                                                            
                                                     </div><!-- /.tab-pane -->
                                                     <div class="tab-pane" id="tab_2">
-                                                            
                                                             <div class="box-body" id="ListaUsuarios">
                                                                 <div class="box-header">
                                                                 <h3 class="box-title">Asignar Roles</h3>
@@ -373,11 +405,32 @@ if(!isset($_SESSION['idUsuario'])){
 
                                                     </div><!-- /.tab-pane -->
                                                 </div><!-- /.tab-content -->
-                                            </div>
+                            </div>
 
                                                   
-                        <!--<button onclick="guardarImages()" class="btn btn-info btn-lg"  >IMAGEN</button>-->
+                        <!--NODAL EDITAR JEJEJE-->
+                        <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title"><i class="fa fa-pencil"></i> EDITAR USUARIO </h4>
+                                    </div>
+                                    <form action="#" method="post" onsubmit="editarTrabajador(); return false;" accept-charset="utf-8">
+                                        <div class="modal-body" id="AreaEditar">
+                                            
 
+                                        </div>
+                                        <div class="modal-footer clearfix">
+
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Salir</button>
+
+                                            <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Editar</button>
+                                        </div>
+                                    </form>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->

@@ -29,7 +29,10 @@ class ModeloUsuario{
                 break;
             case "listarRol":
                 echo $this->listarRol();
-                break; 
+                break;
+            case "seleccion":
+                echo $this->seleccion();
+                break;  
             case "agregarTrabajador":
                 echo $this->agregarTrabajador();
                 break; 
@@ -38,6 +41,12 @@ class ModeloUsuario{
                 break; 
             case "listarUsuarios":
                 echo $this->listarUsuarios();
+                break;
+            case "cargarEditar":
+                echo $this->cargarEditar();
+                break; 
+            case "editarTrabajador":
+                echo $this->editarTrabajador();
                 break;     
         }
     }
@@ -113,12 +122,37 @@ class ModeloUsuario{
                                                          values (".$rowuserid[0].",'$rol')";
                                         $this->result=mysql_query($consultaSql);
                                         if ($this->result) {
-                                            //session_start();
-                                            //if($foto1){
-                                              //  move_uploaded_file($foto2,'img/fotosUsuario/'.$rowuserid[0].'.jpg');
-                                            //}
-                                            //$_FILES['fotosUsuario']['name'];
-                                            //COPY($_FILES['fotosUsuario']['tmp_name'],'img/fotosUsuario/'.$rowuserid[0].'.jpg');
+                                            
+                                            $pathToMove = "../../uploads/";
+                                            $imagePathParameterName = "uploadedImagePath"; 
+                                            $imagePath = '../'.$this->param[$imagePathParameterName];
+                                                //&& (file_exists($imagePath))
+                                            if (($imagePath != null) ) 
+                                                { 
+                                                 // $imagePathToMove = $pathToMove . basename($imagePath); 
+                                                   $info=pathinfo($imagePath);
+
+                                                  $imagePathToMove = $pathToMove .$rowuserid[0].'.png';//$info['extension'];
+
+                                                  if(file_exists($imagePathToMove)) { 
+                                                    unlink($imagePathToMove); 
+                                                  } 
+                                                  if(rename($imagePath, $imagePathToMove)) { 
+
+                                                    //$consultaSql="update usuarios set imagen='foto".$rowuserid[0]."' where id=".$rowuserid[0];
+                                                    //$this->result=mysql_query($consultaSql);
+                                                    //if($this->result){
+
+                                                    //}
+                                                    //echo "The image " . $imagePathToMove . " was stored with the description '" . $description . "'."; 
+                                                  } 
+                                                  else { 
+                                                    //echo "There was an error moving the file " . $imagePath . " to " . $imagePathToMove; 
+                                                  } 
+                                                } 
+                                                else { 
+                                                  //echo "No image was uploaded for the description '" . $description . "'."; 
+                                                } 
                                             echo 'Registro Exitoso!';
                                         }
                                     }
@@ -152,6 +186,18 @@ class ModeloUsuario{
                 while($row=mysql_fetch_row($this->result)){
                             echo '<option value="'.$row[0].'">'.$row[1].'</option>';
             }         
+        }
+
+    }
+    function seleccion(){
+        $idUsuario=$this->param['idUsuario'];
+        $this->cerrarAbrir();
+        $consultaSql="SELECT u.id,u.usuario,ur.rol_id from usuarios u 
+                                inner join usuario_rol ur on u.id=ur.usuario_id where u.estado=1 and u.id='$idUsuario'";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+            echo $row[2];   
         }
 
     }
@@ -263,8 +309,8 @@ function listarUsuarios(){
                                             <td>'.$row[2].'</td>
                                             <td>'.$row[3].'</td>
                                             <td>
-                                                <button class="btn btn-primary"><icon class="glyphicon glyphicon-trash"></button>
-                                                <button class="btn btn-danger"><icon class="glyphicon glyphicon-pencil"></button>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" onClick="cargarEditar('.$row[0].');listarRolE();"><icon class="glyphicon glyphicon-pencil"></button>
+                                                <button class="btn btn-danger"><icon class="glyphicon glyphicon-trash"></button>
                                             </td>
                                         </tr>';
             }
@@ -326,7 +372,106 @@ function listarUsuarios(){
         }
 
 }
+function cargarEditar(){
+    $idUsuario=$this->param['idUsuario'];
+    $this->cerrarAbrir();
+       $consultaSql="SELECT u.id,u.usuario,t.dni,t.apellidos,t.nombres,t.correo,ur.rol_id from usuarios u inner join trabajador t 
+                                on u.id_trabajador=t.id 
+                                inner join usuario_rol ur on u.id=ur.usuario_id where u.estado=1 and u.id='$idUsuario' and u.id_trabajador is not null";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
 
+            echo '                          <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">USUARIO:</span>
+                                                    <input id="usuarioE" type="text" class="form-control" placeholder="Usuario" value="'.$row[1].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">NEW PASSWORD:</span>
+                                                    <input id="passwordE" type="password" class="form-control" placeholder="New Password" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">DNI:</span>
+                                                    <input id="dniE" type="text" class="form-control" placeholder="DNI" value="'.$row[2].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">APELLIDOS:</span>
+                                                    <input id="apellidosE" type="text" class="form-control" placeholder="APELLIDOS" value="'.$row[3].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">NOMBRES:</span>
+                                                    <input id="nombresE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[4].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">CORREO:</span>
+                                                    <input id="correoE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[5].'">
+                                                    <input id="idE" type="hidden" class="form-control" placeholder="idE" value="'.$row[0].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                    <label>ROL</label>
+                                                    <select class="form-control" id="rolE">                                   
+                                                    </select>
+                                            </div>';
+
+        }
+}
+function editarTrabajador(){
+        $idUsuario=$this->param['idUsuario'];
+        $dni=$this->param['dni'];
+        $apellidos=$this->param['apellidos'];
+        $nombres=$this->param['nombres'];
+        $correo=$this->param['correo'];
+        $rol=$this->param['rol'];
+        $usuario = $this->param['user'];
+        $password = $this->param['password'];
+        $passwordMD5=md5($password);
+
+        $fecha_updated=date("Y-m-d");
+        $idUsuario=$this->param['idUsuario'];
+        $consultaSql="SELECT ur.id from usuarios u 
+                                inner join trabajador ur on ur.id=u.id_trabajador where  u.id='$idUsuario'";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+            $idTrabajador=$row[0];   
+        }
+
+    $this->cerrarAbrir();
+            if ($password='') {
+                # code...
+                $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario' WHERE `id`='$idUsuario' ";
+            }else{
+                $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario',`password`='$passwordMD5' WHERE `id`='$idUsuario' ";
+            }
+           
+            $this->result = mysql_query($consultaSql);
+            if($this->result){
+                $this->cerrarAbrir();
+                $consultaSql="UPDATE `trabajador` SET `dni`='$dni',`apellidos`='$apellidos',`nombres`='$nombres',`correo`='$correo',`updated_at`='$fecha_updated'    WHERE `id`='$idTrabajador' ";
+                $this->result = mysql_query($consultaSql);
+                if($this->result){
+                echo 'ok';
+                }else{
+                    echo 'error en el editar Trabajador';
+                }
+            
+        }else{
+            echo 'error Editar Usuario';
+        }
+
+}
     
 }
 
