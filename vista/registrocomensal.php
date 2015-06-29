@@ -2,7 +2,7 @@
 <?php 
 session_start();
 if(!isset($_SESSION['idUsuario'])){
-    header("Location:vista/login.php");
+    header("Location:vista/login");
 }else{
 ?>
 <html>
@@ -28,10 +28,10 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="loadInstitucion();loadTipoComensal();loadProgramas();" >
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);loadInstitucion();loadTipoComensal();loadProgramas();" >
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="../index.php" class="logo">
+            <a href="../index" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 COMEDOR UNT
             </a>
@@ -231,26 +231,15 @@ if(!isset($_SESSION['idUsuario'])){
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                         
-                        <li>
-                            <a href="#">
-                                <i class="fa fa-th"></i> <span>Administar</span> <small class="badge pull-right bg-green">new</small>
-                            </a>
-                        </li>
+                        
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
                                 <span>OPERACIONES</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGULARIZAR</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> CRONOGRAMA</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGISTRAR ASISTENCIA</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>
-                                <li><a href="../vista/registrocomensal.php"><i class="fa fa-angle-double-right"></i> REGISTRAR COMENSAL</a></li>
-
-
+                            <ul class="treeview-menu" id="listarMenu1">
+                                
                             </ul>
                         </li>
                         <li class="treeview">
@@ -259,15 +248,8 @@ if(!isset($_SESSION['idUsuario'])){
                                 <span>REPORTES</span>
                                 <i class="fa fa-angle-left pull-right"></i>
                             </a>
-                            <ul class="treeview-menu">
-                                <li><a href="comensalesregistrados.php"><i class="fa fa-angle-double-right">
-                                </i>COMENSALES REGISTRADOS</a>
-                                </li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i>HISTORIAL POR ALUMNO</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> REPORTE ASISTENCIA</a></li>
-                                <li><a href="#"><i class="fa fa-angle-double-right"></i> LISTADO DEL DIA</a></li>
-                                
-
+                            <ul class="treeview-menu" id="listarMenu2">
+                               
 
                             </ul>
                         </li>
@@ -433,6 +415,7 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
          <script type"text/javascript" src="../js/registrocomensal.js"></script>
+         <script src="../js/menu.js" type="text/javascript"></script>
 
          <script language="JavaScript" type="text/javascript">
       

@@ -44,6 +44,9 @@ class ModeloUsuario{
                 break;
             case "cargarEditar":
                 echo $this->cargarEditar();
+                break;
+            case "cargarEditarComensal":
+                echo $this->cargarEditarComensal();
                 break; 
             case "editarTrabajador":
                 echo $this->editarTrabajador();
@@ -217,9 +220,9 @@ class ModeloUsuario{
     		$_SESSION['idUsuario'] = $row[0];
             //$_SESSION['nombre'] = $row[1];
             $_SESSION['user'] = $row[1];
-            header("Location:../../index.php");
+            header("Location:../../index");
     	}else{
-    		header("Location:../../vista/login.php");
+    		header("Location:../../vista/login");
     	}
     }
     function listarMenu(){
@@ -364,7 +367,7 @@ function listarUsuarios(){
                                             <td>'.$row[2].'</td>
                                             <td>'.$row[3].'</td>
                                             <td>
-                                                <button class="btn btn-primary"><icon class="glyphicon glyphicon-trash"></button>
+                                                <button class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" onClick="cargarEditarComensal('.$row[0].')"><icon class="glyphicon glyphicon-trash"></button>
                                                 <button class="btn btn-danger"><icon class="glyphicon glyphicon-pencil"></button>
                                             </td>
                                         </tr>';
@@ -432,6 +435,69 @@ function cargarEditar(){
                                                     <span class="input-group-addon">CORREO:</span>
                                                     <input id="correoE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[5].'">
                                                     <input id="idE" type="hidden" class="form-control" placeholder="idE" value="'.$row[0].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group" >
+                                                    <label>ROL</label>
+                                                    <select class="form-control" id="rolE">                                   
+                                                    </select>
+                                            </div>';
+
+        }
+}
+function cargarEditarComensal(){
+    $idUsuario=$this->param['idUsuario'];
+    $this->cerrarAbrir();
+       $consultaSql="SELECT u.id,u.usuario,t.dni,t.ape_paterno,t.ape_maerno,t.nombre,t.codigo_comensal,ur.rol_id 
+                    from usuarios u inner join Comensales t 
+                                on u.id_comensal=t.id 
+                                inner join usuario_rol ur 
+                                on u.id=ur.usuario_id where u.estado=1 and u.id='$idUsuario' and u.id_comensal is not null";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+
+            echo '                          <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">USUARIO:</span>
+                                                    <input id="usuarioEC" type="text" class="form-control" placeholder="Usuario" value="'.$row[1].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">NEW PASSWORD:</span>
+                                                    <input id="passwordEC" type="password" class="form-control" placeholder="New Password" >
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">DNI:</span>
+                                                    <input id="dniEC" type="text" class="form-control" placeholder="DNI" value="'.$row[2].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">APE PATERNO:</span>
+                                                    <input id="apePaternoEC" type="text" class="form-control" placeholder="APELLIDOS" value="'.$row[3].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">APE MATERNO:</span>
+                                                    <input id="apeMaternoEC" type="text" class="form-control" placeholder="APELLIDOS" value="'.$row[3].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">NOMBRES:</span>
+                                                    <input id="nombresE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[4].'">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon">CODIGO COM:</span>
+                                                    <input id="codigoE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[5].'">
+                                                    <input id="idEC" type="hidden" class="form-control" placeholder="idE" value="'.$row[0].'">
                                                 </div>
                                             </div>
                                             <div class="form-group" >

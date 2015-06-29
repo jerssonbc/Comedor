@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-06-2015 a las 03:00:05
+-- Tiempo de generación: 29-06-2015 a las 16:37:38
 -- Versión del servidor: 5.6.17
 -- Versión de PHP: 5.5.12
 
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS `asistencia` (
   PRIMARY KEY (`id`),
   KEY `asistencia_comensal_id_foreign` (`comensal_id`),
   KEY `asistencia_turno_id_foreign` (`turno_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=23 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
 
 --
 -- Volcado de datos para la tabla `asistencia`
@@ -61,7 +61,8 @@ INSERT INTO `asistencia` (`id`, `fecha`, `comensal_id`, `turno_id`) VALUES
 (19, '2015-06-07', 4, 3),
 (20, '2015-06-08', 4, 1),
 (21, '2015-06-08', 4, 2),
-(22, '2015-06-08', 3, 2);
+(22, '2015-06-08', 3, 2),
+(23, '2015-06-17', 3, 3);
 
 -- --------------------------------------------------------
 
@@ -90,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `comensales` (
   KEY `comensales_institucion_id_foreign` (`institucion_id`),
   KEY `comensales_tipocomensal_id_foreign` (`tipocomensal_id`),
   KEY `comensales_programa_id_foreign` (`programa_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=24 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=25 ;
 
 --
 -- Volcado de datos para la tabla `comensales`
@@ -111,7 +112,8 @@ INSERT INTO `comensales` (`id`, `dni`, `ape_paterno`, `ape_maerno`, `nombre`, `c
 (20, '70665520', 'Garcia', 'Pelaes', 'Oscar', '1000000009', 1, 3, NULL, NULL, NULL, 3, '2015-06-08', 1, '2015-06-08 05:00:00', '2015-06-08 05:00:00'),
 (21, '70665521', 'bac', 'jers', 'jejej', '1000000011', 1, 3, NULL, NULL, NULL, 3, '2015-06-08', 1, '2015-06-08 05:00:00', '2015-06-08 05:00:00'),
 (22, '70665529', 'bac', 'jers', 'jdfj', '1000000012', 1, 3, NULL, NULL, NULL, 3, '2015-06-08', 1, '2015-06-08 05:00:00', '2015-06-08 05:00:00'),
-(23, '74859632', 'Altamirano', 'Guevara', 'Neyder', '1000000013', 1, 3, NULL, NULL, NULL, 3, '2015-06-08', 1, '2015-06-08 05:00:00', '2015-06-08 05:00:00');
+(23, '74859632', 'Altamirano', 'Guevara', 'Neyder', '1000000013', 1, 3, NULL, NULL, NULL, 3, '2015-06-08', 1, '2015-06-08 05:00:00', '2015-06-08 05:00:00'),
+(24, '19032574', 'Vega', 'Santos', 'jOrge', '1000000012', 1, 3, NULL, NULL, NULL, 3, '2015-06-17', 1, '2015-06-17 05:00:00', '2015-06-17 05:00:00');
 
 -- --------------------------------------------------------
 
@@ -206,14 +208,14 @@ CREATE TABLE IF NOT EXISTS `menus` (
 --
 
 INSERT INTO `menus` (`id`, `padre`, `nombre`, `url`, `estado`, `created_at`, `updated_at`) VALUES
-(1, 2, 'ADMINISTRAR', 'vista/administrar.php', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(1, 2, 'ADMINISTRAR', 'vista/administrar', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
 (2, 0, 'OPERACIONES', '#', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 2, 'REGULARIZAR', 'vista/regularizar.php', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 2, 'CRONOGRAMA', 'vista/cronograma.php', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 2, 'REGISTRAR ASISTENCIA', 'vista/registarAsistencia.php', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 3, 'HISTORIAL POR ALUMNO', 'vista/historialAlumno.php\r\n', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 2, 'Registro Comensal', 'vista/registrocomensal.php', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 3, 'Comensales Registrados', 'vista/comensalesregistrados.php', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(3, 2, 'REGULARIZAR', 'vista/regularizar', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(4, 2, 'CRONOGRAMA', 'vista/cronograma', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(5, 2, 'REGISTRAR ASISTENCIA', 'vista/registarAsistencia', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(6, 3, 'HISTORIAL POR ALUMNO', 'vista/historialAlumno', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(7, 2, 'Registro Comensal', 'vista/registrocomensal', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
+(8, 3, 'Comensales Registrados', 'vista/comensalesregistrados', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -337,7 +339,7 @@ CREATE TABLE IF NOT EXISTS `tipos_comensal` (
   `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 --
 -- Volcado de datos para la tabla `tipos_comensal`
@@ -364,14 +366,15 @@ CREATE TABLE IF NOT EXISTS `trabajador` (
   `created_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   `updated_at` timestamp NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=3 ;
 
 --
 -- Volcado de datos para la tabla `trabajador`
 --
 
 INSERT INTO `trabajador` (`id`, `dni`, `apellidos`, `nombres`, `correo`, `estado`, `created_at`, `updated_at`) VALUES
-(1, '74859632', 'Sanchez', 'Diaz', 'satarete@htomail.com', 1, '2015-06-08 05:00:00', '2015-06-08 05:00:00');
+(1, '74859632', 'Sanchez Diaz', 'Carlos Eduardo', 'satarete@htomail.com', 1, '2015-06-08 05:00:00', '2015-06-17 05:00:00'),
+(2, '74853254', 'LarousÃ© Femerou', 'Geraldine', 'geraldine@hotmail.com', 1, '2015-06-17 05:00:00', '2015-06-17 05:00:00');
 
 -- --------------------------------------------------------
 
@@ -416,7 +419,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `imagen` varchar(50) DEFAULT NULL,
   `id_trabajador` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=18 ;
 
 --
 -- Volcado de datos para la tabla `usuarios`
@@ -435,8 +438,10 @@ INSERT INTO `usuarios` (`id`, `usuario`, `password`, `estado`, `created_at`, `up
 (11, 'edu', '123', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 18, 'foto11', NULL),
 (12, 'edu1', '123', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 21, 'foto12', NULL),
 (13, 'edu10', '123', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 22, NULL, NULL),
-(14, 'sarate', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 1),
-(15, 'neyder', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 23, NULL, NULL);
+(14, 'sarate', 'd41d8cd98f00b204e9800998ecf8427e', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 1),
+(15, 'Luis', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 4, NULL, NULL),
+(16, 'geraldine', 'd41d8cd98f00b204e9800998ecf8427e', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', NULL, NULL, 2),
+(17, 'jorge', '202cb962ac59075b964b07152d234b70', 1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 22, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -451,7 +456,7 @@ CREATE TABLE IF NOT EXISTS `usuario_rol` (
   PRIMARY KEY (`id`),
   KEY `usuario_rol_usuario_id_foreign` (`usuario_id`),
   KEY `usuario_rol_rol_id_foreign` (`rol_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=13 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=15 ;
 
 --
 -- Volcado de datos para la tabla `usuario_rol`
@@ -468,7 +473,9 @@ INSERT INTO `usuario_rol` (`id`, `usuario_id`, `rol_id`) VALUES
 (9, 12, 3),
 (10, 13, 3),
 (11, 14, 1),
-(12, 15, 3);
+(12, 15, 3),
+(13, 16, 2),
+(14, 17, 3);
 
 --
 -- Restricciones para tablas volcadas
@@ -478,15 +485,15 @@ INSERT INTO `usuario_rol` (`id`, `usuario_id`, `rol_id`) VALUES
 -- Filtros para la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  ADD CONSTRAINT `asistencia_turno_id_foreign` FOREIGN KEY (`turno_id`) REFERENCES `turnos` (`id`),
-  ADD CONSTRAINT `asistencia_comensal_id_foreign` FOREIGN KEY (`comensal_id`) REFERENCES `comensales` (`id`);
+  ADD CONSTRAINT `asistencia_comensal_id_foreign` FOREIGN KEY (`comensal_id`) REFERENCES `comensales` (`id`),
+  ADD CONSTRAINT `asistencia_turno_id_foreign` FOREIGN KEY (`turno_id`) REFERENCES `turnos` (`id`);
 
 --
 -- Filtros para la tabla `comensales`
 --
 ALTER TABLE `comensales`
-  ADD CONSTRAINT `comensales_programa_id_foreign` FOREIGN KEY (`programa_id`) REFERENCES `programas` (`id`),
   ADD CONSTRAINT `comensales_institucion_id_foreign` FOREIGN KEY (`institucion_id`) REFERENCES `instituciones` (`id`),
+  ADD CONSTRAINT `comensales_programa_id_foreign` FOREIGN KEY (`programa_id`) REFERENCES `programas` (`id`),
   ADD CONSTRAINT `comensales_tipocomensal_id_foreign` FOREIGN KEY (`tipocomensal_id`) REFERENCES `tipos_comensal` (`id`);
 
 --

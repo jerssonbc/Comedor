@@ -240,6 +240,25 @@ function cargarEditar(idUsuario)
             }
      });
 }
+function cargarEditarComensal(idUsuario)
+{
+    //alert(idUsuario);
+    $.ajax({
+            type: "POST",
+            data: {idUsuario:idUsuario,param_opcion:'cargarEditarComensal'},
+            url: "../control/Usuario/controlUsuario.php",
+            success: function(datos) {
+                if (datos == '') {
+                    
+                } else {
+                    $('#AreaEditar').html(datos);
+                }
+            },
+            error: function(datos) {
+                alert(datos+" Error Fatal3");
+            }
+     });
+}
 function editarTrabajador(){
     var bol=true;
     dni=$('#dniE').val();
