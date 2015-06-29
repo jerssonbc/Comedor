@@ -2,7 +2,7 @@
 <?php 
 session_start();
 if(!isset($_SESSION['idUsuario'])){
-    header("Location:vista/login.php");
+    header("Location:vista/login");
 }else{
 ?>
 <html>
@@ -29,7 +29,7 @@ if(!isset($_SESSION['idUsuario'])){
     <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);listarRol();">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="../index.php" class="logo">
+            <a href="../index" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 COMEDOR UNT
             </a>
