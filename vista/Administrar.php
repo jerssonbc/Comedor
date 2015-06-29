@@ -18,7 +18,9 @@ if(!isset($_SESSION['idUsuario'])){
         <link href="../css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <link href="../css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
         <link href="../assets/css/goSamples.css" rel="stylesheet" type="text/css" /> 
+        <link href="../css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -444,6 +446,8 @@ if(!isset($_SESSION['idUsuario'])){
         <script src="../js/AdminLTE/app.js"        type="text/javascript"></script>
         <script src="../js/menu.js" type="text/javascript"></script>
         <script src="../js/validacionesUsuario.js" type="text/javascript"></script>
+        
+        
 
 
     </body>

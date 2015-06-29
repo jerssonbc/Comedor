@@ -275,7 +275,7 @@ function listarUsuarios(){
                                                                 <div class="box-header">
                                                                 <h3 class="box-title">Trabajadores</h3>
                                                             </div><!-- /.box-header -->
-                                                                <table class="table">
+                                                                <table class="table table-bordered table-striped" id="dataTables-usuarios">
                                                                     <thead>
                                                                         
                                                                     <tr>
@@ -316,7 +316,10 @@ function listarUsuarios(){
             }
             echo    '</tbody>
                                         
-                                    </table>';     
+                                    </table>
+                                    ';
+            
+            
         }
         $this->cerrarAbrir();
         $consultaSql="SELECT u.id,u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre) from usuarios u inner join comensales c 
@@ -329,7 +332,7 @@ function listarUsuarios(){
                                                                 <div class="box-header">
                                                                 <h3 class="box-title">Comensales</h3>
                                                             </div><!-- /.box-header -->
-                                                                <table class="table">
+                                                                <table class="table table-bordered table-striped" id="dataTables-comensales">
                                                                     <thead>
                                                                         
                                                                     <tr>
@@ -368,7 +371,19 @@ function listarUsuarios(){
             }
             echo    '</tbody>
                                         
-                                    </table>';     
+                                    </table>
+                                    ';
+
+            echo '<script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
+                  <script src="../js/jquery.dataTables.js" type="text/javascript"></script>';
+            echo "<script type='text/javascript'>
+            $(document).ready(function(){
+                
+                $('#dataTables-usuarios').dataTable();
+                $('#dataTables-comensales').dataTable();
+                
+                });
+            </script>";      
         }
 
 }
@@ -448,7 +463,7 @@ function editarTrabajador(){
             $idTrabajador=$row[0];   
         }
 
-    $this->cerrarAbrir();
+        $this->cerrarAbrir();
             if ($password='') {
                 # code...
                 $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario' WHERE `id`='$idUsuario' ";
