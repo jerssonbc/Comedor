@@ -1,6 +1,6 @@
 <div class="form-horizontal" id="contenido">
     <div id="reloj" style="font-size:20px;color:green;position:absolute;top:200px;right:50px;"></div>
-    <h3 style="color:blue;" align="center"><b>ASISTENCIA COMENSAL</b></h3>
+    <h3 style="color:blue;" align="center"><b>ASISTENCIA COMENSAL </b></h3>
     <form onsubmit="registrarAsistenciaComensal(); return false;" method="post" accept-charset="utf-8">
         <input type="hidden" id="horaMarcado">
         <input type="hidden" id="soloHoraMarcado">

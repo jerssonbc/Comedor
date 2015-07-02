@@ -28,7 +28,7 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);loadInstitucion();loadTipoComensal();loadProgramas();" >
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);loadFacultades();loadInstitucion();loadTipoComensal();loadProgramas();loadProgramas2();" >
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="../index" class="logo">
@@ -277,256 +277,383 @@ if(!isset($_SESSION['idUsuario'])){
 
                 <!-- Main content -->
                 <section class="content" style="background: url(/img/fondo.jpg);no-repeat;height:500px" >
-
-                    <div class="col-md-1">
-                        
-                    </div>
-                    <div class="col-md-10">
-                        <div class="box box-primary">
-
-                                    <div class="box-header">
-                                        <h3 class="box-title">Registro de Nuevo Comensal ...</h3>
-                                    </div><!-- /.box-header -->
-                                <div class="col-md-7">
-                                    
-                                
-                                    <!-- form start -->
-                                    <form role="form" id="addComensal" onsubmit="agregarComensal(); return false;" method="post" accept-charset="utf-8">
-                                        <div class="box-body">  
-                                                <!-- dni input -->
-                                                <div class="form-group">
-                                                    <label>DNI</label>
-                                                    <input name="dni" type="text" class="form-control" placeholder="Ingrese número del DNI" required/>
-                                                </div>
-                                                <!-- ape paterno input-->
-                                                <div class="form-group">
-                                                    <label>Apellido Paterno</label>
-                                                    <input  name="apepaterno" type="text" class="form-control" placeholder="Ingrese el apellido Paterno" required/>
-                                                </div>
-                                                <!-- ape materno input-->
-                                                <div class="form-group">
-                                                    <label>Apellido Materno</label>
-                                                    <input name="apematerno" type="text" class="form-control" placeholder="Ingrese el apellido Materno" required/>
-                                                </div>
-                                                <!-- Nombre input-->
-                                                <div class="form-group">
-                                                    <label>Nombres</label>
-                                                    <input name="nombres" type="text" class="form-control" placeholder="Ingrese el Nombre" required/>
-                                                </div>
-                                                <!-- codigo input-->
-                                                <div class="form-group">
-                                                    <label>Codigo Comensal</label>
-                                                    <input name="codigo_comensal" type="text" class="form-control" placeholder="Ingrese codigo" required/>
-                                                </div>
-                                                <!-- select intitucion-->
-                                                <div class="form-group" id="idInstituciones">
-                                                    <label>Insitución</label>
-                                                    <select class="form-control" >
-                                                        <option value="0">--Seleccionar--</option>
-                                                        
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" id="idTipoComensales">
-                                                    <label>Tipo Comensal</label>
-                                                    <select class="form-control">
-                                                        <option value="0">--Seleccionar--</option>
-                                                    </select>
-                                                </div>
-                                                <div class="form-group" id="idProgramas">
-                                                    <label>Programa</label>
-                                                    <select class="form-control">
-                                                        <option value="0">--Seleccionar--</option>
-                                                        
-                                                    </select>
-                                                </div>
-                                                <!-- user input -->
-                                                <div class="form-group">
-                                                    <label>Usuario</label>
-                                                    <input name="usuario" type="text" 
-                                                        class="form-control" 
-                                                            placeholder="Ingrese el usuario" required/>
-                                                </div>
-
-                                                <!-- password input -->
-                                                <div class="form-group">
-                                                    <label>Password</label>
-                                                    <input name="password" type="password" 
-                                                        class="form-control" 
-                                                            placeholder="Ingrese password" required/>
-                                                </div>
-
-                                        </div><!-- /.box-body -->
-                                        <div class="box-footer">
-                                           <button type="submit" class="btn btn-primary">
-                                            <i class="fa fa-plus-square"></i> Registrar</button>
-                                           <!-- <button class="btn btn-danger">
-                                           <i class="fa fa-times-circle">
-                                               
-                                           </i> Cancelar</button> -->
+                    
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="nav-tabs-custom">
+                                <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#univ-unt" data-toggle="tab">Universitario UNT</a></li>
+                                    <li><a href="#lext-unt" data-toggle="tab">Libre UNT o Externo</a></li>
+                                </ul>
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="univ-unt">
+                                        <div class="col-xs-1">
+                                            
                                         </div>
-                                    </form>      
-                                </div> 
-                                <div class="col-md-5">
-                                    <iframe id="uploadedImage" name="uploadedImage" src="" 
-                                          style="width:200px; height:200px;"
-                                          frameborder="0" marginheight="0" marginwidth="0">
-                                      </iframe>
-                                      <br>
-                                     <form id="imageForm" name="imageForm" enctype="multipart/form-data"
-                                            action="uploadImage.php" method="POST" target="uploadedImage">
-                                                <div class="form-group">
-                                                    <label>Foto:</label>
-                                                    <input name="imageToUpload"  class="form-control" 
-                                                        id="imageToUpload" type="file"
-                                                            onchange="uploadImage();" size="30" required/>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label for="oldImageToDelete">
-                                                        Old uploaded image to delete (this field should be hidden):
-                                                    </label>
-                                                    <input name="oldImageToDelete" id="oldImageToDelete" type="text"
-                                                    size="50" />
-                                                </div>
-                                                
-                                              
-                                              
-                                    </form>
+                                        <div class="col-xs-10">
+                                            <h4 class="page-header">Registro de Nuevo Comensal</h4>
+                                            <div class="col-xs-7">
+                                                <!-- form start -->
+                                                <form role="form" id="addComensaluu" onsubmit="agregarComensaluunt(); return false;" method="post" accept-charset="utf-8">
+                                                    <div class="box-body">  
+                                                            <!-- dni input -->
+                                                            <div class="form-group">
+                                                                <label>DNI</label>
+                                                                <input name="uudni" type="text" class="form-control" 
+                                                                placeholder="Ingrese número del DNI" required/>
+                                                            </div>
+                                                            <!-- ape paterno input-->
+                                                            <div class="form-group">
+                                                                <label>Apellido Paterno</label>
+                                                                <input  name="uuapepaterno" type="text" class="form-control"
+                                                                 placeholder="Ingrese el apellido Paterno" required/>
+                                                            </div>
+                                                            <!-- ape materno input-->
+                                                            <div class="form-group">
+                                                                <label>Apellido Materno</label>
+                                                                <input name="uuapematerno" type="text" class="form-control" 
+                                                                placeholder="Ingrese el apellido Materno" required/>
+                                                            </div>
+                                                            <!-- Nombre input-->
+                                                            <div class="form-group">
+                                                                <label>Nombres</label>
+                                                                <input name="uunombres" type="text" class="form-control" 
+                                                                placeholder="Ingrese el Nombre" required/>
+                                                            </div>
+                                                            <div class="form-group" id="idFacultades">
+                                                                <label>Facultad</label>
+                                                                <select class="form-control" id="idfacultad">
+                                                                    <option value="0">--Seleccionar--</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group" id="idEscuelas">
+                                                                <label>Escuela</label>
+                                                                <select class="form-control" id="idescuela">
+                                                                    <option value="0">--Seleccionar--</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <!-- codigo input-->
+                                                            <div class="form-group">
+                                                                <label>Codigo Comensal</label>
+                                                                <input name="uucodigo_comensal" type="text" class="form-control" 
+                                                                placeholder="Ingrese codigo" required/>
+                                                            </div>
+                                                            
+                                                            <div class="form-group" id="idProgramas">
+                                                                <label>Programa</label>
+                                                                <select class="form-control" id="uuidprograma">
+                                                                    <option value="0">--Seleccionar--</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <!-- user input -->
+                                                            <div class="form-group">
+                                                                <label>Usuario</label>
+                                                                <input name="uuusuario" type="text" 
+                                                                    class="form-control" 
+                                                                        placeholder="Ingrese el usuario" required/>
+                                                            </div>
+
+                                                            <!-- password input -->
+                                                            <div class="form-group">
+                                                                <label>Password</label>
+                                                                <input name="uupassword" type="password" 
+                                                                    class="form-control" 
+                                                                        placeholder="Ingrese password" required/>
+                                                            </div>
+
+                                                    </div><!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                       <button type="submit" class="btn btn-primary">
+                                                        <i class="fa fa-plus-square"></i> Registrar</button>
+                                                       <!-- <button class="btn btn-danger">
+                                                       <i class="fa fa-times-circle">
+                                                           
+                                                       </i> Cancelar</button> -->
+                                                    </div>
+                                                </form>      
+                                            </div> 
+                                            <div class="col-xs-5">
+                                                <iframe id="uploadedImageuu" name="uploadedImageuu" src="" 
+                                                      style="width:200px; height:200px;"
+                                                      frameborder="0" marginheight="0" marginwidth="0">
+                                                </iframe>
+                                                  <br>
+                                                 <form id="imageFormuu" name="imageFormuu" enctype="multipart/form-data"
+                                                        action="uploadImageuu.php" method="POST" target="uploadedImageuu">
+                                                            <div class="form-group">
+                                                                <label>Foto:</label>
+                                                                <input name="imageToUploaduu"  class="form-control" 
+                                                                    id="imageToUploaduu" type="file"
+                                                                        onchange="uploadImageuu();" size="30" required/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                
+                                                                <input name="oldImageToDeleteuu" id="oldImageToDeleteuu" type="hidden"
+                                                                size="50" />
+                                                            </div>              
+                                                </form>
+                                            </div>  
+                                        </div>
+                                        <div class="col-xs-1"></div>
+                                        <div style="clear:both;"></div>
+                                        
+                                    </div>
+                                    <div class="tab-pane" id="lext-unt">
+                                        <div class="col-xs-1">   
+                                        </div>
+                                        <div class="col-xs-10">
+                                            <h4 class="page-header">Registro de Nuevo Comensal</h4>
+                                            <div class="col-xs-7">
+                                                <!-- form start -->
+                                                <form role="form" id="addComensal" onsubmit="agregarComensal(); return false;" method="post" accept-charset="utf-8">
+                                                    <div class="box-body">  
+                                                            <!-- dni input -->
+                                                            <div class="form-group">
+                                                                <label>DNI</label>
+                                                                <input name="dni" type="text" class="form-control" placeholder="Ingrese número del DNI" required/>
+                                                            </div>
+                                                            <!-- ape paterno input-->
+                                                            <div class="form-group">
+                                                                <label>Apellido Paterno</label>
+                                                                <input  name="apepaterno" type="text" class="form-control" placeholder="Ingrese el apellido Paterno" required/>
+                                                            </div>
+                                                            <!-- ape materno input-->
+                                                            <div class="form-group">
+                                                                <label>Apellido Materno</label>
+                                                                <input name="apematerno" type="text" class="form-control" placeholder="Ingrese el apellido Materno" required/>
+                                                            </div>
+                                                            <!-- Nombre input-->
+                                                            <div class="form-group">
+                                                                <label>Nombres</label>
+                                                                <input name="nombres" type="text" class="form-control" placeholder="Ingrese el Nombre" required/>
+                                                            </div>
+                                                            <!-- codigo input-->
+                                                            <div class="form-group">
+                                                                <label>Codigo Comensal</label>
+                                                                <input name="codigo_comensal" type="text" class="form-control" placeholder="Ingrese codigo" required/>
+                                                            </div>
+                                                            <!-- select intitucion-->
+                                                            <div class="form-group" id="idInstituciones">
+                                                                <label>Insitución</label>
+                                                                <select class="form-control" >
+                                                                    <option value="0">--Seleccionar--</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group" id="idTipoComensales">
+                                                                <label>Tipo Comensal</label>
+                                                                <select class="form-control">
+                                                                    <option value="0">--Seleccionar--</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="form-group" id="idProgramas2">
+                                                                <label>Programa</label>
+                                                                <select class="form-control" id="idprograma">
+                                                                    <option value="0">--Seleccionar--</option>
+                                                                    
+                                                                </select>
+                                                            </div>
+                                                            <!-- user input -->
+                                                            <div class="form-group">
+                                                                <label>Usuario</label>
+                                                                <input name="usuario" type="text" 
+                                                                    class="form-control" 
+                                                                        placeholder="Ingrese el usuario" required/>
+                                                            </div>
+
+                                                            <!-- password input -->
+                                                            <div class="form-group">
+                                                                <label>Password</label>
+                                                                <input name="password" type="password" 
+                                                                    class="form-control" 
+                                                                        placeholder="Ingrese password" required/>
+                                                            </div>
+
+                                                    </div><!-- /.box-body -->
+                                                    <div class="box-footer">
+                                                       <button type="submit" class="btn btn-primary">
+                                                        <i class="fa fa-plus-square"></i> Registrar</button>
+                                                       <!-- <button class="btn btn-danger">
+                                                       <i class="fa fa-times-circle">
+                                                           
+                                                       </i> Cancelar</button> -->
+                                                    </div>
+                                                </form>      
+                                            </div> 
+                                            <div class="col-xs-5">
+                                                <iframe id="uploadedImage" name="uploadedImage" src="" 
+                                                      style="width:200px; height:200px;"
+                                                      frameborder="0" marginheight="0" marginwidth="0">
+                                                  </iframe>
+                                                  <br>
+                                                 <form id="imageForm" name="imageForm" enctype="multipart/form-data"
+                                                        action="uploadImage.php" method="POST" target="uploadedImage">
+                                                            <div class="form-group">
+                                                                <label>Foto:</label>
+                                                                <input name="imageToUpload"  class="form-control" 
+                                                                    id="imageToUpload" type="file"
+                                                                        onchange="uploadImage();" size="30" required/>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                
+                                                                <input name="oldImageToDelete" id="oldImageToDelete" type="hidden"
+                                                                size="50" />
+                                                            </div>              
+                                                </form>
+                                            </div>   
+                                        </div>
+                                        <div class="col-xs-1"></div>
+                                        <div style="clear:both;"></div>
+                                    </div>
+
                                 </div>
-                                
-                                <div style="clear:both;"></div>
-           
-                        </div><!-- /.box -->
-                    </div>
-                    <div class="col-md-1">
+                            </div>
+                        </div>
                         
                     </div>
-                         
-                        <!--<button onclick="guardarImages()" class="btn btn-info btn-lg"  >IMAGEN</button>-->
 
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-    <button type="button" onclick="loadInstitucion();" class="btn btn-danger">Cancelar</button>
         <!-- jQuery 2.0.2 -->
         <script src="../js/jquery-2.1.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
-         <script type"text/javascript" src="../js/registrocomensal.js"></script>
+
+         <script type="text/javascript" src="../js/registrocomensal.js"></script>
+
          <script src="../js/menu.js" type="text/javascript"></script>
 
          <script language="JavaScript" type="text/javascript">
       
       var loadingHtml = "Loading..."; // this could be an animated image
       var imageLoadingHtml = "Image loading...";
-        var http = getXMLHTTPRequest();
+      var http = getXMLHTTPRequest();
+      //-----------------------------------------------------------
+      function uploadImageuu() {
+            var uploadedImageFrameuu = window.uploadedImageuu;
+              uploadedImageFrameuu.document.body.innerHTML = loadingHtml;
+              // VALIDATE FILE
+            var imagePathuu = uploadedImageFrameuu.imagePath;
+            if(imagePathuu == null){
+              imageFormuu.oldImageToDeleteuu.value = "";
+            }
+            else {
+              imageFormuu.oldImageToDeleteuu.value = imagePathuu;
+            }
+            imageFormuu.submit();
+       }
       //----------------------------------------------------------------
         function uploadImage() {
-        var uploadedImageFrame = window.uploadedImage;
-          uploadedImageFrame.document.body.innerHTML = loadingHtml;
-          // VALIDATE FILE
-        var imagePath = uploadedImageFrame.imagePath;
-        if(imagePath == null){
-          imageForm.oldImageToDelete.value = "";
-        }
-        else {
-          imageForm.oldImageToDelete.value = imagePath;
-        }
-        imageForm.submit();
-      }
+            var uploadedImageFrame = window.uploadedImage;
+              uploadedImageFrame.document.body.innerHTML = loadingHtml;
+              // VALIDATE FILE
+            var imagePath = uploadedImageFrame.imagePath;
+            if(imagePath == null){
+              imageForm.oldImageToDelete.value = "";
+            }
+            else {
+              imageForm.oldImageToDelete.value = imagePath;
+            }
+            imageForm.submit();
+       }
       //----------------------------------------------------------------
-      function showImageUploadStatus() {
-        var uploadedImageFrame = window.uploadedImage;
-        if(uploadedImageFrame.document.body.innerHTML == loadingHtml){
-          divResult.innerHTML = imageLoadingHtml;
-        }
-        else {
-          var imagePath = uploadedImageFrame.imagePath;
-          if(imagePath == null){
-            divResult.innerHTML = "No uploaded image in this form.";
-          }
-          else {
-            divResult.innerHTML = "Loaded image: " + imagePath;
-          }
-        }
-      }
+      /*function showImageUploadStatus() {
+            var uploadedImageFrame = window.uploadedImage;
+            if(uploadedImageFrame.document.body.innerHTML == loadingHtml){
+              divResult.innerHTML = imageLoadingHtml;
+            }
+            else {
+              var imagePath = uploadedImageFrame.imagePath;
+              if(imagePath == null){
+                divResult.innerHTML = "No uploaded image in this form.";
+              }
+              else {
+                divResult.innerHTML = "Loaded image: " + imagePath;
+              }
+            }
+      }*/
       //----------------------------------------------------------------
       function getXMLHTTPRequest() {
-        try {
-            xmlHttpRequest = new XMLHttpRequest();
-        }
-        catch(error1) {
             try {
-            xmlHttpRequest = new ActiveXObject("Msxml2.XMLHTTP");
-          }
-          catch(error2) {
-            try {
-                xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                xmlHttpRequest = new XMLHttpRequest();
             }
-            catch(error3) {
-                xmlHttpRequest = false;
+            catch(error1) {
+                try {
+                xmlHttpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+              }
+              catch(error2) {
+                try {
+                    xmlHttpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+                }
+                catch(error3) {
+                    xmlHttpRequest = false;
+                }
+              }
             }
-          }
-        }
-        return xmlHttpRequest;
+            return xmlHttpRequest;
       }
       //----------------------------------------------------------------
-      function sendData() {
-        var url = "submitForm.php";
-        var parameters = "imageDescription=" + dataForm.imageDescription.value;
-        var imagePath = window.uploadedImage.imagePath;
-        if(imagePath != null){
-          parameters += "&uploadedImagePath=" + imagePath;
-        }
+     /* function sendData() {
+            var url = "submitForm.php";
+            var parameters = "imageDescription=" + dataForm.imageDescription.value;
+            var imagePath = window.uploadedImage.imagePath;
+            if(imagePath != null){
+              parameters += "&uploadedImagePath=" + imagePath;
+            }
+            
+            http.open("POST", url, true);
         
-        http.open("POST", url, true);
-    
-        http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-        http.setRequestHeader("Content-length", parameters.length);
-        http.setRequestHeader("Connection", "close");
-    
-        http.onreadystatechange = useHttpResponse;
-        http.send(parameters);
-      }
+            http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            http.setRequestHeader("Content-length", parameters.length);
+            http.setRequestHeader("Connection", "close");
+        
+            http.onreadystatechange = useHttpResponse;
+            http.send(parameters);
+      }*/
       //----------------------------------------------------------------
-      function submitFormIfNotImageLoading(maxLoadingTime, checkingIntervalTime) {
-        if(window.uploadedImage.document.body.innerHTML == loadingHtml) {
-          if(maxLoadingTime <= 0) {
-            divResult.innerHTML = "The image loading has timed up. "
-                                + "Please, try again when the image is loaded.";
-          }
-          else {
-            divResult.innerHTML = imageLoadingHtml;
-            maxLoadingTime = maxLoadingTime - checkingIntervalTime;
-            var recursiveCall = "submitFormIfNotImageLoading(" 
-                              + maxLoadingTime + ", " + checkingIntervalTime + ")";
-            setTimeout(recursiveCall, checkingIntervalTime);
-          }
-        }
-        else {
-          sendData();
-        }
-      }
-        //----------------------------------------------------------------
-      function submitForm() {
-        var maxLoadingTime = 3000; // milliseconds
-        var checkingIntervalTime = 500; // milliseconds
-        submitFormIfNotImageLoading(maxLoadingTime, checkingIntervalTime);
-      }
-      //----------------------------------------------------------------
-      function useHttpResponse() {
-        if (http.readyState == 4) {
-            if (http.status == 200) {
-            divResult.innerHTML = http.responseText;
-            dataForm.reset();
-            imageForm.reset();
-            window.uploadedImage.document.body.innerHTML = "";
-            window.uploadedImage.imagePath = null;
+      /*function submitFormIfNotImageLoading(maxLoadingTime, checkingIntervalTime) {
+            if(window.uploadedImage.document.body.innerHTML == loadingHtml) {
+              if(maxLoadingTime <= 0) {
+                divResult.innerHTML = "The image loading has timed up. "
+                                    + "Please, try again when the image is loaded.";
+              }
+              else {
+                divResult.innerHTML = imageLoadingHtml;
+                maxLoadingTime = maxLoadingTime - checkingIntervalTime;
+                var recursiveCall = "submitFormIfNotImageLoading(" 
+                                  + maxLoadingTime + ", " + checkingIntervalTime + ")";
+                setTimeout(recursiveCall, checkingIntervalTime);
+              }
             }
-        }
-      }
+            else {
+              sendData();
+            }
+      }*/
+        //----------------------------------------------------------------
+      /*function submitForm() {
+            var maxLoadingTime = 3000; // milliseconds
+            var checkingIntervalTime = 500; // milliseconds
+            submitFormIfNotImageLoading(maxLoadingTime, checkingIntervalTime);
+      }*/
+      //----------------------------------------------------------------
+      /*function useHttpResponse() {
+            if (http.readyState == 4) {
+                if (http.status == 200) {
+                divResult.innerHTML = http.responseText;
+                dataForm.reset();
+                imageForm.reset();
+                window.uploadedImage.document.body.innerHTML = "";
+                window.uploadedImage.imagePath = null;
+                }
+            }
+      }*/
 
     </script>
 

@@ -1,3 +1,19 @@
+$(document).ready(function(){	
+});
+function loadEscuelas(){
+        var vidfacultad=$('#idfacultad option:selected').val();
+        $.ajax({
+            type:'POST',
+            data:{param_opcion:'loadEscuelas',id_facultad:vidfacultad},
+            url:'../control/Comensal/controlComensal.php',
+            success:function(data){
+                $('#idEscuelas').html(data);
+            },
+            error:function(data){
+                alert(data+"Error al cargar");
+            }
+        });
+}
 function loadInstitucion(){
 	$.ajax({
 		type:'POST',
@@ -6,6 +22,20 @@ function loadInstitucion(){
 		success:function(data){
 			
 			$('#idInstituciones').html(data);
+		},
+		error:function(data){
+			alert(data+"Error al cargar");
+		}
+	});
+}
+
+function loadFacultades(){
+	$.ajax({
+		type:'POST',
+		data:{param_opcion:'loadFacultades'},
+		url:'../control/Comensal/controlComensal.php',
+		success:function(data){
+			$('#idFacultades').html(data);
 		},
 		error:function(data){
 			alert(data+"Error al cargar");
@@ -42,7 +72,20 @@ function loadProgramas(){
 		}
 	});
 }
-
+function loadProgramas2(){
+	$.ajax({
+		type:'POST',
+		data:{param_opcion:'loadProgramas2'},
+		url:'../control/Comensal/controlComensal.php',
+		success:function(data){
+			
+			$('#idProgramas2').html(data);
+		},
+		error:function(data){
+			alert(data+"Error al cargar");
+		}
+	});
+}
 function agregarComensal(){
 	//event.preventDefault();
    
@@ -59,10 +102,7 @@ function agregarComensal(){
     var vpassword=$('input[name=password]').val();
 
     var vimagepath=window.uploadedImage.imagePath;
-    //$('#uploadedImage').imagePath;
-
-    //alert("Valor "+vimagepath);
-
+ 
     if( vinstitucion=='0')
     	alert('Selection Intitucion');
     else{
@@ -72,48 +112,136 @@ function agregarComensal(){
     		if(vprograma=='0'){
     			alert("Seleccione Programa");
     		}else{
-    			$.ajax({
-                    type:'POST',
-                    url:'../control/Comensal/controlComensal.php',
-                    data:{param_opcion:'agregarComensal',
-                    		dni:vdni,apepaterno:vapepaterno,
-                    		apematerno:vapematerno,nombres:vnombres,
-                    		codigo_comensal:vcodigo_comensal,institucion:vinstitucion,
-                    		tipocomensal:vtipocomensal,programa:vprograma,
-                    		usuario:vusuario,password:vpassword,
-                    		uploadedImagePath:vimagepath
-                    		},
-                    success:function(data){
-                    	if(data=='OK'){
-                        	alert("Resgistro Exitoso");
+    			if(vimagepath==undefined)
+    			{
+    				alert("Seleccione su imagen Imagen");
+    			}else{
+    				$.ajax({
+	                    type:'POST',
+	                    url:'../control/Comensal/controlComensal.php',
+	                    data:{param_opcion:'agregarComensal',
+	                    		dni:vdni,apepaterno:vapepaterno,
+	                    		apematerno:vapematerno,nombres:vnombres,
+	                    		codigo_comensal:vcodigo_comensal,institucion:vinstitucion,
+	                    		tipocomensal:vtipocomensal,programa:vprograma,
+	                    		usuario:vusuario,password:vpassword,
+	                    		uploadedImagePath:vimagepath
+	                    		},
+	                    success:function(data){
+	                    	if(data=='OK'){
+	                        	alert("Resgistro Exitoso");
 
-	                        $('#addComensal').each (function(){
-						  		this.reset();
-							});
-							
-	                    }else{
-	                    	if(data=='EPC'){
-	                    		alert("Fallo el registro del comensal ");
-	                    	}else{
-	                    		if(data=='EPU'){
-	                    			alert("Usuario elegido ya exites, fallo registro");
-	                    		}else{
-	                    			alert("Error al Procesar Datos");
-	                    		}
-	                    	}
-	                    	
+		                        $('#addComensal').each (function(){
+							  		this.reset();
+								});
+								doc = document.getElementById("uploadedImage");
+								doc.contentDocument.body.innerHTML = "";
+
+								$('#imageForm').each (function(){
+							  		this.reset();
+								});
+								
+								
+		                    }else{
+		                    	if(data=='EPC'){
+		                    		alert("Fallo el registro del comensal ");
+		                    	}else{
+		                    		if(data=='EPU'){
+		                    			alert("Usuario elegido ya exites, fallo registro");
+		                    		}else{
+		                    			alert("Error al Procesar Datos");
+		                    		}
+		                    	}
+		                    	
+		                    }
+	                                        
 	                    }
-                                        
-                    }
-          		  });
-
+          			});
+    			}
     		}
     	}
+}
 
+function agregarComensaluunt(){
+	var vdni=$('input[name=uudni]').val();
+    var vapepaterno=$('input[name=uuapepaterno]').val();
+    var vapematerno=$('input[name=uuapematerno]').val();
+    var vnombres=$('input[name=uunombres]').val();
+    var vcodigo_comensal=$('input[name=uucodigo_comensal]').val();
+
+    var vfacultad=$('#idfacultad').val();
+    var vescuela=$('#idescuela').val();
+
+    var vprograma=$('#uuidprograma').val();
+
+    var vusuario=$('input[name=uuusuario]').val();
+    var vpassword=$('input[name=uupassword]').val();
+
+    var vimagepath=window.uploadedImageuu.imagePath;
+    
+    if(vfacultad=='0'){
+    	alert("Seleccione Facultad");
+    }else{
+    	if(vescuela=='0'){
+    		alert("Seleccione Escuela");
+    	}else{
+    		if(vprograma=='0'){
+				alert("Seleccione Programa");
+			}else{
+				if(vimagepath==undefined)
+    			{
+    				alert("Seleccione su imagen Imagen");
+    			}else{
+					$.ajax({
+			            type:'POST',
+			            url:'../control/Comensal/controlComensal.php',
+			            data:{param_opcion:'agregarComensaluu',
+			            		dni:vdni,apepaterno:vapepaterno,
+			            		apematerno:vapematerno,nombres:vnombres,
+			            		codigo_comensal:vcodigo_comensal,
+			            		idfacultad:vfacultad,
+			            		idescuela:vescuela,
+			            		programa:vprograma,
+			            		usuario:vusuario,password:vpassword,
+			            		uploadedImagePath:vimagepath
+			            		},
+			            success:function(data){
+			            	if(data=='OK'){
+			                	alert("Resgistro Exitoso");
+			                    $('#addComensaluu').each (function(){
+							  		this.reset();
+								});
+
+								doc = document.getElementById("uploadedImageuu");
+								doc.contentDocument.body.innerHTML = "";
+
+								$('#imageFormuu').each (function(){
+							  		this.reset();
+								});
+								
+			                }else{
+			                	if(data=='EPC'){
+			                		alert("Fallo el registro del comensal ");
+			                	}else{
+			                		if(data=='EPU'){
+			                			alert("Usuario elegido ya exites, fallo registro");
+			                		}else{
+			                			alert("Error al Procesar Datos");
+			                		}
+			                	}
+			                	
+			                }
+			                                
+			            }
+			  		});
+				}
+			}
+    	}
+    }
+	
 }
 
 function loadComensales(){
-
 	$.ajax({
 		type:'POST',
 		data:{param_opcion:'loadComensales'},

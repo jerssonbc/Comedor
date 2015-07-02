@@ -14,6 +14,16 @@
 	$param['usuario']='';
 	$param['password']='';
 	$param['uploadedImagePath']='';
+	$param['id_facultad']='';
+
+	$param['idfacultad']='';
+	$param['idescuela']='';
+
+	if(isset($_POST['idfacultad']))
+		$param['idfacultad']=$_POST['idfacultad'];
+
+	if(isset($_POST['idescuela']))
+		$param['idescuela']=$_POST['idescuela'];
 
 	if(isset($_POST['uploadedImagePath']))
 		$param['uploadedImagePath']=$_POST['uploadedImagePath'];
@@ -40,6 +50,9 @@
 		$param['usuario']=$_POST['usuario'];
 	if(isset($_POST['password']))
 		$param['password']=$_POST['password'];
+	if (isset($_POST['id_facultad'])) {
+		$param['id_facultad']=$_POST['id_facultad'];
+	}
 
 	$Comensal=new ModeloComensal();
 	echo $Comensal->gestionar($param);
