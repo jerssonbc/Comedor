@@ -12,6 +12,14 @@ $param['correo']='';
 $param['rol']='';
 $param['estado']='';
 $param['user']='';
+
+$param['Mentrada']='';
+$param['Msalida']='';
+$param['Tentrada']='';
+$param['Tsalida']='';
+$param['Nentrada']='';
+$param['Nsalida']='';
+
 $param['uploadedImagePath']='';
 //$param['foto1']='';
 //$param['foto2']='';
@@ -51,6 +59,19 @@ if (isset($_POST['idUsuario']))
 
 if(isset($_POST['uploadedImagePath']))
         $param['uploadedImagePath']=$_POST['uploadedImagePath'];
+
+if (isset($_POST['Mentrada']))
+    $param['Mentrada'] = $_POST['Mentrada'];
+if (isset($_POST['Msalida']))
+    $param['Msalida'] = $_POST['Msalida'];
+if (isset($_POST['Tentrada']))
+    $param['Tentrada'] = $_POST['Tentrada'];
+if (isset($_POST['Tsalida']))
+    $param['Tsalida'] = $_POST['Tsalida'];
+if (isset($_POST['Nentrada']))
+    $param['Nentrada'] = $_POST['Nentrada'];
+if (isset($_POST['Nsalida']))
+    $param['Nsalida'] = $_POST['Nsalida'];
 
 $Usuario=new ModeloUsuario();
 echo $Usuario->gestionar($param);

@@ -1,7 +1,7 @@
 function cargar() {
 
     name=$('#name').val();
-    user=$('#user').val();
+    Nsalida=$('#user').val();
     password=$('#password').val();
      
         $.ajax({
@@ -299,6 +299,71 @@ function editarTrabajador(){
                     alert(datos);
                     listarUsuarios();
                     $('#compose-modal').modal('hide');
+                }
+            },
+            error: function(datos) {
+                alert( datos+" Error Fatal1");
+            }
+        });
+    }
+    
+}
+function cargarHoras(){
+    //alert('asdfasdf');
+    $.ajax({
+            type: "POST",
+            data: {param_opcion:'cargarHoras'},
+            url: "control/Usuario/controlUsuario.php",
+            success: function(datos) {
+                if (datos == '') {
+                    alert("Error");
+                } else {
+                    //alert(datos);
+                    //listarUsuarios();
+                    //$('#compose-modal').modal('hide');
+                    $('#formHoras').html(datos);
+                }
+            },
+            error: function(datos) {
+                alert( datos+" Error Fatal1");
+            }
+        });
+}
+function editarHorasTurno(){
+    var bol=true;
+    Mentrada=$('#Mentrada').val();
+    Msalida=$('#Msalida').val();
+    Tentrada=$('#Tentrada').val();
+    Tsalida=$('#Tsalida').val();
+    Nentrada=$('#Nentrada').val();
+    Nsalida=$('#Nsalida').val();
+    if (Mentrada=='') {bol=false;alert('Llenar Entrada Mañana');};
+    if (Msalida=='' &&  bol==true) {bol=false;alert('Llenar Salida Mañana');};
+    if (Tentrada=='' &&  bol==true) {bol=false;alert('Llenar Entrada Tarde');};
+    if (Tsalida=='' &&  bol==true) {bol=false;alert('Llenar Salida Tarde');};
+    if (Nentrada=='' &&  bol==true) {bol=false;alert('Llenar Entrada Noche');};
+    if (Nsalida=='' &&  bol==true) {bol=false;alert('Llenar Salida Noche');};
+
+    //alert(dni+'::'+apellidos+'::'+nombres+'::'+correo+'::'+usuario+'::'+password+'::'+rol+'::'+idUsuario);
+    if(bol){
+        //var vimagepath=window.uploadedImage.imagePath;
+        $.ajax({
+            type: "POST",
+            data: {Mentrada:Mentrada,
+                Msalida:Msalida,
+                Tentrada:Tentrada,
+                Tsalida:Tsalida,
+                Nentrada:Nentrada,
+                Nsalida:Nsalida,
+                param_opcion:'editarHora'},
+            url: "control/Usuario/controlUsuario.php",
+            success: function(datos) {
+                if (datos == '') {
+                    alert("Error");
+                } else {
+                    alert(datos);
+                    cargarHoras();
+                    //$('#compose-modal').modal('hide');
                 }
             },
             error: function(datos) {

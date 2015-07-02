@@ -28,7 +28,7 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);listarRol();">
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);listarRol();listarUsuarios();">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="../index.php" class="logo">
@@ -277,7 +277,7 @@ if(!isset($_SESSION['idUsuario'])){
                             <div class="nav-tabs-custom">
                                                 <ul class="nav nav-tabs">
                                                     <li class="active"><a href="#tab_1" data-toggle="tab">AGREGAR</a></li>
-                                                    <li><a href="#tab_2" data-toggle="tab" onClick="listarUsuarios();">USUARIOS</a></li>
+                                                    <li><a href="#tab_2" data-toggle="tab" onClick="listarUsuarios()">USUARIOS</a></li>
                                                     <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
                                                 </ul>
                                                 <div class="tab-content">
@@ -394,6 +394,7 @@ if(!isset($_SESSION['idUsuario'])){
                                                                     </tr>
                                                                     </thead>
                                                                     <tbody id="bcomensales">
+                                                                        
                                                                     
                                                                     </tbody>
                                                                     
