@@ -356,13 +356,15 @@ class ModeloComensal{
                 $cont=1;
             while($row=mysql_fetch_row($this->result)){
                 echo '<tr>  
-                            <td>'.$cont.'</td>
-                            <td>'.$row[0].'</td>
+                            
+                            <td>'.$row[3].'</td>
                             <td>'.$row[1].'</td>
                             <td>'.$row[2].' '.
                                   $row[3].', '.$row[4].'</td>
                             <td>'.$row[5].'</td>';
                 echo '</tr>';
+                echo '<script src="../../js/dataTables.bootstrap.js" type="text/javascript"></script>
+                      <script src="../../js/jquery.dataTables.js" type="text/javascript"></script>';
                 $cont++;
             }
         }

@@ -2,7 +2,7 @@
 <?php 
 session_start();
 if(!isset($_SESSION['idUsuario'])){
-    header("Location:vista/login.php");
+    header("Location:vista/login");
 }else{
 ?>
 <html>
@@ -19,8 +19,8 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- Theme style -->
         <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="../css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/css/goSamples.css" rel="stylesheet" type="text/css" /> 
-        <link href="../css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> 
+        <link href="../css/morris/morris.css" rel="stylesheet" type="text/css" /> 
+
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
         <!--[if lt IE 9]>
@@ -28,10 +28,10 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);listarRol();listarUsuarios();">
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);tablaDiaria();repetir();">
         <!-- header logo: style can be found in header.less -->
         <header class="header">
-            <a href="../index.php" class="logo">
+            <a href="../index" class="logo">
                 <!-- Add the class icon to your logo image or logo icon to add the margining -->
                 COMEDOR UNT
             </a>
@@ -178,7 +178,7 @@ if(!isset($_SESSION['idUsuario'])){
                                 <!-- Menu Body -->
                                 <li class="user-body">
                                     <div class="col-xs-4 text-center">
-                                        <a href="#">Followers</a>
+                                        <a href="#" onClick="tablaDiaria();">Followers</a>
                                     </div>
                                     <div class="col-xs-4 text-center">
                                         <a href="#">Sales</a>
@@ -190,7 +190,7 @@ if(!isset($_SESSION['idUsuario'])){
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="pull-left">
-                                        <a href="#" class="btn btn-default btn-flat">Perfil</a>
+                                        <a href="#" class="btn btn-default btn-flat">Profile</a>
                                     </div>
                                     <div class="pull-right">
                                         <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
@@ -204,7 +204,7 @@ if(!isset($_SESSION['idUsuario'])){
         </header>
         <div class="wrapper row-offcanvas row-offcanvas-left">
             <!-- Left side column. contains the logo and sidebar -->
-            <aside class="left-side sidebar-offcanvas">                
+            <aside class="left-side sidebar-offcanvas">
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- Sidebar user panel -->
@@ -230,7 +230,6 @@ if(!isset($_SESSION['idUsuario'])){
                     <!-- /.search form -->
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
-                        
                         <li class="treeview">
                             <a href="#">
                                 <i class="fa fa-laptop"></i>
@@ -252,14 +251,13 @@ if(!isset($_SESSION['idUsuario'])){
 
                             </ul>
                         </li>
-                        
                     </ul>
                 </section>
                 <!-- /.sidebar -->
             </aside>
 
             <!-- Right side column. Contains the navbar and content of the page -->
-            <aside class="right-side">                
+            <aside class="right-side">
                 <!-- Content Header (Page header) -->
                 <section class="content-header">
                     <h1>
@@ -267,173 +265,164 @@ if(!isset($_SESSION['idUsuario'])){
                         <small>Bienvenido al Sistema Comedor Univiersitario</small>
                     </h1>
                     <ol class="breadcrumb">
-                        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                        <li><a href="#"><i class="fa fa-dashboard"></i> Reportes</a></li>
                        
                     </ol>
                 </section>
 
                 <!-- Main content -->
-                <section class="content" >
-                            <div class="nav-tabs-custom">
-                                                <ul class="nav nav-tabs">
-                                                    <li class="active"><a href="#tab_1" data-toggle="tab">AGREGAR</a></li>
-                                                    <li><a href="#tab_2" data-toggle="tab" onClick="listarUsuarios()">USUARIOS</a></li>
-                                                    <li class="pull-right"><a href="#" class="text-muted"><i class="fa fa-gear"></i></a></li>
-                                                </ul>
-                                                <div class="tab-content">
-                                                    <div class="tab-pane active" id="tab_1">
-                                                            
-                                                            <div class="box-header">
-                                                                <h3 class="box-title">ASIGNAR USUARIOS </h3>
-                                                            </div><!-- /.box-header -->
-                                                            <div class="col-md-7">
-                                                                    <div class="box-body">
-                                                                     <div class="box box-primary">
-                                                            
-                                                                        <!-- form start -->
-                                                                        <form role="form" id="formulario" enctype="multipart/form-data">
-                                                                            <div class="box-body">
-                                                                                <!--<div class="form-group">
-                                                                                    <label for="exampleInputFile">Subir Foto Pefil</label>
-                                                                                    <input type="file" name="fotoUsuario" id="fotoUsuario">
-                                                                                    <p class="help-block">Cargado...</p>
-                                                                                </div>-->
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">DNI</label>
-                                                                                    <input type="number" class="form-control" id="dni" placeholder="Enter Dni">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Apellidos</label>
-                                                                                    <input type="text" class="form-control" id="apellidos" placeholder="Enter Apellidos">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Nombres</label>
-                                                                                    <input type="text" class="form-control" id="nombres" placeholder="Enter nombres">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">Correo</label>
-                                                                                    <input type="text" class="form-control" id="correo" placeholder="Enter correo">
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputEmail1">USUARIO</label>
-                                                                                    <input type="text" class="form-control" id="usuario" placeholder="Enter usuario">
-                                                                                </div>
-                                                                                
+                <section class="content">
 
-                                                                                <div class="form-group">
-                                                                                    <label for="exampleInputPassword1">Password</label>
-                                                                                    <input type="password" class="form-control" id="password" placeholder="Password">
-                                                                                </div>
-                                                                                <div class="form-group" >
-                                                                                    <label>ROL</label>
-                                                                                    <select class="form-control" id="rol">
-                                                                                        <option value="0">--Seleccionar--</option>
-                                                                                        
-                                                                                    </select>
-                                                                                </div>
-                                                                                                        
-                                                                            </div><!-- /.box-body -->
-
-                                                                            <div class="box-footer">
-                                                                                <div  class="btn btn-primary" onClick="agregarTrabajador();agregarFoto();" >Agregar</div>
-                                                                            </div>
-                                                                        </form>
-                                                                    </div><!-- /.box -->  
-
-                                                                    
-
-                                                                </div><!-- /.tab-pane -->
-                                                            </div>
-                                                            <div class="col-md-5">
-                                                                <div class="box-body">
-                                                                     <div class="box box-primary">
-                                                                    <iframe id="uploadedImage" name="uploadedImage" src="" 
-                                                                      style="width:200px; height:200px;"
-                                                                      frameborder="0" marginheight="0" marginwidth="0">
-                                                                      </iframe>
-                                                                      <br>
-                                                                     <form id="imageForm" name="imageForm" enctype="multipart/form-data"
-                                                                            action="uploadImage.php" method="POST" target="uploadedImage">
-                                                                                <div class="form-group">
-                                                                                    <label>Foto:</label>
-                                                                                    <input name="imageToUpload"  class="form-control" 
-                                                                                        id="imageToUpload" type="file"
-                                                                                            onchange="uploadImage();" size="30" required/>
-                                                                                </div>
-                                                                                <div class="form-group">
-                                                                                    <label for="oldImageToDelete">
-                                                                                        Old uploaded image to delete (this field should be hidden):
-                                                                                    </label>
-                                                                                    <input name="oldImageToDelete" id="oldImageToDelete" type="text"
-                                                                                    size="50" />
-                                                                                </div>
-                                                                                    </BR>
-                                                      
-                                                      
-                                                                    </form>
-                                                                  </div>
-                                                                </div>  
-                                                            </div>
-                                                            
-                                                    </div><!-- /.tab-pane -->
-                                                    <div class="tab-pane" id="tab_2">
-                                                            <div class="box-body" id="ListaUsuarios">
-                                                                <div class="box-header">
-                                                                <h3 class="box-title">Asignar Roles</h3>
-                                                            </div><!-- /.box-header -->
-                                                                <table class="table">
-                                                                    <thead>
-                                                                        
-                                                                    <tr>
-                                                                        <th style="width: 10px">#</th>
-                                                                        <th>Usuario</th>
-                                                                        <th>Dni</th>
-                                                                        <th>Apellidos y Nombre</th>
-                                                                        <th>Opciones</th>
-                                                                        <th style="width: 40px">Programa</th>
-                                                                    </tr>
-                                                                    </thead>
-                                                                    <tbody id="bcomensales">
-                                                                        
-                                                                    
-                                                                    </tbody>
-                                                                    
-                                                                </table>
-
-                                                                
-                                                            </div><!-- /.box-body -->
-                                                            <div class="box-footer clearfix">
-                                                                
-                                                            </div>
-
-                                                    </div><!-- /.tab-pane -->
-                                                </div><!-- /.tab-content -->
-                            </div>
-
-                                                  
-                        <!--NODAL EDITAR JEJEJE-->
-                        <div class="modal fade" id="compose-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                        <h4 class="modal-title"><i class="fa fa-pencil"></i> EDITAR USUARIO </h4>
+                    <!-- row -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <!-- jQuery Knob -->
+                            <div class="box box-solid">
+                                <div class="box-header">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    <h3 class="box-title">Reportes de asistencia de comensales por día</h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
                                     </div>
-                                    <form action="#" method="post" onsubmit="editarTrabajador(); return false;" accept-charset="utf-8">
-                                        <div class="modal-body" id="AreaEditar">
-                                            
-
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>AÑO</label>
+                                            <select class="form-control" id="anio">
+                                                <option value="2015">2015</option>
+                                            </select>
                                         </div>
-                                        <div class="modal-footer clearfix">
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>MES</label>
+                                            <select class="form-control" id="mes" onchange="tablaDiaria();">
+                                                <option value="1">Enero</option>
+                                                <option value="2">Febrero</option>
+                                                <option value="3">Marzo</option>
+                                                <option value="4">Abril</option>
+                                                <option value="5">Mayo</option>
+                                                <option value="6" selected>Junio</option>
+                                                <option value="7">Julio</option>
+                                                <option value="8">Agosto</option>
+                                                <option value="9">Septiembre</option>
+                                                <option value="10">Octubre</option>
+                                                <option value="11">Nobiembre</option>
+                                                <option value="12">Diciembre</option>
 
-                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Salir</button>
-
-                                            <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Editar</button>
+                                            </select>
                                         </div>
-                                    </form>
-                                </div><!-- /.modal-content -->
-                            </div><!-- /.modal-dialog -->
-                        </div><!-- /.modal -->
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="box-body">
+                                            <label>TURNO</label>
+                                            <select class="form-control" id="turno" onchange="tablaDiaria();">
+                                                <option value="1">MAÑANA</option>
+                                                <option value="2">TARDE</option>
+                                                <option value="3">NOCHE</option>
+                                            </select>
+                                </div>
+                                <div class="box-body" id="tablaDiaria">
+                                    
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-solid">
+                                <div class="box-header">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    <h3 class="box-title">Grafico Asistencias Vs Meses</h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>AÑO</label>
+                                            <select class="form-control" id="anioGrafico" onchange="cargarGrafico();">
+                                                <option value="2015" selected>--Seleccionar--</option>
+                                                <option value="2015">2015</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body chart-responsive">
+                                    <div class="chart" id="bar-chart" style="height: 400px;"></div>
+                                </div><!-- /.box-body -->
+        
+                            </div><!-- /.box -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-solid">
+                                <div class="box-header">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    <h3 class="box-title">Grafico Programas</h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>AÑO</label>
+                                            <select class="form-control" id="anioCirculo">
+                                                <option value="2015">2015</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>MES</label>
+                                            <select class="form-control" id="mesCirculo" onchange="cargarCirculo();">
+                                                <option value="1">Enero</option>
+                                                <option value="2">Febrero</option>
+                                                <option value="3">Marzo</option>
+                                                <option value="4">Abril</option>
+                                                <option value="5">Mayo</option>
+                                                <option value="6" selected>Junio</option>
+                                                <option value="7">Julio</option>
+                                                <option value="8">Agosto</option>
+                                                <option value="9">Septiembre</option>
+                                                <option value="10">Octubre</option>
+                                                <option value="11">Nobiembre</option>
+                                                <option value="12">Diciembre</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="box-body">
+                                            <label>TURNO</label>
+                                            <select class="form-control" id="turnoCirculo" onchange="cargarCirculo();">
+                                                <option value="1">MAÑANA</option>
+                                                <option value="2">TARDE</option>
+                                                <option value="3">NOCHE</option>
+                                            </select>
+                                </div>
+                                <div class="box-body chart-responsive">
+                                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+
+                   
+
                 </section><!-- /.content -->
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
@@ -442,18 +431,22 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- jQuery 2.0.2 -->
         <script src="../js/jquery-2.1.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
-        <script src="../js/bootstrap.min.js"       type="text/javascript"></script>
+        <script src="../js/bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
-        <script src="../js/AdminLTE/app.js"        type="text/javascript"></script>
+        <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
+
+        <!-- jQuery Knob -->
+         
         <script src="../js/menu.js" type="text/javascript"></script>
-        <script src="../js/validacionesUsuario.js" type="text/javascript"></script>
-        
-        
+        <script src="../js/reportes.js" type="text/javascript"></script>
+        <script src="../js/plugins/morris/raphael-min.js" type="text/javascript">></script>
+        <script src="../js/plugins/morris/morris.min.js" type="text/javascript"></script>
 
-
+        <script type="text/javascript">
+            
+        </script>
     </body>
 </html>
-
 
 <?php 
     }

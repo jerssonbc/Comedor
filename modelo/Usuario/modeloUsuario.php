@@ -50,7 +50,13 @@ class ModeloUsuario{
                 break; 
             case "editarTrabajador":
                 echo $this->editarTrabajador();
-                break;     
+                break;
+            case "cargarHoras":
+                echo $this->cargarHoras();
+                break;
+            case "editarHora":
+                echo $this->editarHora();
+                break;       
         }
     }
     function grabar() {
@@ -262,9 +268,101 @@ class ModeloUsuario{
             
     }
 }
-function listarUsuarios(){
+function cargarHoras(){
 
     $this->cerrarAbrir();
+        $consultaSql="SELECT hora_inicio,hora_fin from turnos where id=1";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+            echo '
+                                            <label  class="control-label">MAÑANA</label>
+                                                <div class="form-group" class="col-xs-12">
+                                                    <div class="input-group" class="col-xs-6">
+                                                        <span class="input-group-addon">ENTRADA:</span>
+                                                        <input id="Mentrada" type="number" class="form-control" placeholder="Entrada " style="width:100px" value="'.$row[0].'">
+                                                    </div>
+                                                    <div class="input-group" class="col-xs-6">
+                                                        <span class="input-group-addon">SALIDA: </span>
+                                                        <input id="Msalida" type="number" class="form-control" placeholder="Salida" style="width:117px" value="'.$row[1].'">
+                                                    </div>
+                                                </div>';
+
+
+    }
+    $this->cerrarAbrir();
+        $consultaSql="SELECT hora_inicio,hora_fin from turnos where id=2";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+            echo '
+                                            <label  class="control-label">TARDE</label>
+                                                <div class="form-group" class="col-xs-12">
+                                                    <div class="input-group" class="col-xs-6">
+                                                        <span class="input-group-addon">ENTRADA:</span>
+                                                        <input id="Tentrada" type="number" class="form-control" placeholder="Entrada " style="width:100px" value="'.$row[0].'">
+                                                    </div>
+                                                    <div class="input-group" class="col-xs-6">
+                                                        <span class="input-group-addon">SALIDA: </span>
+                                                        <input id="Tsalida" type="number" class="form-control" placeholder="Salida" style="width:117px" value="'.$row[1].'">
+                                                    </div>
+                                                </div>';
+
+
+    }
+        $this->cerrarAbrir();
+        $consultaSql="SELECT hora_inicio,hora_fin from turnos where id=3";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+            echo '
+                                            <label  class="control-label">NOCHE</label>
+                                                <div class="form-group" class="col-xs-12">
+                                                    <div class="input-group" class="col-xs-6">
+                                                        <span class="input-group-addon">ENTRADA:</span>
+                                                        <input id="Nentrada" type="number" class="form-control" placeholder="Entrada " style="width:100px" value="'.$row[0].'">
+                                                    </div>
+                                                    <div class="input-group" class="col-xs-6">
+                                                        <span class="input-group-addon">SALIDA: </span>
+                                                        <input id="Nsalida" type="number" class="form-control" placeholder="Salida" style="width:117px" value="'.$row[1].'">
+                                                    </div>
+                                                </div>';
+
+
+    }
+
+
+}
+function editarHora(){
+    $Mentrada=$this->param['Mentrada'];
+    $Msalida=$this->param['Msalida'];
+    $Tentrada=$this->param['Tentrada'];
+    $Tsalida=$this->param['Tsalida'];
+    $Nentrada=$this->param['Nentrada'];
+    $Nsalida=$this->param['Nsalida'];
+   
+
+    $this->cerrarAbrir();
+        $consultaSql="UPDATE `turnos` SET `hora_inicio`=$Mentrada,`hora_fin`=$Msalida WHERE `id`=1";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $this->cerrarAbrir();
+            $consultaSql="UPDATE `turnos` SET `hora_inicio`=$Tentrada,`hora_fin`=$Tsalida WHERE `id`=2";
+            $this->result = mysql_query($consultaSql);
+            if($this->result){
+                $this->cerrarAbrir();
+                $consultaSql="UPDATE `turnos` SET `hora_inicio`=$Nentrada,`hora_fin`=$Nsalida WHERE `id`=3";
+                $this->result = mysql_query($consultaSql);
+                if($this->result){
+                    echo "Edicion Exitosa";
+                }
+            }
+        }
+
+}
+function listarUsuarios(){
+
+        $this->cerrarAbrir();
         $consultaSql="SELECT u.id,u.usuario,t.dni,concat(t.apellidos,' ',t.nombres) from usuarios u inner join trabajador t 
                                 on u.id_trabajador=t.id where u.estado=1 and u.id_trabajador is not null";
         $this->result = mysql_query($consultaSql);
@@ -278,7 +376,7 @@ function listarUsuarios(){
                                                                 <div class="box-header">
                                                                 <h3 class="box-title">Trabajadores</h3>
                                                             </div><!-- /.box-header -->
-                                                                <table class="table">
+                                                                <table class="table table-bordered table-striped" id="dataTables-usuarios">
                                                                     <thead>
                                                                         
                                                                     <tr>
@@ -319,7 +417,10 @@ function listarUsuarios(){
             }
             echo    '</tbody>
                                         
-                                    </table>';     
+                                    </table>
+                                    ';
+            
+            
         }
         $this->cerrarAbrir();
         $consultaSql="SELECT u.id,u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre) from usuarios u inner join comensales c 
@@ -332,7 +433,7 @@ function listarUsuarios(){
                                                                 <div class="box-header">
                                                                 <h3 class="box-title">Comensales</h3>
                                                             </div><!-- /.box-header -->
-                                                                <table class="table">
+                                                                <table class="table table-bordered table-striped" id="dataTables-comensales">
                                                                     <thead>
                                                                         
                                                                     <tr>
@@ -371,7 +472,19 @@ function listarUsuarios(){
             }
             echo    '</tbody>
                                         
-                                    </table>';     
+                                    </table>
+                                    ';
+
+            echo '<script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
+                  <script src="../js/jquery.dataTables.js" type="text/javascript"></script>';
+            echo "<script type='text/javascript'>
+            $(document).ready(function(){
+                
+                $('#dataTables-usuarios').dataTable();
+                $('#dataTables-comensales').dataTable();
+                
+                });
+            </script>";      
         }
 
 }
@@ -514,7 +627,7 @@ function editarTrabajador(){
             $idTrabajador=$row[0];   
         }
 
-    $this->cerrarAbrir();
+        $this->cerrarAbrir();
             if ($password='') {
                 # code...
                 $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario' WHERE `id`='$idUsuario' ";

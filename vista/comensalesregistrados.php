@@ -18,8 +18,8 @@ if(!isset($_SESSION['idUsuario'])){
         <link href="../css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css" />
-        <link href="../assets/css/goSamples.css" rel="stylesheet" type="text/css" /> 
-
+        
+        <link href="../css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> 
        
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -296,12 +296,12 @@ if(!isset($_SESSION['idUsuario'])){
                                         </ul>
                                     </div>
                                 </div><!-- /.box-header -->
-                                <div class="box-body no-padding">
-                                    <table class="table">
+                                <div class="box-body table-responsive">
+                                    <table class="table table-bordered table-striped" id="dataTables-usuarios">
                                         <thead>
                                             
                                         <tr>
-                                            <th style="width: 10px">#</th>
+                                            
                                             <th>Codigo</th>
                                             <th>Dni</th>
                                             <th>Apellidos y Nombre</th>
@@ -309,35 +309,19 @@ if(!isset($_SESSION['idUsuario'])){
                                             <th style="width: 40px">Programa</th>
                                         </tr>
                                         </thead>
-                                        <tbody id="bcomensales">
-                                        <tr>
-                                            <td>1.</td>
-                                            <td>Update software</td>
-                                            <td>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-danger" style="width: 55%"></div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-red">55%</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>2.</td>
-                                            <td>Clean database</td>
-                                            <td>
-                                                <div class="progress xs">
-                                                    <div class="progress-bar progress-bar-yellow" style="width: 70%"></div>
-                                                </div>
-                                            </td>
-                                            <td><span class="badge bg-yellow">70%</span></td>
-                                        </tr>
+                                        <tbody id="bcomensales" >
+                                            
+                                            
+                                        
                                         </tbody>
                                         
                                     </table>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
+                            
                         </div>
-                        <div class="col-md-1">
-                    </div>
+                        
+
                         
                     </div>
                          
@@ -349,16 +333,35 @@ if(!isset($_SESSION['idUsuario'])){
 
     <button type="button" onclick="loadInstitucion();" class="btn btn-danger">Cancelar</button>
         <!-- jQuery 2.0.2 -->
+
         <script src="../js/jquery-2.1.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
         <script src="../js/bootstrap.min.js" type="text/javascript"></script>
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
          <script type"text/javascript" src="../js/registrocomensal.js"></script>
-         <script src="../js/menu.js" type="text/javascript"></script>
+
+         <script src="../js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
+        <script src="../js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
+        <script src="../js/menu.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+
+                $('#dataTables-usuarios').dataTable();
+                $("#example1").dataTable();
+                
+            });
+        </script>
+         
+
+         
+
 
     </body>
+    
+
 </html>
+
 
 
 <?php 
