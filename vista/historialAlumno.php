@@ -19,7 +19,11 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- Theme style -->
         <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="../assets/css/goSamples.css" rel="stylesheet" type="text/css" /> 
-        
+        <style type="text/css">
+            a {
+                cursor: pointer;
+            }
+        </style>
        
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -28,7 +32,7 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);historial();cronogHistorial();" >
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);historial(1);cronogHistorial();" >
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="../index" class="logo">
@@ -284,7 +288,7 @@ if(!isset($_SESSION['idUsuario'])){
                     <div id="cronogramaH">
                         
                     </div>
-                    <form name="fmrhistorial" action="#">
+                    <form name="fmrhistorial" action="#" method="POST">
                         <h3>Fecha Inicio: &nbsp;<input type="date" name="txtfechaIn">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         Fecha Fin: &nbsp;<input type="date" name="txtfechaFin">
@@ -302,6 +306,20 @@ if(!isset($_SESSION['idUsuario'])){
 
                         </tbody>
                     </table>
+                    <nav>
+                      <ul class="pagination">
+                        <li><a onclick="historial(1)">1</a></li>
+                        <li><a onclick="historial(2)">2</a></li>
+                        <li><a onclick="historial(3)">3</a></li>
+                        <li><a onclick="historial(4)">4</a></li>
+                        <li><a onclick="historial(5)">5</a></li>
+                        <li><a onclick="historial(6)">6</a></li>
+                        <li><a onclick="historial(7)">7</a></li>
+                        <li><a onclick="historial(8)">8</a></li>
+                        <li><a onclick="historial(9)">9</a></li>
+                        <li><a onclick="historial(10)">10</a></li>
+                      </ul>
+                    </nav>
             </center>
             </div>     
                         <!--<button onclick="guardarImages()" class="btn btn-info btn-lg"  >IMAGEN</button>-->

@@ -30,6 +30,8 @@ class ModeloHistorial{
     function consultarHistorial() {
     	$this->cerrarAbrir();
     	$codigo=$this->param['codigo'];
+        $pag=$this->param['pag'];
+            $it=date('d');
             $fil=date('d');
             $hora=date('H');
             if($hora>=7 && $hora<12){
@@ -43,40 +45,1157 @@ class ModeloHistorial{
                     }        
                 }
             }
-            for ($i=1; $i<=$fil; $i++) {
-                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
-                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
-                echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
-                echo '<td>Noche</td>';
-                $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
-                            and fecha='".$fechaformt."' and turno_id='3'";
-                $this->result = mysql_query($consultaSql);
-                if(mysql_num_rows($this->result))
-                    echo '<td>Asistió</td>';
-                else
-                    echo '<td>Faltó</td>';
-                echo '</tr>';
+            for ($i=1; $i<=$it; $i++) {
+                if($i<=3 && $pag==1){
+                        if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
 
-                echo '<tr>
-                    <td>Tarde</td>';
-                    $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
-                            and fecha='".$fechaformt."' and turno_id='2'";
-                    $this->result = mysql_query($consultaSql2);
-                    if(mysql_num_rows($this->result))
-                        echo '<td>Asistió</td>';
-                    else
-                        echo '<td>Faltó</td>';
-                echo '</tr>
-                <tr>
-                    <td>Mañana</td>';
-                    $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
-                            and fecha='".$fechaformt."' and turno_id='1'";
-                    $this->result = mysql_query($consultaSql3);
-                    if(mysql_num_rows($this->result))
-                        echo '<td>Asistió</td>';
-                    else
-                        echo '<td>Faltó</td>';
-                echo '</tr>';       
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                }else{
+                    if($pag==2 && $i>3 && $i<=6){
+                        if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                }else{
+                       if($pag==3 && $i>6 && $i<=9){
+                           if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                }else{
+                       if($pag==4 && $i>9 && $i<=12){
+                        if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                       }else{
+                           if($pag==5 && $i>12 && $i<=15){
+                            if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                           }else{
+                               if($pag==6 && $i>15 && $i<=18){
+                                if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                               }else{
+                                   if($pag==7 && $i>18 && $i<=21){
+                                    if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                                   }else{
+                                        if($pag==8 && $i>24 && $i<=27){
+                                            if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                                        }else{
+                                            if($pag==9 && $i>27 && $i<=30){
+                                                if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                                           }else{
+                                            if($pag==10 && $i>30){
+                                                if($it==$fil && $i==1){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }else{
+                        if(($it-1)==$fil && $i==1){
+                            $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                            $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                            echo '<tr><td rowspan="2" valign="middle">'.$fecha.'</td>';
+                            echo '<tr>
+                                <td>Tarde</td>';
+                                $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='2'";
+                                $this->result = mysql_query($consultaSql2);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>
+                            <tr>
+                                <td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                            echo '</tr>';
+                        }else{
+                            if(($it-2)==$fil && $i==1){
+                                $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                                $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                                echo '<tr><td rowspan="1" valign="middle">'.$fecha.'</td>';
+                                echo '<td>Mañana</td>';
+                                $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                        and fecha='".$fechaformt."' and turno_id='1'";
+                                $this->result = mysql_query($consultaSql3);
+                                if(mysql_num_rows($this->result))
+                                    echo '<td>Asistió</td>';
+                                else
+                                    echo '<td>Faltó</td>';
+                                echo '</tr>';
+                            }
+                                
+                        }
+                    }
+                    if($i>=2){
+                        $fecha=(date("d")-$i+1).'-'.(date("m")).'-'.(date("Y"));
+                        $fechaformt=(date("Y").'-'.(date("m")).'-'.(date("d")-$i+1));
+                        echo '<tr><td rowspan="3" valign="middle">'.$fecha.'</td>';
+                        echo '<td>Noche</td>';
+                        $consultaSql="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='3'";
+                        $this->result = mysql_query($consultaSql);
+                        if(mysql_num_rows($this->result))
+                            echo '<td>Asistió</td>';
+                        else
+                            echo '<td>Faltó</td>';
+                        echo '</tr>';
+
+                        echo '<tr>
+                            <td>Tarde</td>';
+                            $consultaSql2="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='2'";
+                            $this->result = mysql_query($consultaSql2);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>
+                        <tr>
+                            <td>Mañana</td>';
+                            $consultaSql3="SELECT * FROM ASISTENCIA  where comensal_id='".$codigo."' 
+                                    and fecha='".$fechaformt."' and turno_id='1'";
+                            $this->result = mysql_query($consultaSql3);
+                            if(mysql_num_rows($this->result))
+                                echo '<td>Asistió</td>';
+                            else
+                                echo '<td>Faltó</td>';
+                        echo '</tr>';
+                    }
+                                            }
+                                           }
+                                        }
+                                   }
+                               }
+                           }
+                       }
+                     }
+                    }
+                }
+
             }
     }
 

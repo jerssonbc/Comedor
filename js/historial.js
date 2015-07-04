@@ -1,7 +1,7 @@
-function historial(){
+function historial(cod){
 	$.ajax({
 		type:'POST',
-		data:{param_opcion:'listar'},
+		data:{pag:cod,param_opcion:'listar'},
 		url:'../control/Historial/controlHistorial.php',
 		success:function(data){
 			
