@@ -322,7 +322,7 @@ if(!isset($_SESSION['idUsuario'])){
                 
                 <!--Inicio Modal -->
                 <div class="modal fade" id="newparam-modal" tabindex="-1" role="dialog" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog" style="width:60%;">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -357,15 +357,39 @@ if(!isset($_SESSION['idUsuario'])){
                                             required >
                                         </div>
                                     </div>
+
+                                    <div class="form-group">
+                                        <label for="finicio" class="col-sm-2 control-label">Fecha Inicio:</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group input-append date" id="fechainicio">
+                                                <input type="text" class="form-control" required>
+                                                <span class="input-group-addon add-on">
+                                                    <i class="fa  fa-calendar"></i></span>
+                                            </div>
+
+                                        </div>
+
+                                        <label for="ffin" class="col-sm-2 control-label">Fecha Fin:</label>
+                                        <div class="col-sm-4">
+                                            <div class="input-group input-append date" id="fechafin">
+                                                <input type="text" class="form-control" required>
+                                                <span class="input-group-addon add-on">
+                                                    <i class="fa  fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                     
                                    
 
                                 </div>
                                 <div class="modal-footer clearfix">
 
-                                    <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i> Discard</button>
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                                    <i class="fa fa-times"></i> Discard</button>
 
-                                    <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-envelope"></i> Send Message</button>
+                                    <button type="submit" class="btn btn-primary pull-left">
+                                    <i class="fa fa-envelope"></i> Send Message</button>
                                 </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -403,6 +427,14 @@ if(!isset($_SESSION['idUsuario'])){
                    // viewMode: 'years',
                     minViewMode:'years'
                 });
+            $('#fechainicio').datepicker({
+                language:'es',
+                format: "dd/mm/yyyy"
+            });
+            $('#fechafin').datepicker({
+                language:'es',
+                format: "dd/mm/yyyy"
+            });
         
           var loadingHtml = "Loading..."; // this could be an animated image
           var imageLoadingHtml = "Image loading...";
