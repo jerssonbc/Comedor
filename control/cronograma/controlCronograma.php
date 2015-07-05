@@ -33,11 +33,10 @@ if ($res['opcMensaje']==0) {
             </div>";
 }
 if ($res['opcMensaje']==1) {
-    $devuelve = "<div class='alert alert-success' role='alert'>
+    $devuelve = "<div class='alert alert-success' role='alert' style='cursor:pointer' onclick='cerrarMensaje()'>
               <strong>Cronograma Registrado!</strong> Su cronograma de servicio ha sido registrado exitosamente!. 
             </div>";
 }
 echo $devuelve;
-
 ?>
 

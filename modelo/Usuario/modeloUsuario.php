@@ -424,58 +424,129 @@ function listarUsuarios(){
             
         }
         $this->cerrarAbrir();
-        $consultaSql="SELECT u.id,u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre) from usuarios u inner join comensales c 
+        $consultaSql="SELECT u.id,u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre),c.id from usuarios u inner join comensales c 
                                 on u.id_comensal=c.id where u.estado=1 and u.id_comensal is not null";
         $this->result = mysql_query($consultaSql);
         if($this->result){
                 //$cont=1;
                                 
             echo '<div class="box-body" id="ListaUsuarios">
-                                                                <div class="box-header">
-                                                                <h3 class="box-title">Comensales</h3>
-                                                            </div><!-- /.box-header -->
-                                                                <table class="table table-bordered table-striped" id="dataTables-comensales">
-                                                                    <thead>
-                                                                        
-                                                                    <tr>
-                                                                        <th style="width: 10px">#</th>
-                                                                        <th>Usuario</th>
-                                                                        <th>Dni</th>
-                                                                        <th>Apellidos y Nombre</th>
-                                                                        <th>Opciones</th>
-                                                                        
-                                                                    </tr>
-                                                                    </thead>
-                    <tbody id="bcomensales">';
-                while($row=mysql_fetch_row($this->result)){
-                    $link_photo_car = "../uploads/".$row[0].".png"; 
-
-                    
-     
-                        if (file_exists("../../uploads/".$row[0].".png")) 
-                        { 
-                            $show_path_photo_car = $link_photo_car; // Photo unavailable 
-                        } 
-                        else 
-                        { 
-                            $show_path_photo_car ="../uploads/imgdefecto.png";
-                        } 
-                           echo '<tr>
-                                            <td><div class="pull-left image"><img src="'.$show_path_photo_car.'" style="width:35px;heigth:35px;" /></div></td>
-                                            <td>'.$row[1].'</td>
-                                            <td>'.$row[2].'</td>
-                                            <td>'.$row[3].'</td>
-                                            <td>
-                                                <button class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" onClick="cargarEditarComensal('.$row[0].')"><icon class="glyphicon glyphicon-trash"></button>
-                                                <button class="btn btn-danger"><icon class="glyphicon glyphicon-pencil"></button>
-                                            </td>
-                                        </tr>';
+                        <div class="box-header">
+                        <h3 class="box-title">Comensales</h3>
+                    </div><!-- /.box-header -->
+                        <table class="table table-bordered table-striped" id="dataTables-comensales">
+                            <thead>
+                                
+                            <tr>
+                                <th style="width: 10px">#</th>
+                                <th>Usuario</th>
+                                <th>Dni</th>
+                                <th>Apellidos y Nombre</th>
+                                <th>Opciones</th>
+                                
+                            </tr>
+                            </thead>
+                            <tbody id="bcomensales">';
+            while($row=mysql_fetch_row($this->result)){
+                $link_photo_car = "../uploads/".$row[0].".png";           
+                if (file_exists("../../uploads/".$row[0].".png")) 
+                { 
+                    $show_path_photo_car = $link_photo_car; // Photo unavailable 
+                } 
+                else 
+                { 
+                    $show_path_photo_car ="../uploads/imgdefecto.png";
+                } 
+                   echo '<tr>
+                            <td><div class="pull-left image"><img src="'.$show_path_photo_car.'" style="width:35px;heigth:35px;" /></div></td>
+                            <td>'.$row[1].'</td>
+                            <td>'.$row[2].'</td>
+                            <td>'.$row[3].'</td>
+                            <td>
+                                <button class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" onClick="cargarEditarComensal('.$row[0].')"><icon class="glyphicon glyphicon-pencil"></button>
+                                <button class="btn btn-success" data-toggle="modal" data-target="#registrarCronograma'.$row[4].'"><icon class="glyphicon glyphicon-th"></button>
+                            </td>
+                        </tr>';                    
             }
-            echo    '</tbody>
-                                        
+            echo    '</tbody>                    
+                </table>';
+            $consultaSql="SELECT u.id,u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre),c.id from usuarios u inner join comensales c 
+                                on u.id_comensal=c.id where u.estado=1 and u.id_comensal is not null";
+            $this->result = mysql_query($consultaSql);
+            while($row=mysql_fetch_row($this->result)){
+                echo '
+                    <!-- Modal registrar cronograma -->
+                    <div class="modal fade" id="registrarCronograma'.$row[4].'" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                      <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content" style="width:800px;">
+                        <form onsubmit="guardarCronogramaComensal('.$row[4].'); return false;" method="post" accept-charset="utf-8">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Registrar Cronograma de Servicio para '.$row[3].' (MES ACTUAL: '.date("F").')</h4>
+                          </div>
+                          <div class="modal-body">
+                              <div class="form-group">
+                                <input type="hidden" id="dia0">
+                                    <table class="table">
+                                      <thead>
+                                        <tr class="danger">
+                                          <th>Lunes</th>
+                                          <th>Martes</th>
+                                          <th>Miercoles</th>
+                                          <th>Jueves</th>
+                                          <th>Viernes</th>
+                                          <th>Sabados</th>
+                                          <th>Domingos</th>
+                                        </tr>
+                                      </thead>
+                                      <tbody>';
+                                        $numeroDias = date("t");
+                                        $week = 1;
+                                        for ($i=1; $i <=$numeroDias ; $i++) { 
+                                          $day_week = date('N', strtotime(date('Y-m').'-'.$i));
+                                          $calendar[$week][$day_week] = $i;
+                                          if ($day_week == 7) { $week++; };
+                                        }
+                                        $aux=1;
+                                        $estilo="";
+                                        $color="";
+                                        foreach ($calendar as $days) {
+                                          echo "<tr>";
+                                          for ($i=1;$i<=7;$i++){
+                                            if(!isset($days[$i])){
+                                              $aux=0;
+                                              $estilo="background: #B5B9BA;cursor: not-allowed;border: 1px solid white;";
+                                              $color="#B5B9BA";                             
+                                            } else{
+                                                $estilo="background: #04A4BB;border: 1px solid white;cursor: pointer;";
+                                                $color="#04A4BB";
+                                            }
+                                            echo '<td class="dia'.$aux.'" id="dia'.$aux.''.$row[4].'" onclick="seleccionarDiaCrono('.$aux.','.$row[4].')" style="'.$estilo.'"><div style="width:90px;height:45px;color:white;">';
+                                            if(isset($days[$i])){
+                                              echo '<h3>'.$days[$i].'</h3>';                              
+                                            } 
+                                            echo '<input id="diaValor'.$aux.''.$row[4].'" type="hidden" value="0">';
+                                            echo '</div></td>';
+                                            $aux=$aux+1;
+                                          }                          
+                                          echo "</tr>";
+                                        }
+                                echo    '</tbody>
                                     </table>
-                                    ';
-
+                              </div>
+                              <input type="hidden" id="numeroDias" value="'.$numeroDias.'">                              
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">REGISTRAR</button>
+                          </div>
+                        </form>
+                        </div>
+                      </div>
+                    </div>'; 
+            }
+            echo '<div id="mensajeCronograma" style="position:fixed;left:10px;bottom:10px;height:100px;width:300px;opacity:0.8;z-index:10;">
+            </div>';
             echo '<script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
                   <script src="../js/jquery.dataTables.js" type="text/javascript"></script>';
             echo "<script type='text/javascript'>
@@ -485,7 +556,7 @@ function listarUsuarios(){
                 $('#dataTables-comensales').dataTable();
                 
                 });
-            </script>";      
+            </script>";               
         }
 
 }

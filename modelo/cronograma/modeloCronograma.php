@@ -33,13 +33,12 @@ class ModeloCronograma{
         $fecha="";
         for ($i=1; $i <= $numeroDias; $i++) {  
             $fecha=date("Y").'-'.date("m").'-'.str_pad($i, 2, "0", STR_PAD_LEFT);           
-            $consultaSql="INSERT INTO cronogramas_servicio(fecha,estado,comensal_id) VALUES('".$fecha."',".$estadoDia[$i].",1) ";
+            $consultaSql="INSERT INTO cronogramas_servicio(fecha,estado,comensal_id) VALUES('".$fecha."',".$estadoDia[$i].",".$idComensal.") ";
             $this->result = mysql_query($consultaSql);
         }
         $resp['opcMensaje']= 1;        
         return $resp;
-    }
-    
+    }    
 }
 
 ?>

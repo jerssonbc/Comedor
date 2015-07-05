@@ -20,25 +20,25 @@ function registrarCronograma(){
   xmlhttp.send();
 }
 
-function guardarCronogramaComensal() {
-    idComensal=$('#idComensalCronograma').val();     
+function guardarCronogramaComensal(idComensal) {
+    //idComensal=$('#idComensalCronograma').val();     
     numeroDias=$('#numeroDias').val();
     dia = new Array(numeroDias);
     for (var i = 1; i <= numeroDias ; i++) {
-        dia[i]=$('#diaValor'+i).val();
+        dia[i]=$('#diaValor'+i+idComensal).val();
         //alert("dia "+i+": "+dia[i]);
     };
-//    alert(idComensal+"/"+numeroDias);
-    
+    //alert(idComensal+"/"+numeroDias);    
     var diaa = dia.toString();
       $.ajax({
           type: "POST",
           data: {idComensal,numeroDias,diaa,param_opcion:'registrar'},
-          url: "control/cronograma/controlCronograma.php",
+          url: "../control/cronograma/controlCronograma.php",
           success: function(datos) {
               if (datos == '') {
                   alert(datos+"Cronograma no registrado");
               } else {
+                $('#registrarCronograma'+idComensal).modal('hide')                
                 $("#mensajeCronograma").html(datos);
               }
           },
@@ -48,13 +48,16 @@ function guardarCronogramaComensal() {
       });
 }
 
-function seleccionarDiaCrono(id){
-  opc=document.getElementById("diaValor"+id).value;
+function seleccionarDiaCrono(id,idComensal){
+  opc=document.getElementById("diaValor"+id+idComensal).value;
   if (opc==1) {
-    document.getElementById("diaValor"+id).value="0";
-    document.getElementById("dia"+id).style.background="#04A4BB";
+    document.getElementById("diaValor"+id+idComensal).value="0";
+    document.getElementById("dia"+id+idComensal).style.background="#04A4BB";
   }else{
-    document.getElementById("diaValor"+id).value="1";
-    document.getElementById("dia"+id).style.background="#10BD04";
+    document.getElementById("diaValor"+id+idComensal).value="1";
+    document.getElementById("dia"+id+idComensal).style.background="#10BD04";
   }  
+}
+function cerrarMensaje(){
+  document.getElementById("mensajeCronograma").innerHTML="";
 }

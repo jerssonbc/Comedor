@@ -10,6 +10,7 @@ if(!isset($_SESSION['idUsuario'])){
         <meta charset="UTF-8">
         <title>COMEDOR  | Universidad Nacional de Trujillo</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+        <link href="../css/estilo.css" rel="stylesheet" type="text/css" />
         <!-- bootstrap 3.0.2 -->
         <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <!-- font Awesome -->
@@ -447,10 +448,8 @@ if(!isset($_SESSION['idUsuario'])){
         <script src="../js/AdminLTE/app.js"        type="text/javascript"></script>
         <script src="../js/menu.js" type="text/javascript"></script>
         <script src="../js/validacionesUsuario.js" type="text/javascript"></script>
+        <script src="../js/registrarCronograma.js" type="text/javascript"></script>
         
-        
-
-
     </body>
 </html>
 
