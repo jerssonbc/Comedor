@@ -6,3 +6,20 @@
 	padding: 15px;
 	width: 90%;
 }
+
+.dia{
+	background: #04A4BB;
+	border: 1px solid white;
+}
+
+.dia:hover{
+color: rgba(0,0,0,1);
+background:rgba(5,114,247,1);
+opacity:1;
+cursor: pointer;
+}
+
+#dia0{
+	background: #B5B9BA;
+	cursor: not-allowed;
+}

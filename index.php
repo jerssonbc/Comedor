@@ -291,7 +291,7 @@ if(!isset($_SESSION['idUsuario'])){
         <script src="js/AdminLTE/app.js"        type="text/javascript"></script>
         <script src="js/validacionesUsuario.js" type="text/javascript"></script>
         <script src="js/asistencia.js" type="text/javascript"></script>
-
+        <script src="js/registrarCronograma.js" type="text/javascript"></script>
     </body>
 </html>
 

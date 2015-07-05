@@ -262,7 +262,8 @@ class ModeloUsuario{
             }
             if ($tipo==2) {
                 echo '<li><a onclick="registrarAsistencia()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR ASISTENCIA</a></li>
-                                <li><a onclick="tipoComensal()()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>';
+                    <li><a onclick="tipoComensal()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>
+                    <li><a onclick="registrarCronograma()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR CRONOGRAMA COMENSAL</a></li>';
 
             }
             
