@@ -348,7 +348,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label>AÑO</label>
-                                            <select class="form-control" id="anioGrafico" onchange="cargarGrafico();">
+                                            <select class="form-control" id="anioGrafico" onchange="cargarGrafico();cargarGraficofusion();">
                                                 <option value="2015" selected>--Seleccionar--</option>
                                                 <option value="2015">2015</option>
                                             </select>
@@ -357,6 +357,7 @@ if(!isset($_SESSION['idUsuario'])){
                                 </div>
                                 <div class="box-body chart-responsive">
                                     <div class="chart" id="bar-chart" style="height: 400px;"></div>
+                                    <div id="chartContainer">FusionCharts!</div>
                                 </div><!-- /.box-body -->
         
                             </div><!-- /.box -->
@@ -386,7 +387,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label>MES</label>
-                                            <select class="form-control" id="mesCirculo" onchange="cargarCirculo();">
+                                            <select class="form-control" id="mesCirculo" onchange="cargarCirculo();cargarCirculoFusion();">
                                                 <option value="1">Enero</option>
                                                 <option value="2">Febrero</option>
                                                 <option value="3">Marzo</option>
@@ -408,7 +409,7 @@ if(!isset($_SESSION['idUsuario'])){
                                 
                                 <div class="box-body">
                                             <label>TURNO</label>
-                                            <select class="form-control" id="turnoCirculo" onchange="cargarCirculo();">
+                                            <select class="form-control" id="turnoCirculo" onchange="cargarCirculo();cargarCirculoFusion();">
                                                 <option value="1">MAÑANA</option>
                                                 <option value="2">TARDE</option>
                                                 <option value="3">NOCHE</option>
@@ -416,6 +417,116 @@ if(!isset($_SESSION['idUsuario'])){
                                 </div>
                                 <div class="box-body chart-responsive">
                                     <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                                    <div id="chart-container2">doughnut</div>
+                                </div><!-- /.box-body -->
+                            </div><!-- /.box -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="box box-solid">
+                                <div class="box-header">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    <h3 class="box-title">Grafico Asistencias-Faltas Vs Meses </h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>AÑO</label>
+                                            <select class="form-control" id="anioGraficoDoble" onchange="cargarGraficofusionDoble();">
+                                                <option value="2015" selected>--Seleccionar--</option>
+                                                <option value="2015">2015</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="box-body chart-responsive">
+                                    
+                                    <div id="chartContainer3">FusionCharts!</div>
+                                </div><!-- /.box-body -->
+        
+                            </div><!-- /.box -->
+                        </div><!-- /.col -->
+                    </div><!-- /.row -->
+                <div class="row">
+                        <div class="col-xs-12">
+                            <!-- jQuery Knob -->
+                            <div class="box box-solid">
+                                <div class="box-header">
+                                    <i class="fa fa-bar-chart-o"></i>
+                                    <h3 class="box-title">Reportes de asistencia por Programas</h3>
+                                    <div class="box-tools pull-right">
+                                        <button class="btn btn-default btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+                                        <button class="btn btn-default btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+                                    </div>
+                                </div><!-- /.box-header -->
+                                <div class="box-body">
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>AÑO</label>
+                                            <select class="form-control" id="anioPrograma">
+                                                <option value="2015">2015</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <div class="form-group">
+                                            <label>MES</label>
+                                            <select class="form-control" id="mesPrograma" onchange="tablaDiariaPrograma();">
+                                                <option value="1">Enero</option>
+                                                <option value="2">Febrero</option>
+                                                <option value="3">Marzo</option>
+                                                <option value="4">Abril</option>
+                                                <option value="5">Mayo</option>
+                                                <option value="6" selected>Junio</option>
+                                                <option value="7">Julio</option>
+                                                <option value="8">Agosto</option>
+                                                <option value="9">Septiembre</option>
+                                                <option value="10">Octubre</option>
+                                                <option value="11">Nobiembre</option>
+                                                <option value="12">Diciembre</option>
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                </div>
+                                <div class="box-body" >
+                                    <table class="table table-bordered table-striped" >
+                                                                    <thead>
+                                                                        
+                                                                    <tr>
+                                                                        
+                                                                        <th rowspan="2">PROGRAMA</th>
+                                                                        <th  colspan="3">MAÑANA</th>
+                                                                        <th colspan="3">TARDE</th>
+                                                                        <th  colspan="3">NOCHE</th>
+                                                                        <th rowspan="2">TOTAL</th>
+                                                                        
+                                                                    </tr>
+                                                                    <tr>
+                                                                        
+                                                                
+                                                                        <th>Programados(PP)</th>
+                                                                        <th>Asistidos(CA)</th>
+                                                                        <th>Porcentaje%(CA/PP)</th>
+                                                                        <th>Programados(PP)</th>
+                                                                        <th>Asistidos(CA)</th>
+                                                                        <th>Porcentaje%(CA/PP)</th>
+                                                                        <th>Programados(PP)</th>
+                                                                        <th>Asistidos(CA)</th>
+                                                                        <th>Porcentaje%(CA/PP)</th>
+                                                                        
+                                                                    </tr>
+                                                                    </thead>
+                                    <tbody id="tablaDiariaPrograma">
+                                    </tbody>
+                                        
+                                    </table>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                         </div><!-- /.col -->
@@ -441,6 +552,9 @@ if(!isset($_SESSION['idUsuario'])){
         <script src="../js/reportes.js" type="text/javascript"></script>
         <script src="../js/plugins/morris/raphael-min.js" type="text/javascript">></script>
         <script src="../js/plugins/morris/morris.min.js" type="text/javascript"></script>
+        <script type="text/javascript" src="../fusioncharts/fusioncharts.js"></script>
+        <script type="text/javascript" src="../fusioncharts/themes/fusioncharts.theme.zune.js"></script>
+
 
         <script type="text/javascript">
             
