@@ -61,3 +61,4 @@ function seleccionarDiaCrono(id,idComensal){
 function cerrarMensaje(){
   document.getElementById("mensajeCronograma").innerHTML="";
 }
+
