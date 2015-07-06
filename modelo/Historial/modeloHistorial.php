@@ -19,10 +19,14 @@ class ModeloHistorial{
         $this->param = $param;
         switch ($this->param['param_opcion']) {            
             case "listar":
-                $resultadoHistorial = $this->consultarHistorial();
+                //$resultadoHistorial = $this->consultarHistorial();
+                $resultadoHistorial = $this->consultarHistorialEdgar();
                 break;
             case "cronograma":
                 $resultadoHistorial = $this->cronogramaHistorial();
+                break;
+            case "filtrar":
+                $resultadoHistorial = $this->filtrar();
                 break;
         }
         return $resultadoHistorial;
@@ -120,8 +124,7 @@ class ModeloHistorial{
                                 else
                                     echo '<td>Faltó</td>';
                                 echo '</tr>';
-                            }
-                                
+                            }                                
                         }
                     }
                     if($i>=2){
@@ -1198,6 +1201,11 @@ class ModeloHistorial{
 
             }
     }
+    function consultarHistorialEdgar(){
+        $this->cerrarAbrir();
+        $codigo=$this->param['codigo'];
+
+    }
 
     function cronogramaHistorial(){
         $this->cerrarAbrir();
@@ -1217,6 +1225,22 @@ class ModeloHistorial{
             '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   Fecha de Fin de Programa:'.$fechafin.'
               </h3>';
+        }
+    }
+
+    function filtrar(){
+        $this->cerrarAbrir();
+        $codigo=$this->param['codigo'];
+        $Inicio=$this->param['inicio'];
+        $fin=$this->param['fin'];
+        $consultaSql="SELECT * FROM asistencia WHERE fecha between '".$inicio."' and '".$fin."' and comensal_id='".$codigo."'";
+        $this->result=mysql_query($consultaSql);
+        $dato=mysql_fetch_row($this->result);
+        echo "string";
+        if(mysql_num_rows($this->result)){
+            echo '<tr><td>'.$dato[1].'</td>
+                  <td>'.$dato[2].'</td>
+                  <td>'.$dato[3].'</td></tr>';
         }
     }
 }

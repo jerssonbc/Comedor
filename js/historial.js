@@ -27,3 +27,27 @@ function cronogHistorial(){
 	});
 }
 
+function filtrar(){
+
+	var finicio=document.getElementById('txtfechaIn').value;
+	var ffin=document.getElementById('txtfechaFin').value;
+	
+	if(finicio>ffin){
+		alert('No puede seleccionar una fecha de fin menor '+ffin);
+	}else{
+		$.ajax({
+			type:'POST',
+			data:{param_opcion:'filtrar',
+				  inicio:finicio,fin:ffin},
+			url:'../control/Historial/controlHistorial.php',
+			success:function(data){
+				$('#historial').html(data);
+			},
+			error:function(data){
+				alert(data+"Error al cargar");
+			}
+		});
+	}
+
+}
+

@@ -288,12 +288,12 @@ if(!isset($_SESSION['idUsuario'])){
                     <div id="cronogramaH">
                         
                     </div>
-                    <form name="fmrhistorial" action="#" method="POST">
-                        <h3>Fecha Inicio: &nbsp;<input type="date" name="txtfechaIn">
+                    <form name="fmrhistorial" method="POST">
+                        <h3>Fecha Inicio: &nbsp;<input type="date" id="txtfechaIn">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Fecha Fin: &nbsp;<input type="date" name="txtfechaFin">
+                        Fecha Fin: &nbsp;<input type="date" id="txtfechaFin">
                         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <input type="submit" value="Filtrar" class="btn btn-primary btn-lg"></h3>
+                        <div class="btn btn-primary btn-lg" onclick="filtrar()">Filtrar</div></h3>
                     </form>
                     <br><br>
                     <table class="table table-bordered">

@@ -268,7 +268,7 @@ class ModeloReportes{
                                             <td>'.$programas[$cont].'</td>
                                             <td>'.$row[3].'</td>
                                             <td>'.number_format(($row[3]/$programas[$cont])*100,2).'%</td>
-                                            <td>Total</td>
+                                            <td>'.($row[1]+$row[2]+$row[3]).'</td>
                                         </tr>';
                                         $cont++;
                                     }       
@@ -306,18 +306,18 @@ class ModeloReportes{
             if ($i==3) {$turno="NOCHE";}
                     $this->cerrarAbrir();
                     $consultaSql=" SELECT 
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=1) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=2) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=3) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=4) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=5) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=6) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=7) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=8) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=9) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=10) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=11) then a.id end )as programados,
-                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=12) then a.id end )as programados 
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=1 and 1<= DATE_FORMAT(now(),'%m')) then a.id end )as enero,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=2 and 2<= DATE_FORMAT(now(),'%m')) then a.id end )as febrero,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=3 and 3<= DATE_FORMAT(now(),'%m')) then a.id end )as marzo,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=4 and 4<= DATE_FORMAT(now(),'%m')) then a.id end )as abril,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=5 and 5<= DATE_FORMAT(now(),'%m')) then a.id end )as mayo,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=6 and 6<= DATE_FORMAT(now(),'%m')) then a.id end )as junio,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=7 and 7<= DATE_FORMAT(now(),'%m')) then a.id end )as julio,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=8 and 8<= DATE_FORMAT(now(),'%m')) then a.id end )as agosto,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=9 and 9<= DATE_FORMAT(now(),'%m')) then a.id end )as septiembre,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=10 and 10<= DATE_FORMAT(now(),'%m')) then a.id end )as octubre,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=11 and 11<= DATE_FORMAT(now(),'%m')) then a.id end )as noviembre,
+                                    count(case when (DATE_FORMAT(a.created_at,'%m')<=12 and 12<= DATE_FORMAT(now(),'%m')) then a.id end )as diciembre  
                             from comensales  a  where estado=1 and DATE_FORMAT(a.created_at,'%Y')=$year";
                     $this->result = mysql_query($consultaSql);
                     if($this->result){
@@ -439,7 +439,7 @@ class ModeloReportes{
                             count(case when (DATE_FORMAT(a.fecha,'%m')=11) then a.id end )as turno,
                             count(case when (DATE_FORMAT(a.fecha,'%m')=12) then a.id end )as turno
                               
-                        from asistencia a where  a.turno_id=$i and DATE_FORMAT(a.fecha,'%Y')=$year";
+                        from asistencia a where  a.turno_id=$i and DATE_FORMAT(a.fecha,'%Y')=$year ";
                     $this->result = mysql_query($consultaSql);
                     if($this->result){
                             

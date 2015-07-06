@@ -30,7 +30,9 @@ if ($res['total'] > 0 and $res['totalValidacion']==0) {
     $datos = $res['datos'];
     for ($i = 0; $i < count($datos); $i++) {
         $comensal = $datos[$i];                
-        $devuelve = '<div class="form-group">                         
+        $devuelve = '<div class="col-md-9"> 
+        <div class="form-group">
+                                
                 <label for="nombre" class="col-sm-2 control-label">Nombre</label>
                 <div class="col-sm-10">
                     <input type="text" class="form-control" name="nombre" id="nombre" value="'.$comensal['ape_paterno'].' '.$comensal['ape_maerno'].', '.$comensal['nombre'].'" disabled>
@@ -62,7 +64,17 @@ if ($res['total'] > 0 and $res['totalValidacion']==0) {
             </div><br>
             <div class="alert alert-success" role="alert">
 		      <strong>Asistencia Registrada!</strong> Su asistencia ha sido registrada exitosamente!. 
-		    </div>';
+		     </div>
+                  </div>
+                <div class="col-md-3">
+                    <div class="thumbnail" 
+                        style="width:200px; height:200px;
+                         margin:5px 0px 0px 5px;">
+                        <img src="uploads/'.$comensal['user_id'].'.png" alt="Img del Comensal">
+                    </div>
+                </div>
+                <div style="clear:both;"></div>  
+            ';
     }
 }
 //Ya ha marcado asistencia para ese turno en ese dia

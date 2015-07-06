@@ -88,7 +88,8 @@ class ModeloComensal{
                         if ($this->result) {
                             $row=mysql_fetch_row($this->result);
 
-                            $consultaSql="INSERT INTO  universitario_unt(comensal_id,escuela_id) values (".$row[0].",".$escuela.")";
+                            $consultaSql="INSERT INTO  universitario_unt(comensal_id,escuela_id) 
+                            values (".$row[0].",".$escuela.")";
                             $this->result=mysql_query($consultaSql);
 
                             $consultaSql="INSERT INTO usuarios(usuario,password,estado, id_comensal)
@@ -96,7 +97,8 @@ class ModeloComensal{
 
                             $this->result=mysql_query($consultaSql);
                                 if ($this->result) {
-                                    $consultaSql="SELECT id FROM usuarios where usuario='$usuario' and password='$passwordMD5'";
+                                    $consultaSql="SELECT id FROM usuarios where usuario='$usuario' and 
+                                    password='$passwordMD5'";
                                     $this->result=mysql_query($consultaSql);
                                     if($this->result)
                                     {
