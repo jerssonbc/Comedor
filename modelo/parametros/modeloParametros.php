@@ -31,13 +31,14 @@ class ModeloParametro
     	$anio=$this->param["anio"];
     	$descripcion=$this->param["descripcion"];
     	$fechainicio=$this->param["fechainicio"];
+    	
     	$fechafin=$this->param["fechafin"];
     	$estado=1;
     	$consultaSql="INSERT into parametros(codigo,anio,descripcion,fecha_inicio,fecha_termino,estado) 
     		values('$codigo','$anio','$descripcion','fechainicio','$fechafin','$estado')";
     	$this->result=mysql_query($consultaSql);
     	if($this->result){
-    		echo 'OK'
+    		echo 'OK';
     	}else{
     		echo 'EPD';
 

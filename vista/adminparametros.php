@@ -195,7 +195,7 @@ if(!isset($_SESSION['idUsuario'])){
                                         <a href="#" class="btn btn-default btn-flat">Perfil</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="vista/logout.php" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -328,7 +328,7 @@ if(!isset($_SESSION['idUsuario'])){
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 <h4 class="modal-title"><i class="fa fa-plus"></i>Agregar Parametro</h4>
                             </div>
-                            <form id="addparametro" method="post" role="form" accept-charset="utf-8">
+                            <form id="addparametro" action="#" method="post" accept-charset="utf-8">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="codigo">Código</label>
@@ -386,8 +386,8 @@ if(!isset($_SESSION['idUsuario'])){
 
 
 
-                                    <div class="btn btn-primary pull-left" onClick="agregarParametro();">
-                                    <i class="fa  fa-plus-circle"></i> Registrar</div>
+                                    <a class="btn btn-primary pull-left" onClick="agregarParametro();">
+                                    <i class="fa  fa-plus-circle"></i> Registrar</a>
                                 </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -405,13 +405,15 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
 
-        <script  src="../js/parametros.js" type="text/javascript"></script>
+        
 
         <script src="../js/menu.js" type="text/javascript"></script>
         <script src="../js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="../js/bootstrap-datepicker.es.min.js" type="text/javascript"></script>
         <script src="../js/jquery.dataTables.js" type="text/javascript"></script>
         <script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
+
+        <script  src="../js/parametros.js" type="text/javascript"></script>
         
         <script language="JavaScript" type="text/javascript">
             $(document).ready(function(){

@@ -2,14 +2,16 @@
 
 function agregarParametro()
 {
-	//alert("Estoy aca");
+	
 	var vcodigo=$('input[name=codigo]').val();
 	var vanio=$('input[name=panio]').val();
 	var vdescripcion=$("input[name=pdescripcion]").val();
 
-	var vfechainicio=$("input[name=fechainicio]").val();
-	var vfechafin=$("input[name=fechafin]").val();
-	alert(vcodigo+'::'+vanio+'::'+vdescripcion+'::'+vfechainicio+'::'+vfechafin);
+	var vfechainicio=Date($("input[name=fechainicio]").val())
+	var vfechafin=Date($("input[name=fechafin]").val());
+
+
+
 	$.ajax({
 		type:'POST',
 		url:'../control/parametros/procesoParametro.php',
@@ -20,12 +22,16 @@ function agregarParametro()
 			fechainicio:vfechainicio,
 			fechafin:vfechafin
 		},
-		success:function(datos){
-			if(datos=='OK'){
-				alert("Registro éxitoso"+datos);
+		success:function(data){
+			if(data=='OK'){
+				alert("Registro éxitosso");
+				$("#newparam-modal").modal("hide");
+				$('#newparam-modal').each (function(){
+							  		this.reset();
+								});
 
 			}else{
-				alert("Errro al registrar datos: "+datos);
+				alert("Errro al registrar datos: "+data);
 
 			}
 		},
