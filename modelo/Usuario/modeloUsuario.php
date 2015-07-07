@@ -236,6 +236,7 @@ class ModeloUsuario{
         $usuario=$this->param['idUsuario'];
         $tipo=$this->param['tipo'];
         //echo "hola";
+        $rol=0;
         if ($this->param['post']!='index') {
             # code...
             $post='../';
@@ -244,7 +245,7 @@ class ModeloUsuario{
         }
 
         $this->cerrarAbrir();
-        $consultaSql="SELECT m.padre,m.nombre,m.url FROM menus m 
+        $consultaSql="SELECT m.padre,m.nombre,m.url,r.id FROM menus m 
                         inner join rol_menu rm on m.id=rm.menu_id 
                         inner join roles r on r.id=rm.rol_id
                         inner join usuario_rol ur on r.id=ur.rol_id WHERE ur.usuario_id='$usuario' ";
@@ -252,7 +253,7 @@ class ModeloUsuario{
         if($this->result){
                 //$cont=1;
                 while($row=mysql_fetch_row($this->result)){
-
+                        $rol=$row[3];
                     if($row[0]==$tipo){
                         
                             echo '<li><a href="'.$post.$row[2].'"><i class="fa fa-angle-double-right"></i>'.$row[1].'</a></li>';   
@@ -261,8 +262,12 @@ class ModeloUsuario{
             
             }
             if ($tipo==2) {
-                echo '<li><a onclick="registrarAsistencia()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR ASISTENCIA</a></li>
+                if ($rol!=3) {
+                    # code...
+                    echo '<li><a onclick="registrarAsistencia()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR ASISTENCIA</a></li>
                     <li><a onclick="tipoComensal()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>';
+                }
+                
                 //echo '<li><a onclick="registrarCronograma()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR CRONOGRAMA COMENSAL</a></li>';
 
             }

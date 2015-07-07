@@ -1204,6 +1204,74 @@ class ModeloHistorial{
     function consultarHistorialEdgar(){
         $this->cerrarAbrir();
         $codigo=$this->param['codigo'];
+        $month=6;
+        $year=2015;
+        $first_of_month = mktime (0,0,0, $month, 1, $year);
+        $maxdays = date('t', $first_of_month);
+        $fecha=date('Y-m-d');
+        $programas=array(0,0,0,0,0,0);
+        echo '<table  class="table table-bordered table-striped" id="tablita">
+                        <thead align="center">
+                            <td>FECHA</td>
+                            <td>MAÑANA</td>
+                            <td>TARDE</td>
+                            <td>NOCHE</td>
+                        </thead>
+                        <tbody align="center" >';
+
+        for ($i=1; $i <=$maxdays ; $i++) { 
+            # code...
+            $fecha=$year.'/'.$month.'/'.$i;
+            $dia=date('w',strtotime($fecha));
+
+
+            if ($dia!=0) {
+                # code...
+                echo '<tr><td>'.$fecha.'</td>';
+                        for ($u=1; $u <=3 ; $u++) { 
+                            # code...
+                        
+                            
+                                $consultaSql2="SELECT a.id from asistencia a where a.turno_id=$u and a.fecha='".$fecha."' and a.comensal_id='$codigo'";
+                                $this->result = mysql_query($consultaSql2);
+                                if($this->result){
+
+                                        $dato=mysql_fetch_row($this->result);
+                                        if ($dato[0]) {
+                                            # code...
+                                            echo '<td>Asistió</td>';
+                                        }else{
+                                            echo '<td>Faltó</td>';
+
+                                        }
+
+                                            # code...
+                                        
+                                        
+                                        
+                                }else{
+                                    
+                                }
+
+                        }
+                        echo '</tr>';
+                       
+             }         
+        }
+        echo '
+
+                        </tbody>
+                    </table>';
+        echo '<script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
+            <script src="../js/jquery.dataTables.js" type="text/javascript"></script>';
+            echo "<script type='text/javascript'>
+            $(document).ready(function(){
+                
+                $('#tablita').dataTable();
+
+                
+                });
+            </script>"; 
 
     }
 

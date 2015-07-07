@@ -287,7 +287,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     </div>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-6" style="width:200px;">
                                         <div class="form-group">
                                             <label>AÑO</label>
                                             <select class="form-control" id="anio">
@@ -295,7 +295,7 @@ if(!isset($_SESSION['idUsuario'])){
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-3" >
                                         <div class="form-group">
                                             <label>MES</label>
                                             <select class="form-control" id="mes" onchange="tablaDiaria();">
@@ -318,7 +318,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     
                                 </div>
                                 
-                                <div class="box-body">
+                                <div class="box-body"  style="width:200px;">
                                             <label>TURNO</label>
                                             <select class="form-control" id="turno" onchange="tablaDiaria();">
                                                 <option value="1">MAÑANA</option>

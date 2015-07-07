@@ -13,6 +13,12 @@ function historial(cod){
 	});
 }
 
+function repetir(){
+    //alert("ddd");
+    timer = setTimeout("historial(1)",2000);
+    //tablaDiaria();
+}
+
 function cronogHistorial(){
 	$.ajax({
 		type:'POST',

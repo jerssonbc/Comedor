@@ -363,9 +363,9 @@ if(!isset($_SESSION['idUsuario'])){
                                                                                 </div>
                                                                                 <div class="form-group">
                                                                                     <label for="oldImageToDelete">
-                                                                                        Old uploaded image to delete (this field should be hidden):
+                                                                                        
                                                                                     </label>
-                                                                                    <input name="oldImageToDelete" id="oldImageToDelete" type="text"
+                                                                                    <input name="oldImageToDelete" id="oldImageToDelete" type="hidden"
                                                                                     size="50" />
                                                                                 </div>
                                                                                     </BR>
