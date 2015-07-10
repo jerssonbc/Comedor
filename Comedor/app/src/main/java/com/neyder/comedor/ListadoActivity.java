@@ -35,8 +35,11 @@ public class ListadoActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar_comensales);
+<<<<<<< HEAD
         /*toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
         setSupportActionBar(toolbar);*/
+=======
+>>>>>>> 04883d5a1020b7f25fea68bd2a543e9dd270b8b3
 
         Thread tr = new Thread(){
             @Override
@@ -47,7 +50,10 @@ public class ListadoActivity extends ActionBarActivity{
                             @Override
                             public void run() {
                                 cargaListado(obtDatosJSON(Resultado));
+<<<<<<< HEAD
                                 //Toast.makeText(getApplicationContext(),Resultado,Toast.LENGTH_SHORT).show();
+=======
+>>>>>>> 04883d5a1020b7f25fea68bd2a543e9dd270b8b3
                             }
                         });
             }
