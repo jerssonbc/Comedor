@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="REPORTES"
+        android:id="@+id/textView"
+        style="@style/Base.TextAppearance.AppCompat.Title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignLeft="@+id/textView3"
+        android:layout_alignStart="@+id/textView3" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Asistencias por programa"
+        android:id="@+id/textView3"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignBottom="@+id/user"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        style="@style/Base.TextAppearance.AppCompat.Light.Widget.PopupMenu.Small" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/yearLabel"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerYear"
+        android:layout_gravity="center_horizontal"
+        android:prompt="@string/yearLabel"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/mesLabel"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerMes"
+        android:layout_gravity="center_horizontal"
+        android:prompt="@string/mesLabel"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/turnoLabel"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinnerTurno"
+        android:layout_gravity="center_horizontal"
+        android:prompt="@string/turnoLabel"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GRAFICA"
+        android:id="@+id/btnGrafica"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:paddingLeft="20dip"
+        android:paddingRight="20dip"
+        android:background="#3F51B5"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp" />
+
+</LinearLayout>

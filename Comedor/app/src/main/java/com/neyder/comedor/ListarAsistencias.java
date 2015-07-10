@@ -38,9 +38,6 @@ import java.util.List;
  */
 public class ListarAsistencias extends Activity{
     InputStream is=null;
-    EditText username;
-    EditText password;
-    private Button btnIngresar;
     String result="";
     int idUser=0;
 

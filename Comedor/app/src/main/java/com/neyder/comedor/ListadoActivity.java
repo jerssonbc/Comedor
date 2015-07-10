@@ -35,8 +35,6 @@ public class ListadoActivity extends ActionBarActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar_comensales);
-        /*toolbar = (Toolbar) findViewById(R.id.tool_bar); // Attaching the layout to the toolbar object
-        setSupportActionBar(toolbar);*/
 
         Thread tr = new Thread(){
             @Override
@@ -47,7 +45,6 @@ public class ListadoActivity extends ActionBarActivity{
                             @Override
                             public void run() {
                                 cargaListado(obtDatosJSON(Resultado));
-                                //Toast.makeText(getApplicationContext(),Resultado,Toast.LENGTH_SHORT).show();
                             }
                         });
             }
