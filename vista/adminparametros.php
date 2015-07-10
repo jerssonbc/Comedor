@@ -414,11 +414,7 @@ if(!isset($_SESSION['idUsuario'])){
         <script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
 
         <script  src="../js/parametros.js" type="text/javascript"></script>
-<<<<<<< HEAD
-        <script src="../js/asistencia.js" type="text/javascript"></script>
-=======
-        
->>>>>>> 04883d5a1020b7f25fea68bd2a543e9dd270b8b3
+
         <script language="JavaScript" type="text/javascript">
             $(document).ready(function(){
                 $('#dataTables-parametros').dataTable();

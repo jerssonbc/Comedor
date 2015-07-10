@@ -98,11 +98,7 @@ public class MainActivity extends Activity {
                                     }
                                 });
                                 if (loginId==1){
-<<<<<<< HEAD
                                     Intent intent = new Intent(MainActivity.this, ListadoClientes.class);
-=======
-                                    Intent intent = new Intent(MainActivity.this, OpcionAdmin.class);
->>>>>>> 04883d5a1020b7f25fea68bd2a543e9dd270b8b3
                                     intent.putExtra("idUsuario", loginId);
                                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                     getApplicationContext().startActivity(intent);
