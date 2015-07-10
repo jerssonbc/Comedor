@@ -32,6 +32,7 @@ function registrarAsistenciaComensal() {
               if (datos == '') {
                   alert(datos+"Comensal no registrado");
               } else {
+                  
                   $("#datosAsistencia").html(datos);
               }
           },

@@ -287,7 +287,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     </div>
                                 </div><!-- /.box-header -->
                                 <div class="box-body">
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-6" style="width:200px;">
                                         <div class="form-group">
                                             <label>AÑO</label>
                                             <select class="form-control" id="anio">
@@ -295,7 +295,7 @@ if(!isset($_SESSION['idUsuario'])){
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-3" >
                                         <div class="form-group">
                                             <label>MES</label>
                                             <select class="form-control" id="mes" onchange="tablaDiaria();">
@@ -318,7 +318,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     
                                 </div>
                                 
-                                <div class="box-body">
+                                <div class="box-body"  style="width:200px;">
                                             <label>TURNO</label>
                                             <select class="form-control" id="turno" onchange="tablaDiaria();">
                                                 <option value="1">MAÑANA</option>
@@ -348,7 +348,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label>AÑO</label>
-                                            <select class="form-control" id="anioGrafico" onchange="cargarGrafico();cargarGraficofusion();">
+                                            <select class="form-control" id="anioGrafico" onchange="cargarGraficofusion();">
                                                 <option value="2015" selected>--Seleccionar--</option>
                                                 <option value="2015">2015</option>
                                             </select>
@@ -356,7 +356,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     </div>
                                 </div>
                                 <div class="box-body chart-responsive">
-                                    <div class="chart" id="bar-chart" style="height: 400px;"></div>
+                                    <!--<div class="chart" id="bar-chart" style="height: 400px;"></div>-->
                                     <div id="chartContainer">FusionCharts!</div>
                                 </div><!-- /.box-body -->
         
@@ -387,7 +387,7 @@ if(!isset($_SESSION['idUsuario'])){
                                     <div class="col-xs-6">
                                         <div class="form-group">
                                             <label>MES</label>
-                                            <select class="form-control" id="mesCirculo" onchange="cargarCirculo();cargarCirculoFusion();">
+                                            <select class="form-control" id="mesCirculo" onchange="cargarCirculoFusion();">
                                                 <option value="1">Enero</option>
                                                 <option value="2">Febrero</option>
                                                 <option value="3">Marzo</option>
@@ -409,14 +409,14 @@ if(!isset($_SESSION['idUsuario'])){
                                 
                                 <div class="box-body">
                                             <label>TURNO</label>
-                                            <select class="form-control" id="turnoCirculo" onchange="cargarCirculo();cargarCirculoFusion();">
+                                            <select class="form-control" id="turnoCirculo" onchange="cargarCirculoFusion();">
                                                 <option value="1">MAÑANA</option>
                                                 <option value="2">TARDE</option>
                                                 <option value="3">NOCHE</option>
                                             </select>
                                 </div>
                                 <div class="box-body chart-responsive">
-                                    <div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>
+                                    <!--<div class="chart" id="sales-chart" style="height: 300px; position: relative;"></div>-->
                                     <div id="chart-container2">doughnut</div>
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->

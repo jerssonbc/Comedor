@@ -19,10 +19,14 @@ class ModeloHistorial{
         $this->param = $param;
         switch ($this->param['param_opcion']) {            
             case "listar":
-                $resultadoHistorial = $this->consultarHistorial();
+                //$resultadoHistorial = $this->consultarHistorial();
+                $resultadoHistorial = $this->consultarHistorialEdgar();
                 break;
             case "cronograma":
                 $resultadoHistorial = $this->cronogramaHistorial();
+                break;
+            case "filtrar":
+                $resultadoHistorial = $this->filtrar();
                 break;
         }
         return $resultadoHistorial;
@@ -120,8 +124,7 @@ class ModeloHistorial{
                                 else
                                     echo '<td>Faltó</td>';
                                 echo '</tr>';
-                            }
-                                
+                            }                                
                         }
                     }
                     if($i>=2){
@@ -1198,6 +1201,79 @@ class ModeloHistorial{
 
             }
     }
+    function consultarHistorialEdgar(){
+        $this->cerrarAbrir();
+        $codigo=$this->param['codigo'];
+        $month=6;
+        $year=2015;
+        $first_of_month = mktime (0,0,0, $month, 1, $year);
+        $maxdays = date('t', $first_of_month);
+        $fecha=date('Y-m-d');
+        $programas=array(0,0,0,0,0,0);
+        echo '<table  class="table table-bordered table-striped" id="tablita">
+                        <thead align="center">
+                            <td>FECHA</td>
+                            <td>MAÑANA</td>
+                            <td>TARDE</td>
+                            <td>NOCHE</td>
+                        </thead>
+                        <tbody align="center" >';
+
+        for ($i=1; $i <=$maxdays ; $i++) { 
+            # code...
+            $fecha=$year.'/'.$month.'/'.$i;
+            $dia=date('w',strtotime($fecha));
+
+
+            if ($dia!=0) {
+                # code...
+                echo '<tr><td>'.$fecha.'</td>';
+                        for ($u=1; $u <=3 ; $u++) { 
+                            # code...
+                        
+                            
+                                $consultaSql2="SELECT a.id from asistencia a where a.turno_id=$u and a.fecha='".$fecha."' and a.comensal_id='$codigo'";
+                                $this->result = mysql_query($consultaSql2);
+                                if($this->result){
+
+                                        $dato=mysql_fetch_row($this->result);
+                                        if ($dato[0]) {
+                                            # code...
+                                            echo '<td>Asistió</td>';
+                                        }else{
+                                            echo '<td>Faltó</td>';
+
+                                        }
+
+                                            # code...
+                                        
+                                        
+                                        
+                                }else{
+                                    
+                                }
+
+                        }
+                        echo '</tr>';
+                       
+             }         
+        }
+        echo '
+
+                        </tbody>
+                    </table>';
+        echo '<script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
+            <script src="../js/jquery.dataTables.js" type="text/javascript"></script>';
+            echo "<script type='text/javascript'>
+            $(document).ready(function(){
+                
+                $('#tablita').dataTable();
+
+                
+                });
+            </script>"; 
+
+    }
 
     function cronogramaHistorial(){
         $this->cerrarAbrir();
@@ -1217,6 +1293,22 @@ class ModeloHistorial{
             '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   Fecha de Fin de Programa:'.$fechafin.'
               </h3>';
+        }
+    }
+
+    function filtrar(){
+        $this->cerrarAbrir();
+        $codigo=$this->param['codigo'];
+        $Inicio=$this->param['inicio'];
+        $fin=$this->param['fin'];
+        $consultaSql="SELECT * FROM asistencia WHERE fecha between '".$inicio."' and '".$fin."' and comensal_id='".$codigo."'";
+        $this->result=mysql_query($consultaSql);
+        $dato=mysql_fetch_row($this->result);
+        echo "string";
+        if(mysql_num_rows($this->result)){
+            echo '<tr><td>'.$dato[1].'</td>
+                  <td>'.$dato[2].'</td>
+                  <td>'.$dato[3].'</td></tr>';
         }
     }
 }

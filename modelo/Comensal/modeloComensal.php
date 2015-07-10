@@ -88,7 +88,8 @@ class ModeloComensal{
                         if ($this->result) {
                             $row=mysql_fetch_row($this->result);
 
-                            $consultaSql="INSERT INTO  universitario_unt(comensal_id,escuela_id) values (".$row[0].",".$escuela.")";
+                            $consultaSql="INSERT INTO  universitario_unt(comensal_id,escuela_id) 
+                            values (".$row[0].",".$escuela.")";
                             $this->result=mysql_query($consultaSql);
 
                             $consultaSql="INSERT INTO usuarios(usuario,password,estado, id_comensal)
@@ -96,7 +97,8 @@ class ModeloComensal{
 
                             $this->result=mysql_query($consultaSql);
                                 if ($this->result) {
-                                    $consultaSql="SELECT id FROM usuarios where usuario='$usuario' and password='$passwordMD5'";
+                                    $consultaSql="SELECT id FROM usuarios where usuario='$usuario' and 
+                                    password='$passwordMD5'";
                                     $this->result=mysql_query($consultaSql);
                                     if($this->result)
                                     {
@@ -350,6 +352,19 @@ class ModeloComensal{
     }
     function loadComensales(){
         $this->cerrarAbrir();
+        echo '<table class="table table-bordered table-striped" id="dataTables-usuarios">
+                                        <thead>
+                                            
+                                        <tr>
+                                            
+                                            <th>Codigo</th>
+                                            <th>Dni</th>
+                                            <th>Apellidos y Nombre</th>
+
+                                            <th style="width: 40px">Programa</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>';
         $consultaSql="SELECT codigo_comensal,dni,ape_paterno,ape_maerno,nombre, p.descripcion FROM comensales c INNER JOIN programas p on c.programa_id=p.id ";
         $this->result = mysql_query($consultaSql);
         if($this->result){
@@ -357,17 +372,28 @@ class ModeloComensal{
             while($row=mysql_fetch_row($this->result)){
                 echo '<tr>  
                             
-                            <td>'.$row[3].'</td>
+                            <td>'.$row[0].'</td>
                             <td>'.$row[1].'</td>
                             <td>'.$row[2].' '.
                                   $row[3].', '.$row[4].'</td>
                             <td>'.$row[5].'</td>';
                 echo '</tr>';
-                echo '<script src="../../js/dataTables.bootstrap.js" type="text/javascript"></script>
-                      <script src="../../js/jquery.dataTables.js" type="text/javascript"></script>';
+                echo '<script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
+                      <script src="../js/jquery.dataTables.js" type="text/javascript"></script>';
                 $cont++;
             }
         }
+        echo '</tbody>
+                                        
+                                    </table>';
+        echo '<script type="text/javascript">
+                    $(document).ready(function(){
+        
+                        $("#dataTables-usuarios").dataTable();
+                        
+                        
+                    });
+                </script>';
 
     }
    

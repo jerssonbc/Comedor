@@ -29,10 +29,15 @@ class ModeloAsistencia{
     	$codigo=$this->param['codigo'];
         $hora=$this->param['horaMarcado'];
         $soloHora=$this->param['soloHoraMarcado'];
-    	$consultaSql="SELECT c.id,c.ape_paterno,c.ape_maerno,c.nombre,c.escuela,c.num_matricula,p.descripcion FROM COMENSALES C INNER JOIN PROGRAMAS P ON C.programa_id=P.id WHERE codigo_comensal='".$codigo."' ";
+    	$consultaSql="SELECT c.id,c.ape_paterno,c.ape_maerno,
+                c.nombre,c.escuela,c.num_matricula,p.descripcion,u.id as user_id FROM
+         COMENSALES C INNER JOIN PROGRAMAS P ON C.programa_id=P.id
+         inner join  usuarios u on c.id=u.id_comensal 
+         WHERE codigo_comensal='".$codigo."' ";
     	$this->result = mysql_query($consultaSql);
 
-        $datos = $this->obtenerCamposMultiples($this->result,array('id', 'ape_paterno', 'ape_maerno', 'nombre', 'escuela', 'num_matricula', 'descripcion'));
+        $datos = $this->obtenerCamposMultiples($this->result,
+            array('id', 'ape_paterno', 'ape_maerno', 'nombre', 'escuela', 'num_matricula', 'descripcion','user_id'));
         $resp['total'] = count($datos);
         $turno=0;
         $resp['opcMensaje']= 0;
@@ -62,14 +67,17 @@ class ModeloAsistencia{
             $resp['opcMensaje']= -1;
         }
         if ($resp['total']>0) {
-            $consultaSql2="SELECT * FROM ASISTENCIA WHERE comensal_id='".$datos[0]["id"]."' and turno_id=".$turno." and fecha='".date("Y-m-d")."' ";
+            $consultaSql2="SELECT * FROM ASISTENCIA 
+            WHERE comensal_id='".$datos[0]["id"]."' and turno_id=".$turno.
+                            " and fecha='".date("Y-m-d")."' ";
             $res2 = mysql_query($consultaSql2);
             $validar = $this->obtenerCamposMultiples($res2,array('id'));
             $respV['total'] = count($validar);
             $resp['totalValidacion'] = count($validar);
             if ($resp['total']>0 and $respV['total']==0) {
                 if ($turno>0) {
-                    $consulta = "INSERT INTO ASISTENCIA (`id`, `fecha`, `comensal_id`, `turno_id`) VALUES (null,now(),".$datos[0]["id"].",".$turno.")";
+                    $consulta = "INSERT INTO ASISTENCIA (`id`, `fecha`, `comensal_id`, `turno_id`) 
+                    VALUES (null,now(),".$datos[0]["id"].",".$turno.")";
                     $this->result = mysql_query($consulta);                    
                 }  
             }        
@@ -92,6 +100,7 @@ class ModeloAsistencia{
                 array_push($datos3, $datosFila);
             }
         }
+
         return $datos3;
     }
     

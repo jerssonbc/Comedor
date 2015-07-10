@@ -193,7 +193,7 @@ if(!isset($_SESSION['idUsuario'])){
                                         <a href="#" class="btn btn-default btn-flat">Perfil</a>
                                     </div>
                                     <div class="pull-right">
-                                        <a href="vista/logout.php" class="btn btn-default btn-flat">Sign out</a>
+                                        <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
                                     </div>
                                 </li>
                             </ul>
@@ -288,34 +288,16 @@ if(!isset($_SESSION['idUsuario'])){
                                     <h3 class="box-title">Comesales Registrados</h3>
                                     <div class="box-tools">
                                         <ul class="pagination pagination-sm no-margin pull-right">
-                                            <li><a href="#">&laquo;</a></li>
-                                            <li><a href="#">1</a></li>
+                                            <li><a href="#" >&laquo;</a></li>
+                                            <li><a href="#"onclick="loadComensales();">1</a></li>
                                             <li><a href="#">2</a></li>
                                             <li><a href="#">3</a></li>
                                             <li><a href="#">&raquo;</a></li>
                                         </ul>
                                     </div>
                                 </div><!-- /.box-header -->
-                                <div class="box-body table-responsive">
-                                    <table class="table table-bordered table-striped" id="dataTables-usuarios">
-                                        <thead>
-                                            
-                                        <tr>
-                                            
-                                            <th>Codigo</th>
-                                            <th>Dni</th>
-                                            <th>Apellidos y Nombre</th>
-
-                                            <th style="width: 40px">Programa</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody id="bcomensales" >
-                                            
-                                            
-                                        
-                                        </tbody>
-                                        
-                                    </table>
+                                <div class="box-body table-responsive" id="bcomensales">
+                                    
                                 </div><!-- /.box-body -->
                             </div><!-- /.box -->
                             
@@ -344,14 +326,7 @@ if(!isset($_SESSION['idUsuario'])){
          <script src="../js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
         <script src="../js/plugins/datatables/jquery.dataTables.js" type="text/javascript"></script>
         <script src="../js/menu.js" type="text/javascript"></script>
-        <script type="text/javascript">
-            $(document).ready(function(){
-
-                $('#dataTables-usuarios').dataTable();
-                $("#example1").dataTable();
-                
-            });
-        </script>
+        
          
 
          

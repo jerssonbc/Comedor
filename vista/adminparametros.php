@@ -30,7 +30,7 @@ if(!isset($_SESSION['idUsuario'])){
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
     </head>
-    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);loadFacultades();" >
+    <body class="skin-blue" onload="listarMenu1(2);listarMenu2(3);" >
         <!-- header logo: style can be found in header.less -->
         <header class="header">
             <a href="../index" class="logo">
@@ -328,7 +328,7 @@ if(!isset($_SESSION['idUsuario'])){
                                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                 <h4 class="modal-title"><i class="fa fa-plus"></i>Agregar Parametro</h4>
                             </div>
-                            <form action="#" method="post">
+                            <form id="addparametro" action="#" method="post" accept-charset="utf-8">
                                 <div class="modal-body">
                                     <div class="form-group">
                                         <label for="codigo">Código</label>
@@ -357,12 +357,11 @@ if(!isset($_SESSION['idUsuario'])){
                                             required >
                                         </div>
                                     </div>
-
                                     <div class="form-group">
                                         <label for="finicio" class="col-sm-2 control-label">Fecha Inicio:</label>
                                         <div class="col-sm-4">
                                             <div class="input-group input-append date" id="fechainicio">
-                                                <input type="text" class="form-control" required>
+                                                <input name="fechainicio" type="text" class="form-control" required>
                                                 <span class="input-group-addon add-on">
                                                     <i class="fa  fa-calendar"></i></span>
                                             </div>
@@ -372,24 +371,23 @@ if(!isset($_SESSION['idUsuario'])){
                                         <label for="ffin" class="col-sm-2 control-label">Fecha Fin:</label>
                                         <div class="col-sm-4">
                                             <div class="input-group input-append date" id="fechafin">
-                                                <input type="text" class="form-control" required>
+                                                <input name="fechafin" type="text" class="form-control" required>
                                                 <span class="input-group-addon add-on">
                                                     <i class="fa  fa-calendar"></i></span>
                                             </div>
                                         </div>
-
                                     </div>
-                                    
-                                   
-
+                
                                 </div>
                                 <div class="modal-footer clearfix">
 
                                     <button type="button" class="btn btn-danger" data-dismiss="modal">
                                     <i class="fa fa-times"></i> Discard</button>
 
-                                    <button type="submit" class="btn btn-primary pull-left">
-                                    <i class="fa fa-envelope"></i> Send Message</button>
+
+
+                                    <a class="btn btn-primary pull-left" onClick="agregarParametro();">
+                                    <i class="fa  fa-plus-circle"></i> Registrar</a>
                                 </div>
                             </form>
                         </div><!-- /.modal-content -->
@@ -407,13 +405,16 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js" type="text/javascript"></script>
 
-        <script type="text/javascript" src="../js/registrocomensal.js"></script>
+        
 
         <script src="../js/menu.js" type="text/javascript"></script>
         <script src="../js/bootstrap-datepicker.js" type="text/javascript"></script>
         <script src="../js/bootstrap-datepicker.es.min.js" type="text/javascript"></script>
         <script src="../js/jquery.dataTables.js" type="text/javascript"></script>
         <script src="../js/dataTables.bootstrap.js" type="text/javascript"></script>
+
+        <script  src="../js/parametros.js" type="text/javascript"></script>
+        
         <script language="JavaScript" type="text/javascript">
             $(document).ready(function(){
                 $('#dataTables-parametros').dataTable();

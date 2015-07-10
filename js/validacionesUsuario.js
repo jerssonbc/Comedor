@@ -280,8 +280,8 @@ function editarTrabajador(){
     if(bol){
         //var vimagepath=window.uploadedImage.imagePath;
         $.ajax({
-            type: "POST",
-            data: {dni:dni,
+            type:"POST",
+            data:{dni:dni,
                 apellidos:apellidos,
                 nombres:nombres,
                 password:password,
