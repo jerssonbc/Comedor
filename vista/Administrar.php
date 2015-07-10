@@ -274,7 +274,7 @@ if(!isset($_SESSION['idUsuario'])){
                 </section>
 
                 <!-- Main content -->
-                <section class="content" >
+                <section class="content" id="content" >
                             <div class="nav-tabs-custom">
                                                 <ul class="nav nav-tabs">
                                                     <li class="active"><a href="#tab_1" data-toggle="tab">AGREGAR</a></li>
@@ -420,7 +420,7 @@ if(!isset($_SESSION['idUsuario'])){
                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                         <h4 class="modal-title"><i class="fa fa-pencil"></i> EDITAR USUARIO </h4>
                                     </div>
-                                    <form action="#" method="post" onsubmit="editarTrabajador(); return false;" accept-charset="utf-8">
+                                    <form action="#" method="post" onsubmit="editar(tipoEditar.value); return false;" accept-charset="utf-8">
                                         <div class="modal-body" id="AreaEditar">
                                             
 
@@ -430,6 +430,28 @@ if(!isset($_SESSION['idUsuario'])){
                                             <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Salir</button>
 
                                             <button type="submit" class="btn btn-primary pull-left"><i class="fa fa-pencil"></i> Editar</button>
+                                        </div>
+                                    </form>
+                                </div><!-- /.modal-content -->
+                            </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+                        <div class="modal fade" id="compose-modalCard" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title"><i class="fa fa-pencil"></i> GRABAR TARJETA RFID </h4>
+                                    </div>
+                                    <form action="#" method="post" onsubmit="return false;" accept-charset="utf-8">
+                                        <div class="modal-body" id="AreaEditarCard">
+                                            
+
+                                        </div>
+                                        <div class="modal-footer clearfix">
+
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fa fa-times"></i>Salir</button>
+
+                                    
                                         </div>
                                     </form>
                                 </div><!-- /.modal-content -->
@@ -449,6 +471,7 @@ if(!isset($_SESSION['idUsuario'])){
         <script src="../js/menu.js" type="text/javascript"></script>
         <script src="../js/validacionesUsuario.js" type="text/javascript"></script>
         <script src="../js/registrarCronograma.js" type="text/javascript"></script>
+        <script src="../js/asistencia.js" type="text/javascript"></script>
         
     </body>
 </html>

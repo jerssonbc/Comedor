@@ -51,6 +51,12 @@ class ModeloUsuario{
             case "editarTrabajador":
                 echo $this->editarTrabajador();
                 break;
+            case "cargarGrabarTargeta":
+                echo $this->cargarGrabarTargeta();
+                break;
+            case "editarComensal":
+                echo $this->editarComensal();
+                break;
             case "cargarHoras":
                 echo $this->cargarHoras();
                 break;
@@ -235,6 +241,7 @@ class ModeloUsuario{
 
         $usuario=$this->param['idUsuario'];
         $tipo=$this->param['tipo'];
+        $postt=$this->param['post'];
         //echo "hola";
         $rol=0;
         if ($this->param['post']!='index') {
@@ -248,7 +255,7 @@ class ModeloUsuario{
         $consultaSql="SELECT m.padre,m.nombre,m.url,r.id FROM menus m 
                         inner join rol_menu rm on m.id=rm.menu_id 
                         inner join roles r on r.id=rm.rol_id
-                        inner join usuario_rol ur on r.id=ur.rol_id WHERE ur.usuario_id='$usuario' ";
+                        inner join usuario_rol ur on r.id=ur.rol_id WHERE ur.usuario_id='$usuario' and m.estado=1 ";
         $this->result = mysql_query($consultaSql);
         if($this->result){
                 //$cont=1;
@@ -264,8 +271,8 @@ class ModeloUsuario{
             if ($tipo==2) {
                 if ($rol!=3) {
                     # code...
-                    echo '<li><a onclick="registrarAsistencia()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR ASISTENCIA</a></li>
-                    <li><a onclick="tipoComensal()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>';
+                    echo '<li><a onclick="registrarAsistencia('."'$postt'".')" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR ASISTENCIA</a></li>
+                    <li><a onclick="tipoComensal('."'$postt'".')" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR TIPO COMENSAL</a></li>';
                 }
                 
                 //echo '<li><a onclick="registrarCronograma()" style="cursor:pointer;"><i class="fa fa-angle-double-right"></i> REGISTRAR CRONOGRAMA COMENSAL</a></li>';
@@ -468,13 +475,17 @@ function listarUsuarios(){
                             <td>'.$row[2].'</td>
                             <td>'.$row[3].'</td>
                             <td>
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" onClick="cargarEditarComensal('.$row[0].')"><icon class="glyphicon glyphicon-pencil"></button>
-                                <button class="btn btn-success" data-toggle="modal" data-target="#registrarCronograma'.$row[4].'"><icon class="glyphicon glyphicon-th"></button>
+                                <button title="Editar Comensal" class="btn btn-primary" data-toggle="modal" data-target="#compose-modal" onClick="cargarEditarComensal('.$row[0].')"><icon class="glyphicon glyphicon-pencil"></button>
+                                <button title="Asignar Cronograma" class="btn btn-success" data-toggle="modal" data-target="#registrarCronograma'.$row[4].'"><icon class="glyphicon glyphicon-th"></button>
+                                <a  title="Exportar Modelo Carnet" href="../vista/card.php?codigo='.$row[0].'" target="_blank" "><button class="btn btn-info"><icon class="glyphicon glyphicon-print"></button></a>
+                                <button title="Grabar Carnet RFID" class="btn btn-warning" data-toggle="modal" data-target="#compose-modalCard" onClick="cargarGrabarTargeta('.$row[0].')"><icon class="glyphicon glyphicon-save"></button>
+
                             </td>
                         </tr>';                    
             }
             echo    '</tbody>                    
                 </table>';
+            echo '<a href="../vista/cards.php" target="_blank" "><button class="btn btn-info" >IMPRIMIR CARD <icon class="glyphicon glyphicon-print"></button></a>';
             $consultaSql="SELECT u.id,u.usuario,c.dni,concat(c.ape_paterno,' ',c.ape_maerno,' ',c.nombre),c.id from usuarios u inner join comensales c 
                                 on u.id_comensal=c.id where u.estado=1 and u.id_comensal is not null";
             $this->result = mysql_query($consultaSql);
@@ -692,6 +703,7 @@ function cargarEditar(){
                                                     <span class="input-group-addon">CORREO:</span>
                                                     <input id="correoE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[5].'">
                                                     <input id="idE" type="hidden" class="form-control" placeholder="idE" value="'.$row[0].'">
+                                                    <input id="tipoEditar" name="tipoEditar" type="hidden" value="1">
                                                 </div>
                                             </div>
                                             <div class="form-group" >
@@ -741,27 +753,57 @@ function cargarEditarComensal(){
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">APE MATERNO:</span>
-                                                    <input id="apeMaternoEC" type="text" class="form-control" placeholder="APELLIDOS" value="'.$row[3].'">
+                                                    <input id="apeMaternoEC" type="text" class="form-control" placeholder="APELLIDOS" value="'.$row[4].'">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">NOMBRES:</span>
-                                                    <input id="nombresE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[4].'">
+                                                    <input id="nombresEC" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[5].'">
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                 <div class="input-group">
                                                     <span class="input-group-addon">CODIGO COM:</span>
-                                                    <input id="codigoE" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[5].'">
+                                                    <input id="codigoEC" type="text" class="form-control" placeholder="NOMBRES" value="'.$row[6].'">
                                                     <input id="idEC" type="hidden" class="form-control" placeholder="idE" value="'.$row[0].'">
+                                                    <input id="tipoEditar" name="tipoEditar" type="hidden" value="2">
                                                 </div>
                                             </div>
-                                            <div class="form-group" >
-                                                    <label>ROL</label>
-                                                    <select class="form-control" id="rolE">                                   
-                                                    </select>
-                                            </div>';
+                                            ';
+
+        }
+}
+function cargarGrabarTargeta(){
+    $idUsuario=$this->param['idUsuario'];
+    $this->cerrarAbrir();
+       $consultaSql="SELECT u.id,u.usuario,t.dni,t.ape_paterno,t.ape_maerno,t.nombre,t.codigo_comensal,ur.rol_id 
+                    from usuarios u inner join Comensales t 
+                                on u.id_comensal=t.id 
+                                inner join usuario_rol ur 
+                                on u.id=ur.usuario_id where u.estado=1 and u.id='$idUsuario' and u.id_comensal is not null";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+
+            echo ' 
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon">CODIGO COM:</span>
+                             <input id="codigoComensal" type="text" class="form-control" placeholder="ERROR AL CARGAR" value="'.$row[6].'" disabled>
+                             <input id="idEC" type="hidden" class="form-control" placeholder="idE" value="'.$row[0].'">
+                             <input id="tipoEditar" name="tipoEditar" type="hidden" value="2">
+                         </div>
+                     </div>
+                     <div  class="btn btn-danger" onclick="grabarRDIF(codigoComensal.value);" ><i class="glyphicon glyphicon-sort"></i>GRABAR</div>
+                     <br><br><span class="input-group-addon">* Despues de grabar pasar la terjeta por del dispositivo</span><br>
+                     <span class="input-group-addon">** Pasar por segunda vez la targeta para verificar</span><br>
+
+                     <div class="input-group">
+                            <span class="input-group-addon"></span>
+                             <input id="verificar" type="text" class="form-control" placeholder="VERIFICAR LECTURA AQUI" ">
+                         </div>
+                                            ';
 
         }
 }
@@ -787,11 +829,11 @@ function editarTrabajador(){
         }
 
         $this->cerrarAbrir();
-            if ($password='') {
+            if ($password=='') {
                 # code...
-                $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario' WHERE `id`='$idUsuario' ";
+                 $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario' WHERE `id`='$idUsuario' ";
             }else{
-                $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario',`password`='$passwordMD5' WHERE `id`='$idUsuario' ";
+                 $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario',`password`='$passwordMD5' WHERE `id`='$idUsuario' ";
             }
            
             $this->result = mysql_query($consultaSql);
@@ -803,6 +845,52 @@ function editarTrabajador(){
                 echo 'ok';
                 }else{
                     echo 'error en el editar Trabajador';
+                }
+            
+        }else{
+            echo 'error Editar Usuario';
+        }
+
+}
+function editarComensal(){
+
+    $idUsuario=$this->param['idUsuario'];
+        $dni=$this->param['dni'];
+        $apellidoP=$this->param['apellidoP'];
+        $apellidoM=$this->param['apellidoM'];
+        $nombres=$this->param['nombres'];
+        $usuario = $this->param['user'];
+        $password = $this->param['password'];
+        $codigoC = $this->param['codigoC'];
+        $passwordMD5=md5($password);
+
+        $fecha_updated=date("Y-m-d");
+        $idUsuario=$this->param['idUsuario'];
+        $consultaSql="SELECT ur.id from usuarios u 
+                                inner join comensales ur on ur.id=u.id_comensal where  u.id='$idUsuario'";
+        $this->result = mysql_query($consultaSql);
+        if($this->result){
+            $row=mysql_fetch_row($this->result);
+            $idComensal=$row[0];   
+        }
+
+        $this->cerrarAbrir();
+            if ($password=='') {
+                # code...
+                 $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario' WHERE `id`='$idUsuario' ";
+            }else{
+                 $consultaSql="UPDATE `usuarios` SET `usuario`='$usuario',`password`='$passwordMD5' WHERE `id`='$idUsuario' ";
+            }
+           
+            $this->result = mysql_query($consultaSql);
+            if($this->result){
+                $this->cerrarAbrir();
+                $consultaSql="UPDATE `comensales` SET `dni`='$dni',`ape_paterno`='$apellidoP',`ape_maerno`='$apellidoM',`nombre`='$nombres',`codigo_comensal`='$codigoC',`updated_at`='$fecha_updated' WHERE `id`='$idComensal' ";
+                $this->result = mysql_query($consultaSql);
+                if($this->result){
+                echo 'ok';
+                }else{
+                    echo 'error en el editar Comensal';
                 }
             
         }else{

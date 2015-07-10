@@ -19,7 +19,14 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- Theme style -->
         <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css" />
         <link href="../assets/css/goSamples.css" rel="stylesheet" type="text/css" />
-        <link href="../css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> 
+        <link href="../css/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+        <link href="../css/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+        <!-- iCheck for checkboxes and radio inputs -->
+        <link href="../css/iCheck/all.css" rel="stylesheet" type="text/css" />
+        <!-- Bootstrap Color Picker -->
+        <link href="../css/colorpicker/bootstrap-colorpicker.min.css" rel="stylesheet"/>
+        <!-- Bootstrap time Picker -->
+        <link href="../css/timepicker/bootstrap-timepicker.min.css" rel="stylesheet"/> 
         <style type="text/css">
             a {
                 cursor: pointer;
@@ -281,7 +288,7 @@ if(!isset($_SESSION['idUsuario'])){
                 </section>
 
                 <!-- Main content -->
-                <section class="content" style="background: url(/img/fondo.jpg);no-repeat;height:500px" >
+                <section class="content" id="content" style="background: url(/img/fondo.jpg);no-repeat;height:500px" >
                 <div style="margin-right:50px;background: rgba(255,255,255,0.9);border-radius: 5px 5px 5px 5px;padding: 15px;width: 90%;">
 
                 <center>
@@ -290,11 +297,17 @@ if(!isset($_SESSION['idUsuario'])){
                         
                     </div>
                     <form name="fmrhistorial" method="POST">
-                        <h3>Fecha Inicio: &nbsp;<input type="date" id="txtfechaIn">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        Fecha Fin: &nbsp;<input type="date" id="txtfechaFin">
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <div class="btn btn-primary btn-lg" onclick="repetir();">Filtrar</div></h3>
+                        
+                        <div class="btn btn-primary btn-lg" onclick="filtrar();">Filtrar</div></h3>
+                        <div class="form-group">
+                                <label>Date range:</label>
+                                <div class="input-group">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
+                                    <input type="text" class="form-control pull-right" id="reservation"/>
+                                </div><!-- /.input group -->
+                        </div>
                     </form>
                     <br><br>
                     <div id='historial'>
@@ -321,7 +334,7 @@ if(!isset($_SESSION['idUsuario'])){
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
 
-    <button type="button" onclick="loadInstitucion();" class="btn btn-danger">Cancelar</button>
+    
         <!-- jQuery 2.0.2 -->
         <script src="../js/jquery-2.1.3.min.js" type="text/javascript"></script>
         <!-- Bootstrap -->
@@ -331,6 +344,27 @@ if(!isset($_SESSION['idUsuario'])){
          <script type"text/javascript" src="../js/registrocomensal.js"></script>
          <script type="text/javascript" src="../js/historial.js"></script>
          <script src="../js/menu.js" type="text/javascript"></script>
+        <script src="../js/asistencia.js" type="text/javascript"></script>
+        <script src="../js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+        <script src="../js/plugins/input-mask/jquery.inputmask.js" type="text/javascript"></script>
+        <script src="../js/plugins/input-mask/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+        <script src="../js/plugins/input-mask/jquery.inputmask.extensions.js" type="text/javascript"></script>
+        <script src="../js/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
+        <!-- bootstrap color picker -->
+        <script src="../js/plugins/colorpicker/bootstrap-colorpicker.min.js" type="text/javascript"></script>
+        <!-- bootstrap time picker -->
+        <script src="../js/plugins/timepicker/bootstrap-timepicker.min.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            $(function() {
+                //Datemask dd/mm/yyyy
+                
+                //Date range picker
+                $('#reservation').daterangepicker({format: 'DD/MM/YYYY'});
+                //Date range picker with time picker
+                
+                
+            });
+        </script>
 
     </body>
 </html>

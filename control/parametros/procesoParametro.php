@@ -2,7 +2,7 @@
 include_once '../../modelo/parametros/modeloParametros.php';
 $param=array();
 session_start();
-
+$param['param_opcion']='';
 $param['codigo']='';
 $param['anio']='';
 $param['descripcion']='';
@@ -20,6 +20,9 @@ if(isset($_POST['descripcion']))
 
 if(isset($_POST['fechainicio']))
 		$param['fechainicio']=$_POST['fechainicio'];
+
+if(isset($_POST['param_opcion']))
+		$param['param_opcion']=$_POST['param_opcion'];
 
 if(isset($_POST['fechafin']))
 		$param['fechafin']=$_POST['fechafin'];

@@ -271,7 +271,7 @@ if(!isset($_SESSION['idUsuario'])){
                 </section>
 
                 <!-- Main content -->
-                <section class="content">
+                <section class="content" id="content">
 
                     <!-- row -->
                     <div class="row">
@@ -549,6 +549,7 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- jQuery Knob -->
          
         <script src="../js/menu.js" type="text/javascript"></script>
+        <script src="../js/asistencia.js" type="text/javascript"></script>
         <script src="../js/reportes.js" type="text/javascript"></script>
         <script src="../js/plugins/morris/raphael-min.js" type="text/javascript">></script>
         <script src="../js/plugins/morris/morris.min.js" type="text/javascript"></script>

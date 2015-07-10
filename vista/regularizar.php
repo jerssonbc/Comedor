@@ -271,7 +271,7 @@ if(!isset($_SESSION['idUsuario'])){
                 </section>
 
                 <!-- Main content -->
-                <section class="content" >
+                <section class="content" id="content" >
 
                             <div class="box box-primary">
                                 <div class="box-header">
@@ -328,6 +328,7 @@ if(!isset($_SESSION['idUsuario'])){
         <!-- AdminLTE App -->
         <script src="../js/AdminLTE/app.js"        type="text/javascript"></script>
         <script src="../js/menu.js" type="text/javascript"></script>
+        <script src="../js/asistencia.js" type="text/javascript"></script>
 
 
     </body>

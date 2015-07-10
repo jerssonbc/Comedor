@@ -1,4 +1,5 @@
-function registrarAsistencia(){
+function registrarAsistencia(post){
+  //alert(post);
   var xmlhttp;
   if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -16,24 +17,38 @@ function registrarAsistencia(){
       startTime();
       }
     }
-  xmlhttp.open("GET","vista/view_asistencia.php",true);
+    if (post=='index') {
+      xmlhttp.open("GET","vista/view_asistencia.php?p=1",true);
+    }else{
+      xmlhttp.open("GET","view_asistencia.php?p=2",true);
+    };
+  
   xmlhttp.send();
 }
 
-function registrarAsistenciaComensal() {
+function registrarAsistenciaComensal(p) {
+    if (p==1) {
+        urls="control/asistencia/controlAsistencia.php"
+    }else{
+        urls="../control/asistencia/controlAsistencia.php"
+    };
     codigo=$('#codigo').val();     
     horaMarcado=$('#horaMarcado').val(); 
     soloHoraMarcado=$('#soloHoraMarcado').val();
       $.ajax({
           type: "POST",
-          data: {codigo,horaMarcado,soloHoraMarcado,param_opcion:'registrar'},
-          url: "control/asistencia/controlAsistencia.php",
+          data: {codigo,horaMarcado,soloHoraMarcado,p,param_opcion:'registrar'},
+          url: urls,
           success: function(datos) {
               if (datos == '') {
                   alert(datos+"Comensal no registrado");
+                  $('#codigo').val('');
+                  $("#codigo").focus(); 
               } else {
                   
                   $("#datosAsistencia").html(datos);
+                  $('#codigo').val('');
+                  $("#codigo").focus();  
               }
           },
           error: function(datos) {
@@ -44,7 +59,7 @@ function registrarAsistenciaComensal() {
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-function tipoComensal(){
+function tipoComensal(post){
   var xmlhttp;
   if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
@@ -61,7 +76,11 @@ function tipoComensal(){
       document.getElementById("content").innerHTML=xmlhttp.responseText;      
       }
     }
-  xmlhttp.open("GET","vista/view_registrarTipoComensal.php",true);
+    if (post=='index') {
+      xmlhttp.open("GET","vista/view_registrarTipoComensal.php",true);
+    }else{
+      xmlhttp.open("GET","view_registrarTipoComensal.php",true);
+    };
   xmlhttp.send();
 }
 

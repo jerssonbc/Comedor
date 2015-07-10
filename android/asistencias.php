@@ -12,10 +12,12 @@
             printf("Connect failed: %s\n", mysqli_connect_error());
             exit();
         }
+
   $sql=mysqli_query($c,"SELECT a.fecha,c.ape_paterno,c.ape_maerno,c.nombre,t.descripcion from 
     asistencia a inner join turnos t on a.turno_id=t.id inner join 
     comensales c on a.comensal_id=c.id inner join 
     usuarios u on c.id=u.id_comensal where u.id=".$idUsuario." order by a.fecha");
+
 
   $datos=array(); 
   $cont=0;

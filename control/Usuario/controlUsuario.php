@@ -7,11 +7,14 @@ $param['tipo']='';
 $param['post']='';
 $param['dni']='';
 $param['apellidos']='';
+$param['apellidoP']='';
+$param['apellidoM']='';
 $param['nombres']='';
 $param['correo']='';
 $param['rol']='';
 $param['estado']='';
 $param['user']='';
+$param['codigoC']='';
 
 $param['Mentrada']='';
 $param['Msalida']='';
@@ -72,6 +75,12 @@ if (isset($_POST['Nentrada']))
     $param['Nentrada'] = $_POST['Nentrada'];
 if (isset($_POST['Nsalida']))
     $param['Nsalida'] = $_POST['Nsalida'];
+if (isset($_POST['apellidoP']))
+    $param['apellidoP'] = $_POST['apellidoP'];
+if (isset($_POST['apellidoM']))
+    $param['apellidoM'] = $_POST['apellidoM'];
+if (isset($_POST['codigoC']))
+    $param['codigoC'] = $_POST['codigoC'];
 
 $Usuario=new ModeloUsuario();
 echo $Usuario->gestionar($param);

@@ -6,7 +6,7 @@ function listarMenu1(tipo){
             url: "../control/Usuario/controlUsuario.php",
             success: function(datos) {
                 if (datos == '') {
-                    alert(datos+"Error");
+                    //alert(datos+"Error");
                 } else {
                     $('#listarMenu1').append(datos);
                 }

@@ -259,6 +259,39 @@ function cargarEditarComensal(idUsuario)
             }
      });
 }
+function cargarGrabarTargeta(idUsuario)
+{
+    //alert(idUsuario);
+    $.ajax({
+            type: "POST",
+            data: {idUsuario:idUsuario,param_opcion:'cargarGrabarTargeta'},
+            url: "../control/Usuario/controlUsuario.php",
+            success: function(datos) {
+                if (datos == '') {
+                    
+                } else {
+                    $('#AreaEditarCard').html(datos);
+                }
+            },
+            error: function(datos) {
+                alert(datos+" Error Fatal3");
+            }
+     });
+}
+function editar(cod){
+    //alert(cod);
+    if(cod==1){
+        editarTrabajador();
+    }else{
+        if(cod==2){
+        editarComensal();
+    }else{
+        alert("error"+cod)
+    }
+
+    }
+    
+}
 function editarTrabajador(){
     var bol=true;
     dni=$('#dniE').val();
@@ -308,12 +341,89 @@ function editarTrabajador(){
     }
     
 }
-function cargarHoras(){
+function editarComensal(){
+    //alert("editado");
+    var bol=true;
+    dni=$('#dniEC').val();
+    apellidoP=$('#apePaternoEC').val();
+    apellidoM=$('#apeMaternoEC').val();
+    nombres=$('#nombresEC').val();
+    usuario=$('#usuarioEC').val();
+    password=$('#passwordEC').val();
+    codigoC=$('#codigoEC').val();
+    idUsuario=$('#idEC').val();
+    if (dni=='') {bol=false;alert('Llenar DNI');};
+    if ($('#dniEC').val().length!=8 && bol==true) { bol=false;alert('Tamaño 8 digitos en DNI');};
+    if (apellidoP=='' &&  bol==true) {bol=false;alert('Llenar Apellido Paterno');};
+    if (nombres=='' &&  bol==true) {bol=false;alert('Llenar nombres');};
+    if (apellidoM=='' &&  bol==true) {bol=false;alert('Llenar Apellido Materno');};
+    if (usuario=='' &&  bol==true) {bol=false;alert('Llenar Usuario');};
+    if (codigoC=='' &&  bol==true) {bol=false;alert('Llenar Codigo Comensal');};
+
+    //alert(dni+'::'+apellidos+'::'+nombres+'::'+correo+'::'+usuario+'::'+password+'::'+rol+'::'+idUsuario);
+    if(bol){
+        //var vimagepath=window.uploadedImage.imagePath;
+        $.ajax({
+            type:"POST",
+            data:{dni:dni,
+                apellidoP:apellidoP,
+                nombres:nombres,
+                password:password,
+                apellidoM:apellidoM,
+                user:usuario,
+                codigoC:codigoC,
+                idUsuario:idUsuario,
+                //uploadedImagePath:vimagepath,
+                param_opcion:'editarComensal'},
+            url: "../control/Usuario/controlUsuario.php",
+            success: function(datos) {
+                if (datos == '') {
+                    alert("Error");
+                } else {
+                    alert(datos);
+                    listarUsuarios();
+                    $('#compose-modal').modal('hide');
+                }
+            },
+            error: function(datos) {
+                alert( datos+" Error Fatal1");
+            }
+        });
+    }
+}
+function grabarRDIF(codigo){
+        //alert(codigo);
+        $.ajax({
+            type: "POST",
+            data: {codigo:codigo},
+            url: "../modelo/Usuario/grabarCard2.php",
+            success: function(datos) {
+                if (datos == '') {
+                    alert("Error");
+                } else {
+                    alert(datos);
+                    //listarUsuarios();
+                    //$('#compose-modal').modal('hide');
+                    $('#formHoras').html(datos);
+                }
+            },
+            error: function(datos) {
+                alert( datos+" Error Fatal1");
+            }
+        });
+}
+function cargarHoras(p){
+    //alert(p);
+    if (p==1) {
+        urls="control/Usuario/controlUsuario.php"
+    }else{
+        urls="../control/Usuario/controlUsuario.php"
+    };
     //alert('asdfasdf');
     $.ajax({
             type: "POST",
             data: {param_opcion:'cargarHoras'},
-            url: "control/Usuario/controlUsuario.php",
+            url: urls,
             success: function(datos) {
                 if (datos == '') {
                     alert("Error");
@@ -329,7 +439,12 @@ function cargarHoras(){
             }
         });
 }
-function editarHorasTurno(){
+function editarHorasTurno(p){
+    if (p==1) {
+        urls="control/Usuario/controlUsuario.php"
+    }else{
+        urls="../control/Usuario/controlUsuario.php"
+    };
     var bol=true;
     Mentrada=$('#Mentrada').val();
     Msalida=$('#Msalida').val();
@@ -343,7 +458,13 @@ function editarHorasTurno(){
     if (Tsalida=='' &&  bol==true) {bol=false;alert('Llenar Salida Tarde');};
     if (Nentrada=='' &&  bol==true) {bol=false;alert('Llenar Entrada Noche');};
     if (Nsalida=='' &&  bol==true) {bol=false;alert('Llenar Salida Noche');};
-
+    if ((parseInt(Mentrada)>24 || parseInt(Msalida)>24 || parseInt(Tentrada)>24 || parseInt(Tsalida)>24 || parseInt(Nentrada)>24 || parseInt(Nsalida)>24) && bol==true) {bol=false;alert('HORAS MENORES O IGUALES A 24');};
+    if (parseInt(Mentrada)>=parseInt(Msalida) &&  bol==true) {alert('Error: Salida Menor que entrada(MAÑANA)'+Mentrada+'::'+Msalida+bol);bol=false;};
+    if (parseInt(Tentrada)>=parseInt(Tsalida) &&  bol==true) {bol=false;alert('Error: Salida Menor que entrada(TARDE)');};
+    if (parseInt(Nentrada)>=parseInt(Nsalida) &&  bol==true) {bol=false;alert('Error: Salida Menor que entrada(NOCHE)');};
+    if (parseInt(Msalida)>=parseInt(Tentrada) &&  bol==true) {bol=false;alert('Error: Salida MAÑANA mayor que Entrada TARDE');};
+    if (parseInt(Tsalida)>=parseInt(Nentrada) &&  bol==true) {bol=false;alert('Error: Salida TARDE mayor que Entrada NOCHE');};
+    //if (Msalida<Tentrada &&  bol==true) {bol=false;alert('Error: Salida MAÑANA mayor que Entrada TARDE');};
     //alert(dni+'::'+apellidos+'::'+nombres+'::'+correo+'::'+usuario+'::'+password+'::'+rol+'::'+idUsuario);
     if(bol){
         //var vimagepath=window.uploadedImage.imagePath;
@@ -356,13 +477,13 @@ function editarHorasTurno(){
                 Nentrada:Nentrada,
                 Nsalida:Nsalida,
                 param_opcion:'editarHora'},
-            url: "control/Usuario/controlUsuario.php",
+            url: urls,
             success: function(datos) {
                 if (datos == '') {
                     alert("Error");
                 } else {
                     alert(datos);
-                    cargarHoras();
+                    cargarHoras(p);
                     //$('#compose-modal').modal('hide');
                 }
             },
@@ -372,6 +493,27 @@ function editarHorasTurno(){
         });
     }
     
+}
+function exportarCard(user){
+    //alert('entrar');
+    $.ajax({
+            type: "POST",
+            data: {user,
+                param_opcion:'editarHora'},
+            url: "../vista/card.php",
+            success: function(datos) {
+                if (datos == '') {
+                    alert("Error");
+                } else {
+                    //alert(datos);
+                    //cargarHoras();
+                    //$('#compose-modal').modal('hide');
+                }
+            },
+            error: function(datos) {
+                alert( datos+" Error Fatal1");
+            }
+        });
 }
 
 
