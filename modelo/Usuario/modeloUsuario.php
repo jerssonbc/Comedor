@@ -494,13 +494,26 @@ function listarUsuarios(){
 
             while($row=mysql_fetch_row($this->result)){
                 $j=0;                
-                $consultaSql2=mysql_query("SELECT id,fecha,estado from cronogramas_servicio where comensal_id=".$row[4]." ");
+                $consultaSql2=mysql_query("SELECT id,fecha,estado from cronogramas_servicio where comensal_id=".$row[4]." and month(fecha)=month(curdate()) ");
                 while($fila=mysql_fetch_row($consultaSql2)){
                     if (substr($fila[1], 0, 7)==$fechaAM) {
                         $j=$j+1;
                         $marcado[$j]=$fila[2];
                     }
                 }
+                $mes=date("F");
+                if ($mes=="January") $mes="Enero";
+                if ($mes=="February") $mes="Febrero";
+                if ($mes=="March") $mes="Marzo";
+                if ($mes=="April") $mes="Abril";
+                if ($mes=="May") $mes="Mayo";
+                if ($mes=="June") $mes="Junio";
+                if ($mes=="July") $mes="Julio";
+                if ($mes=="August") $mes="Agosto";
+                if ($mes=="September") $mes="Setiembre";
+                if ($mes=="October") $mes="Octubre";
+                if ($mes=="November") $mes="Noviembre";
+                if ($mes=="December") $mes="Diciembre";
                 if ($j>0) {
                     echo '
                     <!-- Modal registrar cronograma -->
@@ -510,11 +523,10 @@ function listarUsuarios(){
                         <form onsubmit="guardarCronogramaComensal('.$row[4].'); return false;" method="post" accept-charset="utf-8">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Cronograma de Servicio para '.$row[3].' (MES ACTUAL: '.date("F").') - (Registrado!)</h4>
+                            <h4 class="modal-title" id="myModalLabel">Cronograma de Servicio para '.$row[3].' (MES ACTUAL: '.$mes.') - (Registrado!)</h4>
                           </div>
-                          <div class="modal-body">
+                          <div class="modal-body" style="padding-bottom:0px;">
                               <div class="form-group">
-                                <input type="hidden" id="dia0">
                                     <table class="table">
                                       <thead>
                                         <tr class="danger">
@@ -551,7 +563,7 @@ function listarUsuarios(){
                                                 }
                                                                                                 
                                             }
-                                            echo '<td class="dia'.$aux.'" id="dia'.$aux.''.$row[4].'" style="'.$estilo.'"><div style="width:90px;height:45px;color:white;">';
+                                            echo '<td class="dia'.$aux.'" id="dia'.$aux.''.$row[4].'" style="'.$estilo.'"><div style="width:90px;height:40px;color:white;">';
                                             if(isset($days[$i])){
                                               echo '<h3>'.$days[$i].'</h3>';                            
                                             }                                                
@@ -582,11 +594,10 @@ function listarUsuarios(){
                         <form onsubmit="guardarCronogramaComensal('.$row[4].'); return false;" method="post" accept-charset="utf-8">
                           <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="myModalLabel">Registrar Cronograma de Servicio para '.$row[3].' (MES ACTUAL: '.date("F").')</h4>
+                            <h4 class="modal-title" id="myModalLabel">Registrar Cronograma de Servicio para '.$row[3].' (MES ACTUAL: '.$mes.')</h4>
                           </div>
-                          <div class="modal-body">
+                          <div class="modal-body" style="padding-bottom:0px;">
                               <div class="form-group">
-                                <input type="hidden" id="dia0">
                                     <table class="table">
                                       <thead>
                                         <tr class="danger">
@@ -601,6 +612,7 @@ function listarUsuarios(){
                                       </thead>
                                       <tbody>';
                                         $numeroDias = date("t");
+                                        $diaActual = date("j");                                        
                                         $week = 1;
                                         for ($i=1; $i <=$numeroDias ; $i++) { 
                                           $day_week = date('N', strtotime(date('Y-m').'-'.$i));
@@ -616,15 +628,21 @@ function listarUsuarios(){
                                               $aux=0;
                                               $estilo="background: #B5B9BA;cursor: not-allowed;border: 1px solid white;";                                              
                                             } else{
-                                                $estilo="background: #04A4BB;border: 1px solid white;cursor: pointer;";                                                
+                                                if ($days[$i]<$diaActual) {
+                                                    $aux=0;
+                                                    $estilo="background: #B5B9BA;cursor: not-allowed;border: 1px solid white;";
+                                                }else{
+                                                    $estilo="background: #04A4BB;border: 1px solid white;cursor: pointer;";
+                                                    $aux=$days[$i];
+                                                }
+                                                                                                
                                             }
-                                            echo '<td class="dia'.$aux.'" id="dia'.$aux.''.$row[4].'" onclick="seleccionarDiaCrono('.$aux.','.$row[4].')" style="'.$estilo.'"><div style="width:90px;height:45px;color:white;">';
+                                            echo '<td class="dia'.$aux.'" id="dia'.$aux.''.$row[4].'" onclick="seleccionarDiaCrono('.$aux.','.$row[4].')" style="'.$estilo.'"><div style="width:90px;height:40px;color:white;">';
                                             if(isset($days[$i])){
-                                              echo '<h3>'.$days[$i].'</h3>';                              
+                                              echo '<h3>'.$days[$i].'</h3>';                           
                                             } 
                                             echo '<input id="diaValor'.$aux.''.$row[4].'" type="hidden" value="0">';
                                             echo '</div></td>';
-                                            $aux=$aux+1;
                                           }                          
                                           echo "</tr>";
                                         }

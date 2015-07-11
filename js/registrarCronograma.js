@@ -26,9 +26,12 @@ function guardarCronogramaComensal(idComensal) {
     dia = new Array(numeroDias);
     for (var i = 1; i <= numeroDias ; i++) {
         dia[i]=$('#diaValor'+i+idComensal).val();
+        if (dia[i]==null) {
+          dia[i]=0;
+        };
         //alert("dia "+i+": "+dia[i]);
     };
-    //alert(idComensal+"/"+numeroDias);    
+    //alert(idComensal+"/"+numeroDias);
     var diaa = dia.toString();
       $.ajax({
           type: "POST",
@@ -49,15 +52,18 @@ function guardarCronogramaComensal(idComensal) {
 }
 
 function seleccionarDiaCrono(id,idComensal){
-  opc=document.getElementById("diaValor"+id+idComensal).value;
-  if (opc==1) {
-    document.getElementById("diaValor"+id+idComensal).value="0";
-    document.getElementById("dia"+id+idComensal).style.background="#04A4BB";
-  }else{
-    document.getElementById("diaValor"+id+idComensal).value="1";
-    document.getElementById("dia"+id+idComensal).style.background="#10BD04";
-  }  
+  if (id>0) {
+    opc=document.getElementById("diaValor"+id+idComensal).value;
+    if (opc==1) {
+      document.getElementById("diaValor"+id+idComensal).value="0";
+      document.getElementById("dia"+id+idComensal).style.background="#04A4BB";
+    }else{
+      document.getElementById("diaValor"+id+idComensal).value="1";
+      document.getElementById("dia"+id+idComensal).style.background="#10BD04";
+    }  
+  };   
 }
+
 function cerrarMensaje(){
   document.getElementById("mensajeCronograma").innerHTML="";
 }
