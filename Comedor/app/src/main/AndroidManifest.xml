@@ -21,8 +21,21 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ListadoClientes"
+            android:name=".ListadoActivity"
             android:label="Comensales" >
+            <intent-filter>
+                <action android:name="android.intent.action.ListadoActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+        <activity
+            android:name=".ListadoClientes"
+            android:label="Clientes" >
             <intent-filter>
                 <action android:name="android.intent.action.ListadoActivity" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -38,6 +51,30 @@
             android:label="Asistencias" >
             <intent-filter>
                 <action android:name="android.intent.action.ListarAsistencias" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".GraficaAsistProgram"
+            android:label="Asistencias" >
+            <intent-filter>
+                <action android:name="android.intent.action.GraficaAsistProgram" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".FormReporte"
+            android:label="Reporte" >
+            <intent-filter>
+                <action android:name="android.intent.action.FormReporte" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".OpcionAdmin"
+            android:label="Opcion" >
+            <intent-filter>
+                <action android:name="android.intent.action.OpcionAdmin" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>

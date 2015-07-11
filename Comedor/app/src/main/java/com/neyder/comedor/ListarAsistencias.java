@@ -1,120 +1,166 @@
 package com.neyder.comedor;
 
 import android.app.Activity;
-import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
-import android.view.KeyEvent;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.view.View;
+import android.widget.*;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HttpContext;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by NEYDER on 08/06/2015.
- */
-public class ListarAsistencias extends Activity{
-    InputStream is=null;
-    EditText username;
-    EditText password;
-    private Button btnIngresar;
-    String result="";
-    int idUser=0;
-
+public class ListadoClientes extends Activity implements SearchView.OnQueryTextListener,
+        SearchView.OnCloseListener {
     variables_publicas variables=new variables_publicas();
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.listar_asistencias);
+    private ListView myList;
+    private SearchView searchView;
+    private SearchHelper mDbHelper;
+    private MyCustomAdapter defaultAdapter;
+    private ArrayList<String> nameList;
 
-        Bundle extras = getIntent().getExtras();
-        //Obtenemos datos enviados en el intent.
-        if (extras != null) {
-            idUser  = extras.getInt("idUsuario");//idUsuario
-        }else{
-            idUser=0;
-        }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        setContentView(R.layout.listar_comensales);
+
+        nameList = new ArrayList<String>();
+
         Thread tr = new Thread(){
             @Override
             public void run(){
-                final String Resultado = enviarPost(Integer.toString(idUser));
+                final String Resultado = leer();
                 runOnUiThread(
                         new Runnable() {
                             @Override
                             public void run() {
                                 cargaListado(obtDatosJSON(Resultado));
+                                //Toast.makeText(getApplicationContext(),Resultado,Toast.LENGTH_SHORT).show();
                             }
                         });
             }
         };
         tr.start();
 
+        //relate the listView from java to the one created in xml
+        myList = (ListView) findViewById(R.id.lstComensales);
+
+        //show the ListView on the screen
+        // The adapter MyCustomAdapter is responsible for maintaining the data backing this nameList and for producing
+        // a view to represent an item in that data set.
+
+
+        //prepare the SearchView
+        searchView = (SearchView) findViewById(R.id.search);
+
+        //Sets the default or resting state of the search field. If true, a single search icon is shown by default and
+        // expands to show the text field and other buttons when pressed. Also, if the default state is iconified, then it
+        // collapses to that state when the close button is pressed. Changes to this property will take effect immediately.
+        //The default value is true.
+        searchView.setIconifiedByDefault(false);
+        searchView.setOnQueryTextListener(this);
+        searchView.setOnCloseListener(this);
+        mDbHelper = new SearchHelper(this);
+        mDbHelper.open();
+
+        //Clear all names
+        mDbHelper.deleteAllNames();
+
 
     }
 
     public void cargaListado(ArrayList<String> datos){
-        ArrayAdapter<String> adaptador =
+        defaultAdapter = new MyCustomAdapter(ListadoClientes.this, datos);
+        myList.setAdapter(defaultAdapter);
+        /*ArrayAdapter<String> adaptador =
                 new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1,datos);
-        ListView listado = (ListView) findViewById(R.id.lstAsistencias);
-        listado.setAdapter(adaptador);
-    }
-
-    public ArrayList<String> obtDatosJSON(String response){
-        ArrayList<String> listado= new ArrayList<String>();
-        try {
-            String texto="";
-            JSONArray json= new JSONArray(response);
-            for (int i=0; i<json.length();i++){
-                texto = json.getJSONObject(i).getString("fecha") +" - "+
-                        json.getJSONObject(i).getString("ape_paterno") +" "+
-                        json.getJSONObject(i).getString("ape_maerno") +", "+
-                        json.getJSONObject(i).getString("nombre") +" - "+
-                        json.getJSONObject(i).getString("descripcion");
-                listado.add(texto);
-            }
-            Log.e("Resultado ", "OBT DATOS JSON" + listado.toString());
-        } catch (Exception e) {
-            // TODO: handle exception
-            Log.e("Error ","OBT DATOS JSON"+e.toString());
+        ListView listado = (ListView) findViewById(R.id.lstComensales);
+        listado.setAdapter(adaptador);*/
+        // Create the list of names which will be displayed on search
+        for (String name : datos) {
+            mDbHelper.createList(name);
         }
-        return listado;
     }
 
-    //public JSONArray enviarPost(String idUser) {
-    public String enviarPost(String idUser) {
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpContext localContext = new BasicHttpContext();
-        HttpPost httpPost = new HttpPost(variables.direccionIp +"/Comedor/android/asistencias.php");
-        HttpResponse response = null;
+    /**
+     * Method used for performing the search and displaying the results. This method is called every time a letter
+     * is introduced in the search field.
+     *
+     * @param query Query used for performing the search
+     */
+    private void displayResults(String query) {
+
+        Cursor cursor = mDbHelper.searchByInputText((query != null ? query : "@@@@"));
+
+        if (cursor != null) {
+
+            String[] from = new String[] {SearchHelper.COLUMN_NAME};
+
+            // Specify the view where we want the results to go
+            int[] to = new int[] {R.id.search_result_text_view};
+
+            // Create a simple cursor adapter to keep the search data
+            SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.result_search_item, cursor, from, to);
+            myList.setAdapter(cursorAdapter);
+
+            // Click listener for the searched item that was selected
+            myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    // Get the cursor, positioned to the corresponding row in the result set
+                    Cursor cursor = (Cursor) myList.getItemAtPosition(position);
+
+                    // Get the state's capital from this row in the database.
+                    String selectedName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
+                    Toast.makeText(ListadoClientes.this, selectedName, Toast.LENGTH_SHORT).show();
+
+                    // Set the default adapter
+                    myList.setAdapter(defaultAdapter);
+
+                    // Find the position for the original list by the selected name from search
+                    for (int pos = 0; pos < nameList.size(); pos++) {
+                        if (nameList.get(pos).equals(selectedName)){
+                            position = pos;
+                            break;
+                        }
+                    }
+
+                    // Create a handler. This is necessary because the adapter has just been set on the list again and
+                    // the list might not be finished setting the adapter by the time we perform setSelection.
+                    Handler handler = new Handler();
+                    final int finalPosition = position;
+                    handler.post(new Runnable() {
+                        @Override
+                            public void run() {
+                                    myList.setSelection(finalPosition);
+                            }
+                    });
+
+                    searchView.setQuery("",true);
+                }
+            });
+
+        }
+    }
+
+    public String leer(){
+        HttpClient cliente =new DefaultHttpClient();
+        HttpContext contexto = new BasicHttpContext();
+        HttpGet httpget = new HttpGet(variables.direccionIp+"/comedor/android/GetData.php");
         String resultado=null;
         try {
-            List<NameValuePair> params = new ArrayList<NameValuePair>(0);
-            params.add(new BasicNameValuePair("idUsuario", idUser));
-            httpPost.setEntity(new UrlEncodedFormEntity(params));
-            response = httpClient.execute(httpPost,localContext);
+            HttpResponse response = cliente.execute(httpget,contexto);
             HttpEntity entity = response.getEntity();
             resultado = EntityUtils.toString(entity, "UTF-8");
             Log.e("getpostresponde", "result=" + resultado);
@@ -122,49 +168,55 @@ public class ListarAsistencias extends Activity{
             Log.e("getpostresponde ex", "result=" + e.toString());
         }
         return resultado;
-        /*
-        if (is!=null){
-            getpostresponse();
-            return getjsonarray();
-        }else{
-            Log.e("ENVIARPOST ","ERROR");
-            return null;
-        }*/
     }
 
-    public void getpostresponse(){
-        try{
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is,"iso-8859-1"),8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine())!=null){
-                sb.append(line+"\n");
+    public ArrayList<String> obtDatosJSON(String response){
+        ArrayList<String> listado= new ArrayList<String>();
+        try {
+            JSONArray json= new JSONArray(response);
+            String texto="";
+            for (int i=0; i<json.length();i++){
+                //texto = json.getJSONObject(i).getString("num_matricula") +" - "+
+                texto = json.getJSONObject(i).getString("ape_paterno") +" "+
+                        json.getJSONObject(i).getString("ape_maerno") +", "+
+                        json.getJSONObject(i).getString("nombre") +" \n "+
+                        json.getJSONObject(i).getString("facultad") +" - "+
+                        json.getJSONObject(i).getString("escuela");
+                listado.add(texto);
             }
-            is.close();
-            result=sb.toString();
-            Log.e("getpostresponde", "result=" + sb.toString());
-        }catch(Exception e){
-            Log.e("log_tag","Error converting result"+e.toString());
+        } catch (Exception e) {
+            // TODO: handle exception
         }
+        return listado;
     }
 
-    public JSONArray getjsonarray(){
-        try{
-            JSONArray jArray = new JSONArray(result);
-            return jArray;
-        }catch (JSONException e){
-            Log.e("log_tag","Error parsing data "+e.toString());
-            return null;
-        }
-    }
-/*
     @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event)  {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) {
-            // no hacemos nada.
-            return true;
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mDbHelper  != null) {
+            mDbHelper.close();
         }
+    }
 
-        return super.onKeyDown(keyCode, event);
-    }*/
+    @Override
+    public boolean onClose() {
+        myList.setAdapter(defaultAdapter);
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        displayResults(query + "*");
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        if (!newText.isEmpty()){
+            displayResults(newText + "*");
+        } else {
+            myList.setAdapter(defaultAdapter);
+        }
+        return false;
+    }
 }
